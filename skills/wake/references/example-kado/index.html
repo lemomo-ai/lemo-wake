@@ -1,0 +1,422 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>KADO BOOKS · 紙上都市</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+:root{--ink:#161514;--paper:#ebe2cd;--red:#d8452a;--blue:#2448a6}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+#view{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+#cam{position:absolute;left:0;top:0;width:675px;height:1200px;transform-origin:0 0}
+.abs{position:absolute}
+#paper{left:-200px;top:-200px;width:1075px;height:1600px;background:var(--paper) center/cover}
+#guides{left:0;top:0;width:675px;height:1200px;pointer-events:none}
+.lw{position:absolute;overflow:hidden}
+.lw canvas{position:absolute;left:0;top:0;width:100%;height:100%}
+.lab{position:absolute;font-family:Archivo,sans-serif;font-weight:700;color:var(--ink);letter-spacing:.09em;line-height:1.38;white-space:pre}
+.ser{font-family:'Libre Caslon Text',serif;font-weight:400;letter-spacing:0;white-space:pre}
+.jp{font-family:'Noto Serif JP',serif;writing-mode:vertical-rl;white-space:pre}
+.ch{display:inline-block;will-change:transform}
+.rule{position:absolute;height:1.4px;background:var(--ink);transform-origin:0 50%}
+/* book */
+#bookWrap{left:0;top:0;width:675px;height:1200px;perspective:1400px;perspective-origin:200px 820px}
+#book{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d}
+.b3{position:absolute;transform-style:preserve-3d}
+.face{position:absolute;left:0;top:0;width:100%;height:100%;backface-visibility:hidden}
+.page{background:#f2ecdf}
+.ptxt{position:absolute;font-family:'Libre Caslon Text',serif;color:#2a2826;white-space:pre;line-height:1.15}
+.photo{position:absolute;background:#777 center/cover;filter:grayscale(1) contrast(1.05)}
+canvas.rib{position:absolute;left:0;top:0;width:675px;height:1200px}
+#ribShadow{filter:blur(5px);opacity:.55}
+#circ{left:0;top:0;width:675px;height:1200px}
+#circ .photo{position:absolute;left:501px;top:698px;width:158px;height:158px;border-radius:50%;overflow:hidden;background:none}
+#circ .photo div{position:absolute;inset:-20px;background:#666 center/cover;filter:grayscale(1) contrast(1.08)}
+#grain{position:absolute;left:0;top:0;width:1080px;height:1920px;mix-blend-mode:multiply;opacity:.55;pointer-events:none}
+#sweep{position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none;mix-blend-mode:soft-light}
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(60,40,20,.18) 100%)}
+</style></head>
+<body>
+<div id="view">
+  <div id="cam">
+    <div id="paper" class="abs"></div>
+    <svg id="guides" class="abs" viewBox="0 0 675 1200"></svg>
+    <div id="letters"></div>
+    <div id="kamiWrap" class="abs" style="left:0;top:0"></div>
+    <div id="bookWrap" class="abs"><div id="book"></div></div>
+    <canvas id="ribShadow" class="rib"></canvas>
+    <canvas id="rib" class="rib"></canvas>
+    <div id="circ" class="abs"><div class="photo"><div></div></div></div>
+    <div id="type"></div>
+  </div>
+  <div id="sweep"></div>
+  <canvas id="grain" width="540" height="960"></canvas>
+  <div id="vig"></div>
+</div>
+<script>window.CFG={srcW:675,srcH:1200,outW:1080,outH:1920,dur:5.0,fps:30,source:'ref_poster.jpg'};</script>
+<script>
+// ---------- utils ----------
+const $=s=>document.querySelector(s);
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const prog=(t,a,b)=>clamp((t-a)/(b-a));
+const E={
+  outExpo:x=>x>=1?1:1-Math.pow(2,-10*x),
+  outCubic:x=>1-Math.pow(1-x,3),
+  inOutCubic:x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,
+  inQuad:x=>x*x,
+  outBack:(x,s=1.7)=>1+(s+1)*Math.pow(x-1,3)+s*Math.pow(x-1,2),
+  outQuart:x=>1-Math.pow(1-x,4),
+  inOutSine:x=>-(Math.cos(Math.PI*x)-1)/2,
+};
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const DUR=5.0; window.DUR=DUR;
+const K=3; // canvas px per poster unit
+const IMG={};
+function loadImg(n){return new Promise(r=>{const i=new Image();i.onload=()=>{IMG[n]=i;r()};i.onerror=()=>{IMG[n]=null;r()};i.src='assets/'+n+'.png'})}
+function photoURL(n){return IMG[n]?`url(assets/${n}.png)`:'none'}
+
+// ink texture: speckle holes + density variation
+function inkify(ctx,w,h,seed,amt=1){
+  const R=rng(seed);ctx.save();ctx.globalCompositeOperation='destination-out';
+  for(let i=0;i<w*h/5000*amt;i++){const x=R()*w,y=R()*h,r=(0.3+R()*R()*1.4)*K*.5;ctx.globalAlpha=.2+R()*.6;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill()}
+  for(let i=0;i<w*h/60000*amt;i++){const x=R()*w,y=R()*h,r=(20+R()*70)*K*.5;const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(0,0,0,${.02+R()*.05})`);g.addColorStop(1,'rgba(0,0,0,0)');ctx.globalAlpha=1;ctx.fillStyle=g;ctx.fillRect(x-r,y-r,2*r,2*r)}
+  // scratchy streaks
+  for(let i=0;i<w*h/160000*amt;i++){ctx.globalAlpha=.1+R()*.2;ctx.lineWidth=(.3+R()*.8)*K*.5;ctx.beginPath();const x=R()*w,y=R()*h,a=R()*6.28,l=(6+R()*30)*K*.5;ctx.moveTo(x,y);ctx.lineTo(x+Math.cos(a)*l,y+Math.sin(a)*l);ctx.stroke()}
+  ctx.restore();
+}
+// draw a glyph fitted into box (poster units) on its own canvas
+function glyphCanvas(ch,font,box,color,seed,pad=0){
+  const c=document.createElement('canvas');const w=box.w+pad*2,h=box.h+pad*2;c.width=Math.round(w*K);c.height=Math.round(h*K);
+  const x=c.getContext('2d');x.font=font;const m=x.measureText(ch);
+  const gw=m.actualBoundingBoxLeft+m.actualBoundingBoxRight,gh=m.actualBoundingBoxAscent+m.actualBoundingBoxDescent;
+  x.save();x.scale(K,K);x.translate(pad,pad);x.scale(box.w/gw,box.h/gh);x.fillStyle=color;x.fillText(ch,m.actualBoundingBoxLeft,m.actualBoundingBoxAscent);x.restore();
+  inkify(x,c.width,c.height,seed);return c;
+}
+
+// ---------- build: guides ----------
+function buildGuides(){
+  const g=$('#guides');const L=[];
+  [[20,'v'],[337.5,'v'],[655,'v'],[75,'v'],[600,'v']].forEach(([x])=>L.push({x1:x,y1:0,x2:x,y2:1200}));
+  [[18],[80],[600],[1050],[1180]].forEach(([y])=>L.push({x1:0,y1:y,x2:675,y2:y}));
+  g.innerHTML=L.map((l,i)=>`<line x1="${l.x1}" y1="${l.y1}" x2="${l.x2}" y2="${l.y2}" stroke="#3aa3d6" stroke-width=".7" stroke-dasharray="${l.x1===l.x2?1200:675}" data-i="${i}"/>`).join('');
+}
+
+// ---------- build: big letters ----------
+const LET=[
+  {ch:'P',x:98,y:80,w:186,h:520,t:.04},
+  {ch:'R',x:290,y:80,w:186,h:520,t:.16},
+  {ch:'I',x:488,y:150,w:62,h:450,t:.28},
+  {ch:'N',x:250,y:596,w:250,h:432,t:.50},
+  {ch:'T',x:452,y:596,w:172,h:456,t:.60},
+];
+function buildLetters(){
+  const host=$('#letters');
+  LET.forEach((L,i)=>{
+    const w=document.createElement('div');w.className='lw';Object.assign(w.style,{left:L.x+'px',top:L.y+'px',width:L.w+'px',height:L.h+'px'});
+    const c=glyphCanvas(L.ch,'400 400px Anton',{w:L.w,h:L.h},'#171615',11+i);w.appendChild(c);host.appendChild(w);L.el=c;L.wrap=w;
+  });
+}
+// ---------- 紙 ----------
+const KAMI={x:70,y:292,w:330,h:318};
+function buildKami(){
+  const pad=10;const c=glyphCanvas('紙','900 400px "Noto Serif JP"',{w:KAMI.w,h:KAMI.h},'#d8452a',77,pad);
+  Object.assign(c.style,{position:'absolute',left:(KAMI.x-pad)+'px',top:(KAMI.y-pad)+'px',width:(KAMI.w+2*pad)+'px',height:(KAMI.h+2*pad)+'px',transformOrigin:'50% 50%'});
+  // splatter dots
+  const s=document.createElement('canvas');const R=rng(5);s.width=(KAMI.w+160)*K;s.height=(KAMI.h+160)*K;const sx=s.getContext('2d');sx.fillStyle='#d8452a';
+  for(let i=0;i<46;i++){const a=R()*6.28,d=(.55+R()*.35);const cx=s.width/2+Math.cos(a)*s.width/2*d,cy=s.height/2+Math.sin(a)*s.height/2*d;const r=(.6+R()*R()*3.2)*K;sx.beginPath();sx.arc(cx,cy,r,0,7);sx.fill()}
+  Object.assign(s.style,{position:'absolute',left:(KAMI.x-80)+'px',top:(KAMI.y-80)+'px',width:(KAMI.w+160)+'px',height:(KAMI.h+160)+'px',transformOrigin:'50% 50%'});
+  const sh=document.createElement('div');Object.assign(sh.style,{position:'absolute',left:KAMI.x+'px',top:KAMI.y+'px',width:KAMI.w+'px',height:KAMI.h+'px',borderRadius:'40%',background:'rgba(40,20,10,.35)',filter:'blur(30px)',transformOrigin:'50% 50%'});
+  const host=$('#kamiWrap');host.appendChild(sh);host.appendChild(s);host.appendChild(c);KAMI.el=c;KAMI.spl=s;KAMI.sh=sh;
+}
+
+// ---------- book ----------
+const BK={cx:200,cy:806,pw:225,ph:325};
+function el(tag,cls,parent,style={},html=''){const e=document.createElement(tag);if(cls)e.className=cls;Object.assign(e.style,style);if(html)e.innerHTML=html;parent&&parent.appendChild(e);return e}
+function blueBlocks(w,h,seed){
+  const c=document.createElement('canvas');c.width=w*K;c.height=h*K;const x=c.getContext('2d');x.scale(K,K);
+  const polys=[[[18,30],[120,18],[132,96],[30,110]],[[92,120],[190,112],[186,176],[100,184]],[[14,150],[70,140],[78,250],[22,262]],[[110,214],[178,208],[180,236],[112,240]],[[64,262],[140,248],[150,292],[60,296]]];
+  x.fillStyle='#2448a6';polys.forEach(p=>{x.beginPath();p.forEach(([a,b],i)=>i?x.lineTo(a,b):x.moveTo(a,b));x.closePath();x.fill()});
+  x.setTransform(1,0,0,1,0,0);inkify(x,c.width,c.height,seed,.7);return c.toDataURL();
+}
+function buildBook(){
+  const B=$('#book');const W=BK.pw,H=BK.ph;
+  // cover boards
+  const coverL=el('div','b3',B,{left:-W-8+'px',top:-H/2-7+'px',width:W+8+'px',height:H+14+'px',background:'#1c2531',borderRadius:'3px 0 0 3px',transform:'translateZ(-7px)',boxShadow:'0 0 0 1px #11161d'});
+  // left page block
+  const pl=el('div','b3 page',B,{left:-W+'px',top:-H/2+'px',width:W+'px',height:H+'px',transform:'translateZ(-1px)',boxShadow:'-3px 3px 0 #d9d0bd,-5px 5px 0 #cfc5b0,-6px 7px 0 #b9ae98',background:'linear-gradient(90deg,#efe8da 0%,#f3eee2 70%,#d7cdb9 100%)'});
+  el('div','photo',pl,{left:'22px',top:'26px',width:'160px',height:'122px',backgroundImage:photoURL('skyline')});
+  el('div','ptxt',pl,{left:'22px',top:'166px',fontSize:'10px'},'Shanghai\nA Reading City');
+  el('div','',pl,{position:'absolute',left:'22px',top:'198px',width:'16px',height:'1px',background:'#333'});
+  el('div','ptxt',pl,{left:'22px',top:'206px',fontSize:'9px'},'People\nPlaces\nPaper\nPossibilities');
+  el('div','ptxt',pl,{left:'22px',top:'274px',fontSize:'8px'},'01');
+  // right half (opens): hinge at spine
+  const R=el('div','b3',B,{left:'0px',top:-H/2+'px',width:W+'px',height:H+'px',transformOrigin:'0 50%'});BK.right=R;
+  el('div','',R,{position:'absolute',left:'0',top:'-7px',width:W+8+'px',height:H+14+'px',background:'#1c2531',borderRadius:'0 3px 3px 0',transform:'translateZ(-7px)'});
+  const pr=el('div','page',R,{position:'absolute',left:'0',top:'0',width:W+'px',height:H+'px',transform:'translateZ(-1px)',boxShadow:'3px 3px 0 #d9d0bd,5px 5px 0 #cfc5b0,6px 7px 0 #b9ae98',background:'linear-gradient(90deg,#d7cdb9 0%,#f3eee2 25%,#efe8da 100%)'});
+  el('div','photo',pr,{left:'26px',top:'24px',width:'150px',height:'190px',backgroundImage:photoURL('street3')});
+  el('div','ptxt',pr,{left:'26px',top:'230px',fontSize:'9px'},'Walk the city.\nRead the street.');
+  el('div','ptxt',pr,{left:'180px',top:'274px',fontSize:'8px'},'04');
+  // the closed-book front cover face (seen when R is folded over) – drawn on the back of the board
+  el('div','face',R,{left:'0',top:'-7px',width:W+8+'px',height:H+14+'px',background:'linear-gradient(135deg,#243041,#161d27)',transform:'translateZ(-8px) rotateY(180deg)',backfaceVisibility:'hidden'},
+     `<div style="position:absolute;right:22px;top:30px;font:800 22px/1.05 Archivo;letter-spacing:.08em;color:#e9e1cf;text-align:right">KADO<br>BOOKS</div><div style="position:absolute;right:22px;bottom:30px;font:900 64px 'Noto Serif JP';color:#d8452a">紙</div>`);
+  // leaves
+  BK.leaves=[];
+  const bb=blueBlocks(W,H,9);
+  for(let i=0;i<3;i++){
+    const lf=el('div','b3',B,{left:'0px',top:-H/2+'px',width:W+'px',height:H+'px',transformOrigin:'0 50%'});
+    const front=el('div','face page',lf,{background:'linear-gradient(90deg,#d9cfbb 0%,#f4efe3 22%,#f0e9dc 100%)'});
+    const back=el('div','face page',lf,{transform:'rotateY(180deg)',background:'linear-gradient(270deg,#d9cfbb 0%,#f4efe3 22%,#f0e9dc 100%)'});
+    if(i===2){
+      el('div','',front,{position:'absolute',left:'0',top:'0',width:W+'px',height:H+'px',background:`url(${bb}) 0 0/100% 100%`});
+      el('div','photo',front,{left:'10px',top:'148px',width:'58px',height:'110px',backgroundImage:photoURL('street1')});
+      el('div','ptxt',front,{left:'120px',top:'196px',fontSize:'8.5px',transform:'rotate(-4deg)'},'Type\nImages\nBooks\nFor a Kinder\nTomorrow.');
+      el('div','ptxt',front,{left:'176px',top:'276px',fontSize:'8px'},'02');
+    }else{
+      el('div','photo',front,{left:'30px',top:'40px',width:'140px',height:'100px',backgroundImage:photoURL(i?'street2':'sign'),opacity:.9});
+      el('div','ptxt',back,{left:'30px',top:'40px',fontSize:'14px'},i?'Paper\nCities':'Pages\nStreets');
+    }
+    lf.appendChild(front);lf.appendChild(back);BK.leaves.push(lf);
+  }
+  // spine-top marker for the ribbon origin
+  BK.mark=el('div','',B,{position:'absolute',left:'14px',top:(-H/2+52)+'px',width:'1px',height:'1px'});
+}
+function bookPose(t){
+  const fly=E.outCubic(prog(t,.72,1.18));
+  const tx=BK.cx+lerp(-260,0,fly),ty=BK.cy+lerp(520,0,fly);
+  const rz=lerp(-38,22,fly),rx=lerp(10,32,fly),sc=lerp(.8,1,fly);
+  $('#book').style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotateZ(${rz}deg) rotateX(${rx}deg) rotateY(-12deg)`;
+  $('#book').style.opacity=prog(t,.72,.8);
+  const open=E.inOutCubic(prog(t,1.08,1.5));
+  BK.right.style.transform=`rotateY(${lerp(-179,0,open)}deg)`;
+  const leaves=BK.leaves;
+  leaves.forEach((lf,i)=>{
+    const st=1.08+(i===2?0.06:0)+ (i<2?0.0:0), a0=1.22+i*.12;
+    let a;
+    if(t<1.08) a=-179.5+i*.2; // stacked with closed half
+    else if(t<a0){a=lerp(-179,-178.5+i*.3,open)}
+    else{const p=E.outCubic(prog(t,a0,a0+.42));const target=i===2?-30:-1.2+i*.4;a=lerp(-178.5,target,p)}
+    if(i===2&&t>a0+.42){a=-30+5*Math.sin((t-a0-.42)*4.2)}
+    // during closed state, leaves ride with the cover
+    if(t<1.08)a=-179.4+i*.2;
+    else if(t<a0)a=Math.min(a,lerp(-179,0,open)-2+i*.3);
+    lf.style.transform=`translateZ(${(i+1)*.6}px) rotateY(${a}deg)`;
+  });
+}
+
+// ---------- ribbon ----------
+const RB={W:136};
+function buildRibbonTexture(){
+  const W=RB.W,L=1180;RB.L=L;const R=4;RB.R=R;
+  const c=document.createElement('canvas');c.width=L*R;c.height=W*R;const x=c.getContext('2d');x.scale(R,R);
+  x.fillStyle='#f1ebde';x.fillRect(0,0,L,W);
+  // subtle paper tone
+  const g=x.createLinearGradient(0,0,0,W);g.addColorStop(0,'rgba(0,0,0,.05)');g.addColorStop(.15,'rgba(0,0,0,0)');g.addColorStop(.85,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.06)');x.fillStyle=g;x.fillRect(0,0,L,W);
+  // text helper: lines run across the strip (v axis), upright toward the tip (-u)
+  function txt(u0,v0,lines,font,lh,color='#222'){x.save();x.translate(u0,v0);x.rotate(-Math.PI/2);x.fillStyle=color;x.font=font;lines.forEach((l,i)=>x.fillText(l,0,Math.abs(lh)*i));x.restore()}
+  function photo(n,u0,u1,v0=9,v1=W-9){const im=IMG[n];x.save();x.beginPath();x.rect(u0,v0,u1-u0,v1-v0);x.clip();
+    if(im){// draw rotated so photo "up" points toward tip (-u)
+      x.translate((u0+u1)/2,(v0+v1)/2);x.rotate(-Math.PI/2);const bw=v1-v0,bh=u1-u0;const s=Math.max(bw/im.width,bh/im.height);x.filter='grayscale(1) contrast(1.08)';x.drawImage(im,-im.width*s/2,-im.height*s/2,im.width*s,im.height*s);x.filter='none'}
+    else{x.fillStyle='#6b6b6b';x.fillRect(u0,v0,u1-u0,v1-v0)}x.restore()}
+  // panels from tip (u=0) towards book
+  photo('street1',4,150);
+  // card: Another City Another Story
+  txt(196,W-22,['Another','City','Another','Story'],'400 9px "Libre Caslon Text"',-11);
+  x.fillStyle='#222';x.fillRect(262,W-34,1,14);txt(282,W-22,['05'],'italic 400 7px "Libre Caslon Text"',0);
+  photo('street2',300,440);
+  // map
+  (function(){const u0=452,u1=560;x.save();x.beginPath();x.rect(u0,10,u1-u0,W-20);x.clip();const r=rng(3);x.strokeStyle='#555';
+    for(let i=0;i<34;i++){x.lineWidth=r()<.2?1.4:.5;x.beginPath();const a=r()*Math.PI,cx=u0+r()*(u1-u0),cy=10+r()*(W-20);x.moveTo(cx-Math.cos(a)*120,cy-Math.sin(a)*120);x.lineTo(cx+Math.cos(a)*120,cy+Math.sin(a)*120);x.stroke()}
+    x.fillStyle='#d8452a';x.beginPath();x.arc(u0+40,52,2.5,0,7);x.fill();x.restore()})();
+  txt(580,W-20,['PAGES','STREETS','SIGNS','PEOPLE'],'700 7.5px Archivo',-10.5);
+  photo('street3',640,770);
+  // Books Build Brighter Cities
+  txt(806,W-16,['Books','Build','Brighter','Cities'],'400 15px "Libre Caslon Text"',-17);
+  x.fillStyle='#222';x.fillRect(880,W-18,1,14);
+  txt(904,W-16,['Independent','publishing for','a more open','tomorrow.'],'400 7.5px "Libre Caslon Text"',-9.5);
+  txt(965,W-16,['03'],'italic 400 7px "Libre Caslon Text"',0);
+  photo('sign',990,1110);
+  photo('skyline',1120,1176);
+  // fold creases
+  x.fillStyle='rgba(0,0,0,.07)';[150,296,446,566,636,776,986,1116].forEach(u=>x.fillRect(u-.6,0,1.2,W));
+  RB.tex=c;
+}
+// centerline control points (poster units); P0 is replaced by the book marker
+let RPTS=[[215,700],[300,664],[372,600],[420,522],[458,446],[494,372],[536,296],[580,220],[626,142],[668,66],[714,-10],[760,-88]];
+function catmull(pts,n){const out=[];for(let i=0;i<pts.length-1;i++){const p0=pts[Math.max(0,i-1)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(pts.length-1,i+2)];for(let k=0;k<n;k++){const t=k/n,t2=t*t,t3=t2*t;out.push([0,1].map(j=>.5*((2*p1[j])+(-p0[j]+p2[j])*t+(2*p0[j]-5*p1[j]+4*p2[j]-p3[j])*t2+(-p0[j]+3*p1[j]-3*p2[j]+p3[j])*t3)))}}out.push(pts[pts.length-1]);return out}
+function resample(pts,step){const out=[pts[0]];let acc=0;for(let i=1;i<pts.length;i++){let [ax,ay]=out[out.length-1];const [bx,by]=pts[i];let d=Math.hypot(bx-ax,by-ay);while(acc+d>=step){const f=(step-acc)/d;ax=ax+(bx-ax)*f;ay=ay+(by-ay)*f;out.push([ax,ay]);d=Math.hypot(bx-ax,by-ay);acc=0}acc+=d}return out}
+function buildRibbonPath(){
+  const dense=catmull(RPTS,24);RB.base=resample(dense,4);RB.step=4;RB.total=(RB.base.length-1)*4;
+}
+function drawTri(g,img,s0,s1,s2,d0,d1,d2){
+  // expand destination triangle slightly around centroid to hide seams
+  const cx=(d0[0]+d1[0]+d2[0])/3,cy=(d0[1]+d1[1]+d2[1])/3,ex=p=>{const dx=p[0]-cx,dy=p[1]-cy,l=Math.hypot(dx,dy)||1;return[p[0]+dx/l*.35,p[1]+dy/l*.35]};
+  const e0=ex(d0),e1=ex(d1),e2=ex(d2);
+  g.save();g.setTransform(K,0,0,K,0,0);g.beginPath();g.moveTo(...e0);g.lineTo(...e1);g.lineTo(...e2);g.closePath();g.clip();
+  const [x0,y0]=s0,[x1,y1]=s1,[x2,y2]=s2;const den=(x1-x0)*(y2-y0)-(x2-x0)*(y1-y0);if(Math.abs(den)<1e-9){g.restore();return}
+  const a=((d1[0]-d0[0])*(y2-y0)-(d2[0]-d0[0])*(y1-y0))/den,c=((d2[0]-d0[0])*(x1-x0)-(d1[0]-d0[0])*(x2-x0))/den;
+  const b=((d1[1]-d0[1])*(y2-y0)-(d2[1]-d0[1])*(y1-y0))/den,d=((d2[1]-d0[1])*(x1-x0)-(d1[1]-d0[1])*(x2-x0))/den;
+  const e=d0[0]-a*x0-c*y0,f=d0[1]-b*x0-d*y0;
+  g.transform(a,b,c,d,e,f);
+  const mnx=Math.max(0,Math.min(x0,x1,x2)-2),mxx=Math.min(img.width,Math.max(x0,x1,x2)+2);
+  g.drawImage(img,mnx,0,mxx-mnx,img.height,mnx,0,mxx-mnx,img.height);g.restore();
+}
+function drawRibbon(t){
+  const cv=$('#rib'),sv=$('#ribShadow');const x=cv.getContext('2d'),s=sv.getContext('2d');
+  x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,cv.width,cv.height);s.setTransform(1,0,0,1,0,0);s.clearRect(0,0,sv.width,sv.height);
+  const grow=E.inOutCubic(prog(t,1.32,2.55));const len=Math.min(RB.total,RB.L)*grow;if(len<2)return;
+  const n=Math.floor(len/RB.step);const B=RB.base;
+  // perturbed centerline
+  const P=[];for(let i=0;i<=n+1&&i<B.length;i++){const sArc=i*RB.step;const [px,py]=B[i];const [qx,qy]=B[Math.min(B.length-1,i+1)],[ox,oy]=B[Math.max(0,i-1)];let tx=qx-ox,ty=qy-oy;const l=Math.hypot(tx,ty)||1;tx/=l;ty/=l;
+    const amp=Math.min(1,sArc/160)*4*(.4+.6*sArc/RB.total);const w=Math.sin(sArc/85-t*4.2)*amp + Math.sin(sArc/190+t*1.9)*amp*.6;
+    // tip whips while emerging
+    const tipw=Math.exp(-Math.pow((len-sArc)/60,2))*(1-grow)*30*Math.sin(t*14);
+    P.push([px-ty*(w+tipw),py+tx*(w+tipw),sArc])}
+  const N=P.map((p,i)=>{const a=P[Math.max(0,i-1)],b=P[Math.min(P.length-1,i+1)];let tx=b[0]-a[0],ty=b[1]-a[1];const l=Math.hypot(tx,ty)||1;return[-ty/l,tx/l]});
+  const W=RB.W,R=RB.R;
+  const phi=sA=>0.85*Math.sin(sA/150+0.9)+0.22*Math.sin(sA/70-t*3.3)+0.08*Math.sin(t*2.4);
+  for(let pass=0;pass<2;pass++){
+    const g=pass?x:s;
+    for(let i=0;i<P.length-1;i++){
+      const sA=P[i][2];if(sA>len)break;
+      const c0=Math.cos(phi(sA)),c1=Math.cos(phi(P[i+1][2]));const c=(c0+c1)/2;
+      const u0=len-sA,u1=len-P[i+1][2];// texture coordinate
+      const A=[P[i][0]+N[i][0]*W/2*c0,P[i][1]+N[i][1]*W/2*c0];
+      const Bq=[P[i+1][0]+N[i+1][0]*W/2*c1,P[i+1][1]+N[i+1][1]*W/2*c1];
+      const Cq=[P[i+1][0]-N[i+1][0]*W/2*c1,P[i+1][1]-N[i+1][1]*W/2*c1];
+      const D=[P[i][0]-N[i][0]*W/2*c0,P[i][1]-N[i][1]*W/2*c0];
+      const fade=clamp(sA/14);
+      if(pass===0){g.setTransform(K,0,0,K,0,0);g.globalAlpha=fade;g.fillStyle='#2a1d10';g.beginPath();g.moveTo(A[0]+7,A[1]+10);g.lineTo(Bq[0]+7,Bq[1]+10);g.lineTo(Cq[0]+7,Cq[1]+10);g.lineTo(D[0]+7,D[1]+10);g.closePath();g.fill();continue}
+      g.globalAlpha=fade;
+      if(c>0.02 && u1>=0){
+        // exact mapping via two triangles; texture px coords
+        const tA=[u0*R,0],tB=[u1*R,0],tC=[u1*R,W*R],tD=[u0*R,W*R];
+        drawTri(g,RB.tex,tA,tB,tC,A,Bq,Cq);drawTri(g,RB.tex,tA,tC,tD,A,Cq,D);
+        g.setTransform(K,0,0,K,0,0);g.fillStyle=`rgba(40,30,20,${(1-c)*.5})`;g.beginPath();g.moveTo(...A);g.lineTo(...Bq);g.lineTo(...Cq);g.lineTo(...D);g.closePath();g.fill();
+      }else{
+        g.setTransform(K,0,0,K,0,0);g.fillStyle=`rgb(${Math.round(222-80*(1+c))},${Math.round(214-80*(1+c))},${Math.round(198-78*(1+c))})`;
+        g.fillStyle='#d9d0be';g.beginPath();g.moveTo(...A);g.lineTo(...Bq);g.lineTo(...Cq);g.lineTo(...D);g.closePath();g.fill();
+        g.fillStyle=`rgba(40,30,20,${clamp(.1+(1+c)*.25)})`;g.fill();
+      }
+    }
+  }
+  x.globalAlpha=1;s.globalAlpha=1;
+}
+
+// ---------- typography ----------
+const TY=[];
+function addType(o){TY.push(o);return o}
+function chars(str){return [...str].map(c=>c==='\n'?'<br>':`<span class="ch">${c===' '?'&nbsp;':c}</span>`).join('')}
+function buildType(){
+  const host=$('#type');
+  const lab=(txt,st,t,mode='type',cls='lab')=>{const e=el('div',cls,host,st,chars(txt));return addType({el:e,t,mode,chs:[...e.querySelectorAll('.ch')]})};
+  const rule=(x,y,w,t)=>{const e=el('div','rule',host,{left:x+'px',top:y+'px',width:w+'px'});return addType({el:e,t,mode:'rule'})};
+  // left column
+  lab('KADO\nBOOKS',{left:'20px',top:'14px',fontSize:'23px',fontWeight:800,lineHeight:'1.02',letterSpacing:'.1em'},.28,'rise');
+  rule(20,72,14,2.70);
+  lab('BOOKS /\nTYPE /\nPHOTO /\nPRINT',{left:'20px',top:'94px',fontSize:'10.5px'},2.72);
+  lab('CURATED BY\nKADO EDITIONS',{left:'20px',top:'196px',fontSize:'6.6px',letterSpacing:'.04em'},2.86);
+  rule(20,232,14,2.92);
+  lab('本と都市とひと',{left:'14px',top:'242px',fontSize:'15px',fontWeight:500,letterSpacing:'.12em',lineHeight:1},2.95,'drop','lab jp');
+  rule(20,404,14,3.15);
+  lab('A CITY\nCAN BE READ.',{left:'20px',top:'492px',fontSize:'6.6px',letterSpacing:'.04em'},3.05);
+  // top right
+  lab('INDEPENDENT\nBOOK & GRAPHIC FAIR',{left:'493px',top:'14px',fontSize:'11px'},2.74);
+  rule(493,56,14,2.9);
+  lab('PAGES /\nSTREETS /\nSIGNS /\nPEOPLE',{left:'493px',top:'66px',fontSize:'9.5px'},2.92);
+  rule(493,136,14,3.1);
+  // right column
+  lab('紙上都市',{left:'604px',top:'296px',fontSize:'43px',fontWeight:700,lineHeight:1,letterSpacing:'.03em'},2.62,'drop','lab jp');
+  lab('CITY\nIN PRINT',{left:'560px',top:'526px',width:'96px',textAlign:'right',fontSize:'19px',lineHeight:'1.05'},2.9,'rise','lab ser');
+  rule(642,574,14,3.1);
+  // blue box
+  const bx=el('div','',host,{position:'absolute',left:'600px',top:'862px',width:'41px',height:'106px',background:'var(--blue)',transformOrigin:'50% 100%'});
+  el('div','ptxt',bx,{left:'6px',top:'12px',fontSize:'8.5px',color:'#e8e4f5',lineHeight:'1.2'},'Small\nBooks\nBig\nCities');
+  el('div','',bx,{position:'absolute',left:'6px',top:'86px',width:'10px',height:'1px',background:'#e8e4f5'});
+  addType({el:bx,t:3.12,mode:'wipe'});
+  lab('READ\nLOOK\nWALK\nCOLLECT\nBELONG',{left:'600px',top:'978px',fontSize:'7.5px'},3.32);
+  rule(600,1044,14,3.6);
+  lab('書が街を\nつくる',{left:'604px',top:'1092px',fontSize:'14px',fontWeight:500,lineHeight:'1.5',letterSpacing:'.12em'},3.72,'drop','lab jp');
+  // date block
+  lab('NOV 07 — 15 2026',{left:'20px',top:'1038px',fontSize:'25px',letterSpacing:'-.01em'},3.32,'roll','lab ser');
+  lab('11:00 — 20:00',{left:'20px',top:'1069px',fontSize:'25px',letterSpacing:'-.01em'},3.45,'roll','lab ser');
+  rule(20,1110,16,3.7);
+  lab("KADO SPACE · JING'AN · SHANGHAI",{left:'20px',top:'1124px',fontSize:'10px',fontWeight:600,letterSpacing:'.12em'},3.66);
+  lab('上海 · 静安 · KADO 空間',{left:'20px',top:'1144px',fontSize:'11px',fontFamily:'"Noto Serif JP",Archivo',fontWeight:500,letterSpacing:'.12em'},3.8);
+  // roll digits: wrap digit chars with a column
+  TY.filter(o=>o.mode==='roll').forEach(o=>{o.chs.forEach((c,i)=>{const d=c.textContent;if(/\d/.test(d)){c.style.position='relative';c.style.overflow='hidden';c.style.verticalAlign='top';c.style.height='1.25em';const col=[];for(let k=0;k<10;k++)col.push((+d+k+1)%10);col.push(d);c.innerHTML=`<span style="visibility:hidden">${d}</span><span class="col" style="position:absolute;left:0;top:0;display:flex;flex-direction:column;line-height:1.25em">${col.map(v=>`<span>${v}</span>`).join('')}</span>`}})})
+}
+function drawType(t){
+  TY.forEach(o=>{
+    if(o.mode==='rule'){o.el.style.transform=`scaleX(${E.outCubic(prog(t,o.t,o.t+.3))})`;return}
+    if(o.mode==='wipe'){const p=E.outExpo(prog(t,o.t,o.t+.45));o.el.style.clipPath=`inset(${(1-p)*100}% 0 0 0)`;return}
+    o.chs.forEach((c,i)=>{
+      if(o.mode==='type'){const on=t>=o.t+i*.022;c.style.opacity=on?1:0;c.style.background=(on&&t<o.t+i*.022+.05)?'#d8452a':'';c.style.color=(on&&t<o.t+i*.022+.05)?'#f1ebde':''}
+      else if(o.mode==='rise'){const p=E.outExpo(prog(t,o.t+i*.03,o.t+i*.03+.5));c.style.opacity=clamp(p*3);c.style.transform=`translateY(${(1-p)*0.9}em)`;c.style.clipPath=`inset(0 0 ${0}% 0)`}
+      else if(o.mode==='drop'){const p=E.outBack(prog(t,o.t+i*.07,o.t+i*.07+.38),1.4);c.style.opacity=clamp(prog(t,o.t+i*.07,o.t+i*.07+.12));c.style.transform=`translateY(${(1-p)*-0.9}em)`}
+      else if(o.mode==='roll'){const st=o.t+i*.018;const p=prog(t,st,st+.5+(i%3)*.08);c.style.opacity=clamp(prog(t,st,st+.08));const col=c.querySelector('.col');if(col){col.style.transform=`translateY(${-E.outCubic(p)*10*1.25}em)`}}
+    });
+  });
+}
+
+// ---------- camera ----------
+const CAMK=[[0,2.05,300,330],[.85,1.75,290,470],[1.45,1.55,255,760],[2.2,1.45,450,430],[2.62,1.42,330,470],[3.55,1.03,337.5,602],[5.0,0.985,337.5,600]];
+function camAt(t){
+  const k=CAMK;let i=0;while(i<k.length-2&&t>k[i+1][0])i++;
+  const p0=k[Math.max(0,i-1)],p1=k[i],p2=k[i+1],p3=k[Math.min(k.length-1,i+2)];
+  const u=clamp((t-p1[0])/(p2[0]-p1[0]));
+  const cr=(a,b,c,d)=>{const m1=(c-a)/((p2[0]-p0[0])||1)*(p2[0]-p1[0]),m2=(d-b)/((p3[0]-p1[0])||1)*(p2[0]-p1[0]);const u2=u*u,u3=u2*u;return(2*u3-3*u2+1)*b+(u3-2*u2+u)*m1+(-2*u3+3*u2)*c+(u3-u2)*m2};
+  let z=cr(p0[1],p1[1],p2[1],p3[1]),cx=cr(p0[2],p1[2],p2[2],p3[2]),cy=cr(p0[3],p1[3],p2[3],p3[3]);
+  z=Math.max(.98,z);const hw=337.5/Math.max(1,z),hh=600/Math.max(1,z);cx=clamp(cx,hw,675-hw);cy=clamp(cy,hh,1200-hh);
+  return{z,cx,cy};
+}
+function applyCam(t){
+  let {z,cx,cy}=camAt(t);
+  // impact shake
+  const sh=t>2.55?Math.exp(-(t-2.55)*9)*Math.sin((t-2.55)*70):0;cx+=sh*4;cy+=sh*3;
+  const S=1.6*z;$('#cam').style.transform=`translate(${540-cx*S}px,${960-cy*S}px) scale(${S})`;
+}
+
+// ---------- per-frame ----------
+function render(t){
+  // guides
+  document.querySelectorAll('#guides line').forEach((l,i)=>{const p=E.outCubic(prog(t,.02+i*.03,.42+i*.03));const len=+l.getAttribute('stroke-dasharray');l.setAttribute('stroke-dashoffset',len*(1-p));l.style.opacity=(1-prog(t,1.0,1.6))*.85});
+  // letters rise inside their masks
+  LET.forEach(L=>{const p=E.outExpo(prog(t,L.t,L.t+.75));L.el.style.transform=`translateY(${(1-p)*104}%)`});
+  // 紙 stamp
+  {const a=2.2,b=2.55;const f=prog(t,a,b);let sc,rot,op;
+    if(t<b){sc=lerp(2.7,1,E.inQuad(f));rot=lerp(-9,0,E.inQuad(f));op=clamp(f*4)}
+    else{const q=t-b;sc=1+.045*Math.exp(-q*14)*Math.cos(q*40);rot=0;op=1}
+    KAMI.el.style.opacity=t<a?0:op;KAMI.el.style.transform=`scale(${sc}) rotate(${rot}deg)`;KAMI.el.style.filter=t<b&&t>a?`blur(${(1-E.inQuad(f))*5}px)`:'none';
+    KAMI.sh.style.opacity=t<a?0:(t<b?E.inQuad(f)*.9:Math.max(0,.9-(t-b)*6));KAMI.sh.style.transform=`scale(${t<b?lerp(.5,1.08,f):1.08})`;
+    const sp=E.outExpo(prog(t,b,b+.35));KAMI.spl.style.opacity=t<b?0:clamp(1.4-(t-b)*0);KAMI.spl.style.transform=`scale(${lerp(.75,1,sp)})`;
+  }
+  bookPose(t);
+  drawRibbon(t);
+  // circle iris
+  {const p=E.outBack(prog(t,3.0,3.45),1.3);const ph=$('#circ .photo');ph.style.clipPath=`circle(${Math.max(0,p)*50}% at 50% 50%)`;ph.firstChild.style.transform=`scale(${lerp(1.35,1.04,E.outCubic(prog(t,3.0,4.6)))}) translateX(${Math.sin(t*1.2)*3}px)`}
+  drawType(t);
+  // light sweep
+  {const p=E.inOutSine(prog(t,3.95,4.75));const pos=lerp(-40,140,p);$('#sweep').style.background=`linear-gradient(115deg,rgba(255,255,255,0) ${pos-18}%,rgba(255,250,235,.55) ${pos}%,rgba(255,255,255,0) ${pos+18}%)`;$('#sweep').style.opacity=t>3.95&&t<4.8?1:0}
+  applyCam(t);
+}
+window.render=render;
+
+// ---------- init ----------
+(async()=>{
+  await Promise.all(['skyline','street1','street2','street3','sign','paper'].map(loadImg));
+  await document.fonts.load('400 100px Anton');await document.fonts.load('900 100px "Noto Serif JP"','紙');await document.fonts.load('700 100px "Noto Serif JP"','紙上都市');await document.fonts.load('500 20px "Noto Serif JP"','本と都市とひと書が街をつくる上海静安空間');
+  await document.fonts.load('700 20px Archivo');await document.fonts.load('800 20px Archivo');await document.fonts.load('600 20px Archivo');await document.fonts.load('400 20px "Libre Caslon Text"');await document.fonts.load('italic 400 20px "Libre Caslon Text"');
+  await document.fonts.ready;
+  if(IMG.paper)$('#paper').style.backgroundImage='url(assets/paper.png)';
+  $('#circ .photo div').style.backgroundImage=photoURL('sign');
+  ['#rib','#ribShadow'].forEach(s=>{$(s).width=675*K;$(s).height=1200*K});
+  // static grain
+  {const g=$('#grain').getContext('2d');const id=g.createImageData(540,960);const R=rng(42);for(let i=0;i<id.data.length;i+=4){const v=200+R()*55;id.data[i]=v;id.data[i+1]=v-3;id.data[i+2]=v-8;id.data[i+3]=255}g.putImageData(id,0,0)}
+  buildGuides();buildLetters();buildKami();buildBook();buildRibbonTexture();buildType();
+  // measure book marker at final pose to anchor ribbon
+  render(4.9);{const r=BK.mark.getBoundingClientRect();const {z,cx,cy}=camAt(4.9);const S=1.6*z;const px=(r.left-540)/S+cx,py=(r.top-960)/S+cy;RPTS[0]=[px,py];RPTS[1]=[lerp(px,RPTS[2][0],.45),lerp(py,RPTS[2][1],.45)+8];}
+  buildRibbonPath();
+  render(0);window.READY=true;
+})();
+</script>
+</body></html>

@@ -1,0 +1,22 @@
+# Only what ships is tracked: the plugin manifest, the skills, README, LICENSE, CHANGELOG and CI.
+# Everything else in this folder (workbench, test images and films, plans, logs, experiments, previews,
+# local agent settings) stays on the maintainer's machine.
+/*
+!/.gitignore
+!/.claude-plugin/
+!/.github/
+!/skills/
+!/README.md
+!/LICENSE
+!/CHANGELOG.md
+!/CITATION.cff
+
+# runtime and local data inside the skills
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+models/
+history.jsonl
+consent.json
+*.log

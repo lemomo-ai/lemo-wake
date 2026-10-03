@@ -1,0 +1,41 @@
+name: check
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: Manifests are valid JSON with the same version
+        run: |
+          python3 - <<'PY'
+          import json
+          p = json.load(open(".claude-plugin/plugin.json"))
+          m = json.load(open(".claude-plugin/marketplace.json"))
+          assert p["name"] == "lemo-wake" and m["plugins"][0]["name"] == "lemo-wake"
+          assert p["version"] == m["metadata"]["version"], "plugin.json and marketplace.json versions differ"
+          print("version", p["version"])
+          PY
+      - name: Skills have a description
+        run: |
+          for f in skills/*/SKILL.md; do
+            head -1 "$f" | grep -qx -- '---' || { echo "$f: no frontmatter"; exit 1; }
+            sed -n '2,/^---$/p' "$f" | grep -q '^description: ' || { echo "$f: no description"; exit 1; }
+          done
+      - name: Scripts compile
+        run: |
+          python3 -m py_compile skills/*/scripts/*.py
+          for f in skills/wake/scripts/*.mjs skills/wake/assets/template/*.js; do node --check "$f"; done
+      - name: No large or unexpected files
+        run: |
+          big=$(find . -path ./.git -prune -o -type f -size +1M -print)
+          [ -z "$big" ] || { echo "files over 1 MB:"; echo "$big"; exit 1; }

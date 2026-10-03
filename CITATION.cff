@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use lemo-wake, please cite it as below."
+title: "lemo-wake: Wake your image (把你的照片叫醒)"
+abstract: "A Claude Code plugin that turns one still image into a ~5 second seamlessly looping animation (MP4, GIF, WebP, WeChat sticker) by reading the picture, taking it apart and re-choreographing it in code. No image generation, no API keys."
+type: software
+authors:
+  - name: "Lemomo"
+    website: "https://github.com/lemomo-ai"
+version: "1.0.0"
+license: MIT
+repository-code: "https://github.com/lemomo-ai/lemo-wake"
+url: "https://lemomo-ai.github.io/lemo-wake/"
+keywords:
+  - claude-code
+  - claude-code-plugin
+  - agent-skills
+  - image-animation
+  - gif
+  - webp
+  - motion-design

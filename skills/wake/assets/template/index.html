@@ -1,0 +1,78 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>alive</title>
+<script src="config.js"></script>
+<script src="lib.js"></script>
+<script src="fx.js"></script>  <!-- effect blocks: FX.make(name, params), see the top of fx.js and references/effects.md -->
+<link rel="stylesheet" href="fonts.css">
+<style>
+/* global colours etc. here; sizes come from config.js (set in JS).
+   --bg shows only where nothing is drawn (outside the source, under holes). build() sets it to the average colour of
+   the source's border, so dark images get a dark base and light ones a light base; override it if you know better. */
+:root{--bg:#808080;--ink:#161514}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow:hidden;background:var(--bg)}
+#view{position:absolute;left:0;top:0;overflow:hidden;background:var(--bg)}
+#cam{position:absolute;left:0;top:0;transform-origin:0 0}
+.abs{position:absolute}
+.layer{position:absolute;left:0;top:0}
+canvas.full{position:absolute;left:0;top:0}
+#post{position:absolute;inset:0;pointer-events:none}
+</style></head>
+<body>
+<!--
+  Structure: #view (output size, clips)
+              └ #cam (design coordinates = source pixels; the camera transform applies here)
+                  └ your layers: background / subject / foreground ... (build them for your plan)
+            #post: frame-level post (grain, vignette, sheen, flash, tint) - does not move with the camera
+  Contract: window.render(t) must be pure (the same t always draws the same frame); set window.READY = true after build.
+-->
+<div id="view">
+  <div id="cam">
+    <div id="bg" class="layer"></div>
+    <!-- add layers for your plan here -->
+  </div>
+  <div id="post">
+    <!-- optional paper grain: see GRAIN below (off by default) -->
+  </div>
+</div>
+<script>
+const {clamp,lerp,prog,E,kf}=L;
+const $=s=>document.querySelector(s);
+window.DUR=CFG.dur;
+let SRC; // source Image
+// Optional static paper grain over the whole frame. OFF by default: a multiply grain darkens the whole picture and
+// looks dirty on dark images (night, space, keynote). Turn it on for paper / print / light flat images, e.g.
+// const GRAIN={blend:'multiply',opacity:.35}; on dark images try {blend:'screen',opacity:.08}, or fx.js `grain`.
+const GRAIN=null;
+// camera keyframes [t, z, cx, cy, rot] - placeholder slow push-in. Rewrite for your plan.
+let CAM;
+
+async function build(){
+  Object.assign($('#view').style,{width:CFG.outW+'px',height:CFG.outH+'px'});
+  Object.assign($('#cam').style,{width:CFG.srcW+'px',height:CFG.srcH+'px'});
+  SRC=await L.loadImg(CFG.source);
+  await L.loadFonts([]);               // e.g. ['400 100px Anton',['900 100px "Noto Serif JP"','紙']]
+  const bg=edgeColour(SRC);if(bg)document.documentElement.style.setProperty('--bg',bg);   // base colour that matches the image (see :root)
+  if(GRAIN){const g=document.createElement('canvas');g.width=Math.round(CFG.outW/2);g.height=Math.round(CFG.outH/2);L.grain(g);
+    Object.assign(g.style,{position:'absolute',inset:0,width:'100%',height:'100%',mixBlendMode:GRAIN.blend||'multiply',opacity:GRAIN.opacity??.35});$('#post').appendChild(g);}
+  // -- placeholder: the source as a flat background (a real film takes it apart and rebuilds it, see SKILL.md) --
+  const [c,x]=L.canvas(CFG.srcW,CFG.srcH,1);x.drawImage(SRC,0,0);c.className='full';c.style.width=CFG.srcW+'px';c.style.height=CFG.srcH+'px';$('#bg').appendChild(c);
+  CAM=new L.Camera([[0,1.15,CFG.srcW/2,CFG.srcH/2,0],[CFG.dur,1,CFG.srcW/2,CFG.srcH/2,0]]);
+}
+
+// average colour of the source's outer border (a 64 px thumbnail is enough); null if pixels can't be read
+// (a page opened by hand without --allow-file-access-from-files)
+function edgeColour(img){
+  const [c,x]=L.canvas(64,64,1);x.drawImage(img,0,0,64,64);let d;try{d=x.getImageData(0,0,64,64).data;}catch(e){return null;}let r=0,g=0,b=0,n=0;
+  for(let y=0;y<64;y++)for(let i=0;i<64;i++){if(y>3&&y<60&&i>3&&i<60)continue;const k=(y*64+i)*4;r+=d[k];g+=d[k+1];b+=d[k+2];n++;}
+  return `rgb(${Math.round(r/n)},${Math.round(g/n)},${Math.round(b/n)})`;
+}
+
+function render(t){
+  CAM.apply($('#cam'),t);
+}
+window.render=render;
+build().then(()=>{render(0);window.READY=true;});
+</script>
+</body></html>

@@ -1,0 +1,22 @@
+{
+  "name": "lemo-wake",
+  "displayName": "lemo-wake",
+  "version": "1.0.0",
+  "description": "Wake your image. 把你的照片叫醒。 Turn one picture into a ~5 second seamless loop (MP4, GIF, WebP, WeChat sticker). No image generation, no API keys.",
+  "author": {
+    "name": "Lemomo",
+    "url": "https://github.com/lemomo-ai"
+  },
+  "homepage": "https://github.com/lemomo-ai/lemo-wake",
+  "repository": "https://github.com/lemomo-ai/lemo-wake",
+  "license": "MIT",
+  "keywords": [
+    "animation",
+    "gif",
+    "webp",
+    "motion",
+    "image",
+    "sticker",
+    "loop"
+  ]
+}
