@@ -1,0 +1,15 @@
+{
+  "title": "微信聊天 · 西瓜雨",
+  "title_en": "A WeChat chat · Watermelon rain",
+  "category": "ui",
+  "author": "Lemomo",
+  "author_url": "https://github.com/lemomo-ai",
+  "license": "CC-BY-NC-4.0",
+  "consent": true,
+  "created": "2026-10-02",
+  "lemo_wake": "1.0.0",
+  "width": 1920,
+  "height": 1080,
+  "seconds": 6.15,
+  "sample": true
+}

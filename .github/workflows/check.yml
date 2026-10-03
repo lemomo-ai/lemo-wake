@@ -1,0 +1,18 @@
+name: check submission
+on:
+  pull_request:
+    branches: [gallery]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install --quiet "pillow>=10"
+      - name: Check the submitted films
+        run: python3 .github/scripts/check_submission.py "origin/${{ github.base_ref }}"

@@ -1,0 +1,15 @@
+{
+  "title": "旅行照片堆 · 咔嚓，一张张拿给你看",
+  "title_en": "A pile of travel photos · Click, one by one",
+  "category": "multi",
+  "author": "Lemomo",
+  "author_url": "https://github.com/lemomo-ai",
+  "license": "CC-BY-NC-4.0",
+  "consent": true,
+  "created": "2026-10-02",
+  "lemo_wake": "1.0.0",
+  "width": 960,
+  "height": 540,
+  "seconds": 9.04,
+  "sample": true
+}

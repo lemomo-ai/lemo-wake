@@ -1,0 +1,29 @@
+name: build gallery page
+on:
+  push:
+    branches: [gallery]
+    paths: ["films/**", ".github/scripts/build_gallery.py"]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: build-gallery
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install --quiet "pillow>=10"
+      - name: Rebuild films.json, thumbs and README.md
+        run: python3 .github/scripts/build_gallery.py
+      - name: Commit if changed
+        run: |
+          git add README.md films.json llms.txt thumbs
+          git diff --cached --quiet && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update gallery page"
+          git push

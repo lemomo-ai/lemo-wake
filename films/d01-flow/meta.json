@@ -1,0 +1,15 @@
+{
+  "title": "城市能源流向 · 能量甩满全图",
+  "title_en": "City energy flows · Energy flung across the chart",
+  "category": "chart",
+  "author": "Lemomo",
+  "author_url": "https://github.com/lemomo-ai",
+  "license": "CC-BY-NC-4.0",
+  "consent": true,
+  "created": "2026-10-02",
+  "lemo_wake": "1.0.0",
+  "width": 1278,
+  "height": 720,
+  "seconds": 5.03,
+  "sample": true
+}

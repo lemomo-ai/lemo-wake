@@ -1,0 +1,15 @@
+{
+  "title": "咖啡馆自拍 · 剪下来贴上去",
+  "title_en": "Café selfie · Cut out and pasted in",
+  "category": "portrait",
+  "author": "Lemomo",
+  "author_url": "https://github.com/lemomo-ai",
+  "license": "CC-BY-NC-4.0",
+  "consent": true,
+  "created": "2026-10-02",
+  "lemo_wake": "1.0.0",
+  "width": 1280,
+  "height": 720,
+  "seconds": 5.63,
+  "sample": true
+}
