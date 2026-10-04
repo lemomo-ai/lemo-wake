@@ -183,7 +183,7 @@ HF_ENDPOINT=https://hf-mirror.com scripts/models.py fetch all --yes
 - 作品墙里的片子，包括样片、社区作品和附带的原图，同样由各自作者按 [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) 授权，即署名、非商业。
 - 本地模型从各自来源下载，按各自的授权使用，不在本仓库里。
 
-版本记录见 [CHANGELOG.md](CHANGELOG.md)。
+版本记录见 [Releases](https://github.com/lemomo-ai/lemo-wake/releases)。
 
 ## 关于
 

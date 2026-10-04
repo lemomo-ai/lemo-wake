@@ -1,4 +1,4 @@
-# Only what ships is tracked: the plugin manifest, the skills, README, LICENSE, CHANGELOG and CI.
+# Only what ships is tracked: the plugin manifest, the skills, README, LICENSE and CI.
 # Maintainer-only files stay on the maintainer's machine:
 #   dev/  long-lived work (plans, workbench, test images and films, tools, release drafts)
 #   tmp/  scratch that can be wiped at any time
@@ -14,7 +14,6 @@
 !/README.md
 !/README.zh-CN.md
 !/LICENSE
-!/CHANGELOG.md
 !/CITATION.cff
 
 # runtime and local data inside the skills

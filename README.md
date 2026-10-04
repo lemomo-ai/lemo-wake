@@ -183,7 +183,7 @@ Full rules: [CONTRIBUTING.md](https://github.com/lemomo-ai/lemo-wake/blob/galler
 - Gallery films, including samples, community films and any originals shown with them, are licensed by their authors under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) as well: attribution, non-commercial.
 - Local models are downloaded from their own sources and used under their own licenses. They are not part of this repository.
 
-Versions: [CHANGELOG.md](CHANGELOG.md).
+Versions: [Releases](https://github.com/lemomo-ai/lemo-wake/releases).
 
 ## About
 
