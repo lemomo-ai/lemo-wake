@@ -47,6 +47,8 @@ It is not a filter. Claude first reads the image, takes it apart into text, shap
 
 ## Install
 
+Built and tuned for Claude Code. Other agents (Codex, for example) can read the skill too, but the results are not guaranteed.
+
 As a Claude Code plugin (recommended):
 
 ```
@@ -109,7 +111,7 @@ Tested on macOS. Linux and Windows should work. If a step fails, Claude works ou
 
 ## Local models (optional)
 
-Some images benefit from small models that run locally on the CPU. **A model is downloaded only when a film needs it**, after you say yes once. Many films use none.
+Small models that run locally on the CPU cut out objects and people, fill the space behind them and estimate depth. Most films get better with them: that is what lets things leave their place and really move. **Nothing is downloaded until you say yes once**, usually in the first question before a film starts.
 
 | Model | What it does | Size | Source | License |
 |---|---|---|---|---|
@@ -121,7 +123,7 @@ Some images benefit from small models that run locally on the CPU. **A model is 
 
 About 600 MB in all. Every file is checked by sha256.
 
-**Asked once.** The first time a film needs a model, Claude tells you which one, what it is for, how big it is, where it comes from and where it will be stored, and asks once. Your answer is saved. If you say no, Claude finds a compromise in code and still finishes the film.
+**Asked once.** Before the first film that needs a model, Claude tells you which one, what it is for, how big it is, where it comes from and where it will be stored, and asks once. Your answer is saved. If you say no, Claude finds a compromise in code and still finishes the film.
 
 **Where they are stored.** With a plugin install, in `~/.claude/plugins/data/<plugin-id>/models/`, kept across updates and removed on uninstall. With a plain skill install, in `models/` in the skill folder. Set `LEMO_WAKE_MODELS=<folder>` to use another folder.
 

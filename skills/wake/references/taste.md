@@ -7,6 +7,7 @@ These standards come from reviewing many films side by side: which ones people k
 - The objects in the image must physically move: jump, fall, roll, fly, rise, inflate, close up, snap together, settle back. That is what "coming alive" means to viewers.
 - Light, weather, colour grading and time of day can be a link in the chain, but on their own they do not count as motion. A sunrise that only warms the colours, fog that only burns away, sunlight that only sweeps across a table: all read as a filter, and all were rejected.
 - If light spreads, whatever it reaches should react: balloons inflate and lift off, birds start up, the cat's ear twitches, candles ignite, string lights pop on bulb by bulb.
+- People in a photo are actors too. They act on each other and on the things around them: a hand passes the cake, a friend ducks the confetti, a child reaches for the bubble and it pops. A camera that pushes in or follows while everyone stays frozen reads as a dead photo, and was rejected.
 - Playful, characterful object motion is welcome. Breakfast that crouches, leaps out of frame and bounces back onto the plates is much better than sunlight passing over still breakfast.
 
 ## 2. Default to big
@@ -14,7 +15,7 @@ These standards come from reviewing many films side by side: which ones people k
 - The picture starts incomplete or gets taken apart: separations hang apart, a bridge is broken, beacons are dark, the plates are empty, only one lamp is visible.
 - One action chains across the whole picture, with a hit in the middle (an impact, a snap into register, a slam, a burst).
 - The complete picture arrives at the climax, not at frame one.
-- The action covers most of the frame and most of the duration. Photos can be big too, through a camera journey, objects cut out and set in motion, or a chain reaction that travels through the scene.
+- The action covers most of the frame and most of the duration. Photos can be big too: objects and people cut out and set in motion, a chain reaction that travels through the scene, a camera journey that follows them.
 - Rejected as too small: the untouched source image with a little local wobble and a few particles on top; a wave that tilts a few degrees; rain pausing mid-air. Calm and restraint are for when the user asks for them.
 
 ## 3. The signature move belongs to this image

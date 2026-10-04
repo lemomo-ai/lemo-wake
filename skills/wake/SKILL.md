@@ -20,7 +20,13 @@ Fixed boundaries: **no image generation, no services that need API keys, no call
 
 **Talk to the user in their language.** Everything you say to the user - questions, progress updates, the final summary - is in the language the user writes in (Chinese or English; follow the user). These docs are in English only for you.
 
+**Two things matter most.**
+1. **Imagine what this picture could become**, not just what in it could wiggle: things leave, arrive, assemble, swap, react to each other; people act on each other and on the things around them. The signature move should surprise and still belong to this image.
+2. **Direct it as a whole film**: a beat (setup → action → payoff → return), every element doing a job in that line, rhythm judged by watching it play. The camera follows an action; it never replaces one.
+
 **Read `references/taste.md` before planning.** It is the most important reference: what viewers loved and rejected. In short: things in the picture must really move (light or colour alone is not motion); default to big actions that chain across the whole picture; the signature move grows from this image. The output size is the user's choice; what happens inside that frame is yours.
+
+**Use the tools.** The local models (cut-out, element picking, depth, hole filling) are what let things leave their place and move for real. Take the picture apart with them before you plan (step 3); what you can lift out is what you can choreograph.
 
 ## Paths
 
@@ -48,6 +54,7 @@ Needs Node >= 18, ffmpeg, uv. Tested on macOS; on Linux/Windows, if a step fails
 Before you build, ask the user one short question in their language (one message, or your question tool if you have one), with the defaults filled in so they can simply say "go". Skip it if the user already said what they want.
 - **Output size.** Default: the source's own size and aspect ratio (name it, e.g. "1086x1448, 3:4"). Offer other ratios when they would suit this image or where it is going: 16:9 (landscape posts, video covers), 9:16 (stories, Douyin), 1:1, 3:4 (Xiaohongshu). If the long side is over 2560 px, say that the film is rendered at 2560 for speed by default and that full resolution is possible but slower.
 - **Formats.** Default: MP4 (posts) and GIF (chats). On request: WebP (web pages, GitHub, the community gallery), WeChat sticker GIF, Apple Live Photo (only offer it on macOS).
+- **Local models,** only if doctor showed some missing and consent "not asked yet": add one line to the same message (what they are for, about 600 MB in all from Hugging Face, where they are stored; see "Local models" below), so the user is not interrupted later. Only a clear yes counts; record it with `models.py consent yes|no`.
 - No answer, or "just do it": use the defaults. Formats can be added later without re-rendering.
 
 The size is the user's choice; how the picture uses that frame is yours. A different ratio is a new canvas to design for, not a crop or a stretch.
@@ -60,18 +67,19 @@ It makes `<slug>-alive/` in the current folder, with the page in `<slug>-alive/s
 
 The length can change any time: edit `dur` in `<src>/config.js` and re-render (`render.mjs` renders `fps x dur` frames, t = 0 .. dur - 1/fps). With an in-picture ending, `dur` is the whole film and `render(dur)` should look like `render(0)`; with a `reset.py` transition, the transition is added after `dur`.
 
-**3. Read the image and plan** (write it into `<proj>/DIRECTOR.md`)
+**3. Take the picture apart** (before planning: what you can lift out is what you can move)
 
-Decide: what kind of image this is, what its elements naturally do, which action belongs only to this image, what state the picture starts in, how the action travels across it, where the climax is, how it ends and loops. References:
-- `$S/references/taste.md` - the quality bar (read first).
-- `$S/types/<kind>.md` - what works for this kind of image, with case cards of approved films: `photo`, `portrait`, `multi` (several photos), `poster`, `illustration`, `clay` (clay / paper-cut / 3D), `ui` (screenshots), `chart`, `logo`, `sticker` (stickers / avatars), `xhs` (Xiaohongshu covers / text cards). Mixed images: read two.
-- `$S/references/motion-grammar.md` - reading questions, structures, camera, motion principles, rhythm, self-check.
-- `$S/references/recipes.md` - techniques that worked across types.
-- `$S/references/effects.md` - the 49 effect blocks and 27 reset transitions.
-- `$S/references/pitfalls.md` - technical traps.
-- The history file (see Paths), if it exists: recent films, so this one isn't more of the same. Change `seed` values every film; `FX.pick(name, seed)` draws parameters from recommended ranges.
+First look at the image: its kind, its elements, what could be an actor. Then see which tools you have (`$S/scripts/models.py` lists the local models and whether they are installed) and take the picture apart with them. For any photo, painting or illustration that means, by default:
+- a depth map;
+- every possible actor cut out on its own: objects with SAM (one box each, or `--each`), people with `portrait` merged with `general` (one SAM box per person when they should move separately);
+- the plate behind the actors, so they can leave their place.
 
-**4. Measure and prepare material**
+Then look at the parts together and fix what is ragged (missing hair, halos, a bitten edge) before building on it:
+```bash
+$S/scripts/sheet.py <proj>/parts.png --parts <src>                  # cut-outs on a checkerboard, masks over the image, plates, depth
+```
+Flat images (charts, logos, UI, text cards) are often cleaner rebuilt in code; photos, real people and specific products come from the source, lifted out with the models.
+
 ```bash
 $S/scripts/measure.py grid <src>/assets/source.jpg <proj>/grid.png   # coordinate grid, drawn 1.5x larger with labels in source pixels
 $S/scripts/measure.py info|palette <img>                             # size / main colours
@@ -85,7 +93,36 @@ $S/scripts/inpaint.py <src>/assets/source.jpg <mask.png> --out <src>/assets/plat
       #          on its own at near-native resolution instead of one big downscaled blob (watch stderr for "downscale 3x")
 node $S/scripts/fetch_fonts.mjs <src> "family=..."                # Google Fonts saved locally; CJK fonts: add &text= with the used characters
 ```
-Text, flat shapes, geometry, lines, textures and light are best rebuilt in code; photos, real people and specific products come from the source. For SAM, a `--box` is often steadier than a single point. (Model commands: add the `LEMO_WAKE_MODELS=...` prefix from Paths; see "Local models" below.)
+(Model commands: add the `LEMO_WAKE_MODELS=...` prefix from Paths; see "Local models" below.)
+
+What each tool makes possible:
+
+| Tool | Makes possible |
+|---|---|
+| SAM (`segment.py --model sam`) | objects that jump, fall, fly off, swap places, settle back |
+| `portrait` + `general` | people who move, turn, lean, reach, with their hair intact |
+| LaMa (`inpaint.py`) | a clean place left behind, so an actor can leave and come back |
+| depth (`depth.py`) | parallax, near things passing in front of far ones, light or wind arriving by distance |
+
+Getting clean parts:
+- SAM: a box is steadier than a point; add `--neg` points to drop a neighbour; one click often gets only part of a thing, so add a point on the missing part.
+- People: `portrait` keeps flyaway hair; take the maximum with `general` to keep held objects and full bodies.
+- Edges: shrink or feather a mask by 1-2 px where a halo of the old background shows. General libraries (OpenCV, NumPy, scikit-image through `uv`) are fine for this; don't fetch other models.
+- Plates: inpaint each region on its own near native resolution (`--split`, or crops); large filled areas go soft, so stage the film so they are rarely seen in full, or paint big simple surfaces in code.
+- Depth: compute it on the text-free plate when there is text; a 16-bit map must be normalised before converting to 8-bit.
+
+**4. Plan with the parts in front of you** (write it into `<proj>/DIRECTOR.md`)
+
+Decide what happens to the parts: which action belongs only to this image (one sentence), what state the picture starts in, the beat (setup → action → payoff → return, with rough times), what each main actor (each person, each lifted object) does and what it acts on, where the climax is, how it ends and loops. References:
+- `$S/references/taste.md` - the quality bar (read first).
+- `$S/types/<kind>.md` - what works for this kind of image, with case cards of approved films: `photo`, `portrait`, `multi` (several photos), `poster`, `illustration`, `clay` (clay / paper-cut / 3D), `ui` (screenshots), `chart`, `logo`, `sticker` (stickers / avatars), `xhs` (Xiaohongshu covers / text cards). Mixed images: read two.
+- `$S/references/motion-grammar.md` - reading questions, structures, camera, motion principles, rhythm, self-check.
+- `$S/references/recipes.md` - techniques that worked across types.
+- `$S/references/effects.md` - the 49 effect blocks and 27 reset transitions.
+- `$S/references/pitfalls.md` - technical traps.
+- The history file (see Paths), if it exists: recent films, so this one isn't more of the same. Change `seed` values every film; `FX.pick(name, seed)` draws parameters from recommended ranges.
+
+If the plan needs a part you have not lifted yet, go back and lift it.
 
 **5. Build `<src>/index.html`** from the template (layers `#view` frame / `#cam` camera / `#post` post-processing).
 - `render.mjs` grabs frames with several headless browsers in parallel and out of order, so `window.render(t)` must draw the same frame for the same `t` every time (no state carried from the previous frame). Set `window.READY = true` only after all images and fonts are loaded.
@@ -143,9 +180,9 @@ Tell the user (in their language): the file paths and sizes and what each is for
 
 ## Local models
 
-Five small ONNX models run on the CPU: Depth Anything V2 Small (depth, 99 MB), BiRefNet-lite (subject cut-out, 224 MB), MODNet (portrait matting, 26 MB), MobileSAM (pick elements, 44 MB in 2 files), LaMa (fill holes, 208 MB). Each is downloaded from Hugging Face only when first needed. Many films need none of them. `$S/scripts/models.py` shows status. **Consent is only about downloading:** a model already on disk just runs, with no question to the user (status then reads "not needed (models already installed)"). Ask only when a script actually stops with exit code 10.
+Five small ONNX models run on the CPU: Depth Anything V2 Small (depth, 99 MB), BiRefNet-lite (subject cut-out, 224 MB), MODNet (portrait matting, 26 MB), MobileSAM (pick elements, 44 MB in 2 files), LaMa (fill holes, 208 MB). Each is downloaded from Hugging Face only when first needed. Most films get better with them: clean cut-outs and plates are what let things really move, so use them freely. `$S/scripts/models.py` shows status. **Consent is only about downloading:** a model already on disk just runs, with no question to the user (status then reads "not needed (models already installed)"). Ask only when a script actually stops with exit code 10.
 
-- **Exit code 10 - ask once.** The first time a model would be downloaded, the script stops and prints what is needed. Tell the user once, in their language: which model(s), what they are for, size, source (Hugging Face), where they will be stored, and what declining costs (you will still finish the film with code-only approaches; say concretely what gets harder, e.g. depth parallax, clean cut-outs of photo subjects, filling the hole behind a moved object). Record the answer with `$S/scripts/models.py consent yes` or `consent no` and re-run. It is never asked again. If you already know in step 3 that you will want a model that is not installed and `models.py` says consent is "not asked yet", ask early so the user isn't interrupted mid-way.
+- **Exit code 10 - ask once.** The first time a model would be downloaded, the script stops and prints what is needed. Tell the user once, in their language: which model(s), what they are for, size, source (Hugging Face), where they will be stored, and what declining costs (you will still finish the film with code-only approaches; say concretely what gets harder, e.g. depth parallax, clean cut-outs of photo subjects, filling the hole behind a moved object). Record the answer with `$S/scripts/models.py consent yes` or `consent no` and re-run. It is never asked again. If a model is missing and consent is "not asked yet", ask together with the step 1 question so the user isn't interrupted mid-way.
 - **Exit code 11 - declined.** Do not ask again; work around it.
 - **Exit code 12 - download failed.** Find a way yourself: retry with a mirror (`HF_ENDPOINT=https://hf-mirror.com`, common for mainland China), a proxy, or a manual download to the exact path the script prints. Files are sha256-checked either way.
 - `models.py fetch all` pre-downloads everything (only when the user wants that).

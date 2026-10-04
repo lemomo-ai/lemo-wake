@@ -47,6 +47,8 @@ It is not a filter. Claude first reads the image, takes it apart into text, shap
 
 ## 安装
 
+为 Claude Code 设计和调校。其他 agent（比如 Codex）也能读这个 skill，但不保证效果。
+
 作为 Claude Code 插件安装（推荐）：
 
 ```
@@ -109,7 +111,7 @@ cp -R lemo-wake/skills/wake ~/.claude/skills/lemo-wake
 
 ## 本地模型（可选）
 
-有些图会用到在本机 CPU 上运行的小模型。**只有某支片子真的需要时才下载**，并且只在第一次问你。很多片子一个都用不到。
+几个在本机 CPU 上运行的小模型，用来抠出物体和人、补出它们背后的空位、估算景深。大多数片子用了会更好：东西能离开原位，才能真的动起来。**你同意之前什么都不下载**，通常在出片前的第一个问题里顺带问一次。
 
 | 模型 | 作用 | 大小 | 来源 | 授权 |
 |---|---|---|---|---|
@@ -121,7 +123,7 @@ cp -R lemo-wake/skills/wake ~/.claude/skills/lemo-wake
 
 合计约 600MB，每个文件都会核对 sha256。
 
-**只问一次。** 第一次需要模型时，Claude 会说明要下哪个、做什么用、多大、从哪下、存在哪，只问这一次，你的回答会被记住。不同意也没关系，Claude 会用代码折中，照样把片子做完。
+**只问一次。** 第一支要用模型的片子开始前，Claude 会说明要下哪个、做什么用、多大、从哪下、存在哪，只问这一次，你的回答会被记住。不同意也没关系，Claude 会用代码折中，照样把片子做完。
 
 **存在哪里。** 插件安装时存在 `~/.claude/plugins/data/<插件 id>/models/`，更新时保留，卸载时删除。普通 skill 安装时存在 skill 文件夹的 `models/`。也可以用 `LEMO_WAKE_MODELS=<文件夹>` 指定。
 
