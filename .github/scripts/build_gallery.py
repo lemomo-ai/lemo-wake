@@ -4,11 +4,10 @@ before/after cards; needs Pillow) and README.md from films/*/meta.json. Run from
 import json
 from pathlib import Path
 
-CATS = [("photo", "Photos", "摄影"), ("portrait", "Portraits", "人像"), ("multi", "Several photos", "多张照片"),
-        ("poster", "Posters & layouts", "海报与版式"), ("illustration", "Illustration & painting", "插画与绘画"),
-        ("clay", "Clay, paper-cut & 3D", "黏土、纸雕与 3D"), ("ui", "Screenshots & UI", "截图与界面"),
-        ("chart", "Charts", "数据图表"), ("logo", "Logos", "标志"), ("sticker", "Stickers & avatars", "表情包与头像"),
-        ("xhs", "Xiaohongshu covers", "小红书封面")]
+CATS = [("people", "People & portraits", "人像合影"), ("art", "Paintings & drawings", "绘画作品"),
+        ("social", "Social posts & chats", "社交分享"), ("poster", "Posters & ads", "海报广告"),
+        ("brand", "Logos & brands", "品牌标志"), ("data", "Charts & reports", "数据图表"),
+        ("sticker", "Stickers & greetings", "表情问候"), ("life", "Everyday photos", "生活随拍")]
 COLS = 3
 
 

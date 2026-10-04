@@ -20,7 +20,7 @@ One new folder `films/<id>/` on this `gallery` branch, where `<id>` is `<yyyymmd
 {
   "title": "炉边三花猫 · 炉火醒来",
   "title_en": "Calico by the fire · The fire wakes up",
-  "category": "photo",
+  "category": "life",
   "author": "your-name",
   "author_url": "https://github.com/your-login",
   "license": "CC-BY-NC-4.0",
@@ -31,7 +31,7 @@ One new folder `films/<id>/` on this `gallery` branch, where `<id>` is `<yyyymmd
 }
 ```
 
-`title_en` is optional (the gallery shows both languages). `category` is one of `photo`, `portrait`, `multi`, `poster`, `illustration`, `clay`, `ui`, `chart`, `logo`, `sticker`, `xhs`.
+`title_en` is optional (the gallery shows both languages). `category` is the scene the picture comes from - one of `life` (everyday photos: food, pets, places, travel), `people` (portraits, couples, family, milestones), `poster` (posters, ads, campaigns), `brand` (logos and brand marks), `data` (charts and reports), `social` (Xiaohongshu covers, chat screenshots, social posts), `sticker` (stickers and greeting images), `art` (paintings, drawings, picture books).
 
 ## Rules
 

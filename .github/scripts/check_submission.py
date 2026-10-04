@@ -10,7 +10,7 @@ import json, re, subprocess, sys
 from pathlib import Path
 from PIL import Image
 
-CATS = {"photo", "portrait", "multi", "poster", "illustration", "clay", "ui", "chart", "logo", "sticker", "xhs"}
+CATS = {"life", "people", "poster", "brand", "data", "social", "sticker", "art"}
 LIMITS = {"film.webp": 8_000_000, "film.gif": 8_000_000, "preview.webp": 1_000_000,
           "source.jpg": 2_000_000, "notes.md": 20_000, "meta.json": 10_000}
 ID = re.compile(r"[a-z0-9][a-z0-9-]{2,63}")

@@ -10,47 +10,47 @@
 
 ## Gallery (44 films)
 
-- [去有风的地方 · 灯火揭示 / Where the Wind Is · Lantern light reveals the coast](https://lemomo-ai.github.io/lemo-wake/#coastal3): Photos · 摄影, by Lemomo
-- [炉边三花猫 · 炉火醒来 / Calico by the fire · The fire wakes up](https://lemomo-ai.github.io/lemo-wake/#s01-cat): Photos · 摄影, by Lemomo
-- [窗边早餐 · 早餐蹦蹦 / Breakfast by the window · Breakfast hops](https://lemomo-ai.github.io/lemo-wake/#s03-breakfast): Photos · 摄影, by Lemomo
-- [日出热气球 · 点火升空 / Balloons at sunrise · Ignite and lift off](https://lemomo-ai.github.io/lemo-wake/#s08-balloons): Photos · 摄影, by Lemomo
-- [吹蜡烛 · 流星许愿 / Blowing out candles · A wish on a shooting star](https://lemomo-ai.github.io/lemo-wake/#s11-birthday): Photos · 摄影, by Lemomo
-- [咖啡馆自拍 · 剪下来贴上去 / Café selfie · Cut out and pasted in](https://lemomo-ai.github.io/lemo-wake/#h01-cafe): Portraits · 人像, by Lemomo
-- [樱花野餐 · 打开就跳出来 / Cherry-blossom picnic · Pops up as it opens](https://lemomo-ai.github.io/lemo-wake/#h02-picnic): Portraits · 人像, by Lemomo
-- [毕业照 · 抛帽出框 / Graduation · The cap flies out of frame](https://lemomo-ai.github.io/lemo-wake/#h03-grad): Portraits · 人像, by Lemomo
-- [海边婚纱 · 风把它立起来 / Seaside wedding · The wind stands it up](https://lemomo-ai.github.io/lemo-wake/#h04-wedding): Portraits · 人像, by Lemomo
-- [六十年代全家福 · 咔嚓 / A 1960s family portrait · Click](https://lemomo-ai.github.io/lemo-wake/#s12-family): Portraits · 人像, by Lemomo
-- [天台蓝调 · 城市为她亮起 / Rooftop blue hour · The city lights up for her](https://lemomo-ai.github.io/lemo-wake/#s13-rooftop): Portraits · 人像, by Lemomo
-- [旅行照片堆 · 咔嚓，一张张拿给你看 / A pile of travel photos · Click, one by one](https://lemomo-ai.github.io/lemo-wake/#t01-flatlay): Several photos · 多张照片, by Lemomo
-- [夏日旅行日记 · 每张照片都上前来 / Summer travel diary · Every photo steps forward](https://lemomo-ai.github.io/lemo-wake/#t02-collage): Several photos · 多张照片, by Lemomo
-- [雨停之前 · 雷火点灯 / Before the Rain Stops · Lightning lights the lamps](https://lemomo-ai.github.io/lemo-wake/#b2-rain-a): Posters & layouts · 海报与版式, by Lemomo
-- [巴黎 · 套印合拢 / Paris · The print plates snap into register](https://lemomo-ai.github.io/lemo-wake/#paris): Posters & layouts · 海报与版式, by Lemomo
-- [FORM & LIGHT · 咔嗒与日光 / FORM & LIGHT · Click and daylight](https://lemomo-ai.github.io/lemo-wake/#s04-forms): Posters & layouts · 海报与版式, by Lemomo
-- [香りの余白 · 香气触发 / The space of scent · Scent sets it off](https://lemomo-ai.github.io/lemo-wake/#scent): Posters & layouts · 海报与版式, by Lemomo
-- [向未知出发 · 铺路到日出 / Into the unknown · Paving the way to sunrise](https://lemomo-ai.github.io/lemo-wake/#s02-suitcase): Illustration & painting · 插画与绘画, by Lemomo
-- [月亮不睡觉 · 书里飞出的月亮 / The moon won't sleep · Out of the book it flies](https://lemomo-ai.github.io/lemo-wake/#s05-moon): Illustration & painting · 插画与绘画, by Lemomo
-- [一线成境 · 一笔起山 / One line, one landscape · A brushstroke raises mountains](https://lemomo-ai.github.io/lemo-wake/#s09-ink): Illustration & painting · 插画与绘画, by Lemomo
-- [小孩蜡笔画 · 彩虹落地 / A child's crayon drawing · The rainbow lands](https://lemomo-ai.github.io/lemo-wake/#s10-crayon): Illustration & painting · 插画与绘画, by Lemomo
-- [悉尼港 · 钢拱合龙 / Sydney Harbour · The steel arch closes](https://lemomo-ai.github.io/lemo-wake/#sydney): Illustration & painting · 插画与绘画, by Lemomo
-- [长城 · 烽火接力 / The Great Wall · Beacons pass the fire](https://lemomo-ai.github.io/lemo-wake/#wall): Illustration & painting · 插画与绘画, by Lemomo
-- [夏天有点甜 · 冻出来 / A little sweet summer · Frozen into shape](https://lemomo-ai.github.io/lemo-wake/#fruit-pops-clay): Clay, paper-cut & 3D · 黏土、纸雕与 3D, by Lemomo
-- [给海洋一点蓝 · 一滴蓝 / A little blue for the ocean · One drop of blue](https://lemomo-ai.github.io/lemo-wake/#s06-ocean): Clay, paper-cut & 3D · 黏土、纸雕与 3D, by Lemomo
-- [1000 天纪念日 · 拆红包 / 1000-day anniversary · Opening the red envelope](https://lemomo-ai.github.io/lemo-wake/#m01-anniv): Screenshots & UI · 截图与界面, by Lemomo
-- [微信聊天 · 西瓜雨 / A WeChat chat · Watermelon rain](https://lemomo-ai.github.io/lemo-wake/#s14-wechat): Screenshots & UI · 截图与界面, by Lemomo
-- [城市能源流向 · 能量甩满全图 / City energy flows · Energy flung across the chart](https://lemomo-ai.github.io/lemo-wake/#d01-flow): Charts · 数据图表, by Lemomo
-- [咖啡年度报告 · 倒满 / Annual coffee report · Poured to the brim](https://lemomo-ai.github.io/lemo-wake/#d02-coffee): Charts · 数据图表, by Lemomo
-- [一座城市的 365 天 · 一年转一圈 / 365 days of a city · A year turns full circle](https://lemomo-ai.github.io/lemo-wake/#d03-weather): Charts · 数据图表, by Lemomo
-- [风电与光伏将超过煤电 · 时间推杆 / Wind and solar overtake coal · Pushing time forward](https://lemomo-ai.github.io/lemo-wake/#d04-energy): Charts · 数据图表, by Lemomo
-- [一座海岛的一年四季 · 太阳跳过一年 / An island's four seasons · The sun hops through the year](https://lemomo-ai.github.io/lemo-wake/#d05-island): Charts · 数据图表, by Lemomo
-- [A year of clean air · 一阵风吹走一年 / A year of clean air · A gust blows the year away](https://lemomo-ai.github.io/lemo-wake/#d06-cleanair): Charts · 数据图表, by Lemomo
-- [halora 标志 · 小球画出自己的轨道 / halora logo · The ball draws its own orbit](https://lemomo-ai.github.io/lemo-wake/#b01-halora): Logos · 标志, by Lemomo
-- [山隅茶事 · 茶气成山 / Shanyu Tea House · Steam becomes the mountains](https://lemomo-ai.github.io/lemo-wake/#b02-shanyu): Logos · 标志, by Lemomo
-- [SOLENNE 海滨酒店标志 · 日出开扇 / SOLENNE seaside hotel · Sunrise fans open](https://lemomo-ai.github.io/lemo-wake/#b05-solenne): Logos · 标志, by Lemomo
-- [Moon Groove Records · 月亮落针 / Moon Groove Records · The moon drops the needle](https://lemomo-ai.github.io/lemo-wake/#b07-moongroove): Logos · 标志, by Lemomo
-- [冲鸭！ · 冲出去再冲回来 / Go, duck! · Dash out and dash back](https://lemomo-ai.github.io/lemo-wake/#e03-duck): Stickers & avatars · 表情包与头像, by Lemomo
-- [线描女孩 · 两支铅笔 / Line-art girl · Two pencils](https://lemomo-ai.github.io/lemo-wake/#e04-lineart): Stickers & avatars · 表情包与头像, by Lemomo
-- [早上好 · 日出送花 / Good morning · Flowers at sunrise](https://lemomo-ai.github.io/lemo-wake/#e08-zaoshang): Stickers & avatars · 表情包与头像, by Lemomo
-- [平安喜乐 · 仙鹤送福 / Peace and joy · Cranes bring blessings](https://lemomo-ai.github.io/lemo-wake/#e09-pingan): Stickers & avatars · 表情包与头像, by Lemomo
-- [大理 5天4晚 · 刷到就双击 / Dali, 5 days 4 nights · Scroll, stop, double-tap](https://lemomo-ai.github.io/lemo-wake/#x01-dali): Xiaohongshu covers · 小红书封面, by Lemomo
-- [一年读完 52 本书 · 52 本书飞进数字 / 52 books in a year · Books fly into the number](https://lemomo-ai.github.io/lemo-wake/#x02-reading): Xiaohongshu covers · 小红书封面, by Lemomo
-- [10分钟番茄鸡蛋面 · 十分钟出锅 / 10-minute tomato egg noodles · Done in ten](https://lemomo-ai.github.io/lemo-wake/#x03-noodles): Xiaohongshu covers · 小红书封面, by Lemomo
+- [咖啡馆自拍 · 剪下来贴上去 / Café selfie · Cut out and pasted in](https://lemomo-ai.github.io/lemo-wake/#h01-cafe): People & portraits · 人像合影, by Lemomo
+- [樱花野餐 · 打开就跳出来 / Cherry-blossom picnic · Pops up as it opens](https://lemomo-ai.github.io/lemo-wake/#h02-picnic): People & portraits · 人像合影, by Lemomo
+- [毕业照 · 抛帽出框 / Graduation · The cap flies out of frame](https://lemomo-ai.github.io/lemo-wake/#h03-grad): People & portraits · 人像合影, by Lemomo
+- [海边婚纱 · 风把它立起来 / Seaside wedding · The wind stands it up](https://lemomo-ai.github.io/lemo-wake/#h04-wedding): People & portraits · 人像合影, by Lemomo
+- [六十年代全家福 · 咔嚓 / A 1960s family portrait · Click](https://lemomo-ai.github.io/lemo-wake/#s12-family): People & portraits · 人像合影, by Lemomo
+- [天台蓝调 · 城市为她亮起 / Rooftop blue hour · The city lights up for her](https://lemomo-ai.github.io/lemo-wake/#s13-rooftop): People & portraits · 人像合影, by Lemomo
+- [月亮不睡觉 · 书里飞出的月亮 / The moon won't sleep · Out of the book it flies](https://lemomo-ai.github.io/lemo-wake/#s05-moon): Paintings & drawings · 绘画作品, by Lemomo
+- [一线成境 · 一笔起山 / One line, one landscape · A brushstroke raises mountains](https://lemomo-ai.github.io/lemo-wake/#s09-ink): Paintings & drawings · 绘画作品, by Lemomo
+- [小孩蜡笔画 · 彩虹落地 / A child's crayon drawing · The rainbow lands](https://lemomo-ai.github.io/lemo-wake/#s10-crayon): Paintings & drawings · 绘画作品, by Lemomo
+- [悉尼港 · 钢拱合龙 / Sydney Harbour · The steel arch closes](https://lemomo-ai.github.io/lemo-wake/#sydney): Paintings & drawings · 绘画作品, by Lemomo
+- [长城 · 烽火接力 / The Great Wall · Beacons pass the fire](https://lemomo-ai.github.io/lemo-wake/#wall): Paintings & drawings · 绘画作品, by Lemomo
+- [1000 天纪念日 · 拆红包 / 1000-day anniversary · Opening the red envelope](https://lemomo-ai.github.io/lemo-wake/#m01-anniv): Social posts & chats · 社交分享, by Lemomo
+- [微信聊天 · 西瓜雨 / A WeChat chat · Watermelon rain](https://lemomo-ai.github.io/lemo-wake/#s14-wechat): Social posts & chats · 社交分享, by Lemomo
+- [大理 5天4晚 · 刷到就双击 / Dali, 5 days 4 nights · Scroll, stop, double-tap](https://lemomo-ai.github.io/lemo-wake/#x01-dali): Social posts & chats · 社交分享, by Lemomo
+- [一年读完 52 本书 · 52 本书飞进数字 / 52 books in a year · Books fly into the number](https://lemomo-ai.github.io/lemo-wake/#x02-reading): Social posts & chats · 社交分享, by Lemomo
+- [10分钟番茄鸡蛋面 · 十分钟出锅 / 10-minute tomato egg noodles · Done in ten](https://lemomo-ai.github.io/lemo-wake/#x03-noodles): Social posts & chats · 社交分享, by Lemomo
+- [雨停之前 · 雷火点灯 / Before the Rain Stops · Lightning lights the lamps](https://lemomo-ai.github.io/lemo-wake/#b2-rain-a): Posters & ads · 海报广告, by Lemomo
+- [去有风的地方 · 灯火揭示 / Where the Wind Is · Lantern light reveals the coast](https://lemomo-ai.github.io/lemo-wake/#coastal3): Posters & ads · 海报广告, by Lemomo
+- [夏天有点甜 · 冻出来 / A little sweet summer · Frozen into shape](https://lemomo-ai.github.io/lemo-wake/#fruit-pops-clay): Posters & ads · 海报广告, by Lemomo
+- [巴黎 · 套印合拢 / Paris · The print plates snap into register](https://lemomo-ai.github.io/lemo-wake/#paris): Posters & ads · 海报广告, by Lemomo
+- [向未知出发 · 铺路到日出 / Into the unknown · Paving the way to sunrise](https://lemomo-ai.github.io/lemo-wake/#s02-suitcase): Posters & ads · 海报广告, by Lemomo
+- [FORM & LIGHT · 咔嗒与日光 / FORM & LIGHT · Click and daylight](https://lemomo-ai.github.io/lemo-wake/#s04-forms): Posters & ads · 海报广告, by Lemomo
+- [给海洋一点蓝 · 一滴蓝 / A little blue for the ocean · One drop of blue](https://lemomo-ai.github.io/lemo-wake/#s06-ocean): Posters & ads · 海报广告, by Lemomo
+- [香りの余白 · 香气触发 / The space of scent · Scent sets it off](https://lemomo-ai.github.io/lemo-wake/#scent): Posters & ads · 海报广告, by Lemomo
+- [halora 标志 · 小球画出自己的轨道 / halora logo · The ball draws its own orbit](https://lemomo-ai.github.io/lemo-wake/#b01-halora): Logos & brands · 品牌标志, by Lemomo
+- [山隅茶事 · 茶气成山 / Shanyu Tea House · Steam becomes the mountains](https://lemomo-ai.github.io/lemo-wake/#b02-shanyu): Logos & brands · 品牌标志, by Lemomo
+- [SOLENNE 海滨酒店标志 · 日出开扇 / SOLENNE seaside hotel · Sunrise fans open](https://lemomo-ai.github.io/lemo-wake/#b05-solenne): Logos & brands · 品牌标志, by Lemomo
+- [Moon Groove Records · 月亮落针 / Moon Groove Records · The moon drops the needle](https://lemomo-ai.github.io/lemo-wake/#b07-moongroove): Logos & brands · 品牌标志, by Lemomo
+- [城市能源流向 · 能量甩满全图 / City energy flows · Energy flung across the chart](https://lemomo-ai.github.io/lemo-wake/#d01-flow): Charts & reports · 数据图表, by Lemomo
+- [咖啡年度报告 · 倒满 / Annual coffee report · Poured to the brim](https://lemomo-ai.github.io/lemo-wake/#d02-coffee): Charts & reports · 数据图表, by Lemomo
+- [一座城市的 365 天 · 一年转一圈 / 365 days of a city · A year turns full circle](https://lemomo-ai.github.io/lemo-wake/#d03-weather): Charts & reports · 数据图表, by Lemomo
+- [风电与光伏将超过煤电 · 时间推杆 / Wind and solar overtake coal · Pushing time forward](https://lemomo-ai.github.io/lemo-wake/#d04-energy): Charts & reports · 数据图表, by Lemomo
+- [一座海岛的一年四季 · 太阳跳过一年 / An island's four seasons · The sun hops through the year](https://lemomo-ai.github.io/lemo-wake/#d05-island): Charts & reports · 数据图表, by Lemomo
+- [A year of clean air · 一阵风吹走一年 / A year of clean air · A gust blows the year away](https://lemomo-ai.github.io/lemo-wake/#d06-cleanair): Charts & reports · 数据图表, by Lemomo
+- [冲鸭！ · 冲出去再冲回来 / Go, duck! · Dash out and dash back](https://lemomo-ai.github.io/lemo-wake/#e03-duck): Stickers & greetings · 表情问候, by Lemomo
+- [线描女孩 · 两支铅笔 / Line-art girl · Two pencils](https://lemomo-ai.github.io/lemo-wake/#e04-lineart): Stickers & greetings · 表情问候, by Lemomo
+- [早上好 · 日出送花 / Good morning · Flowers at sunrise](https://lemomo-ai.github.io/lemo-wake/#e08-zaoshang): Stickers & greetings · 表情问候, by Lemomo
+- [平安喜乐 · 仙鹤送福 / Peace and joy · Cranes bring blessings](https://lemomo-ai.github.io/lemo-wake/#e09-pingan): Stickers & greetings · 表情问候, by Lemomo
+- [炉边三花猫 · 炉火醒来 / Calico by the fire · The fire wakes up](https://lemomo-ai.github.io/lemo-wake/#s01-cat): Everyday photos · 生活随拍, by Lemomo
+- [窗边早餐 · 早餐蹦蹦 / Breakfast by the window · Breakfast hops](https://lemomo-ai.github.io/lemo-wake/#s03-breakfast): Everyday photos · 生活随拍, by Lemomo
+- [日出热气球 · 点火升空 / Balloons at sunrise · Ignite and lift off](https://lemomo-ai.github.io/lemo-wake/#s08-balloons): Everyday photos · 生活随拍, by Lemomo
+- [吹蜡烛 · 流星许愿 / Blowing out candles · A wish on a shooting star](https://lemomo-ai.github.io/lemo-wake/#s11-birthday): Everyday photos · 生活随拍, by Lemomo
+- [旅行照片堆 · 咔嚓，一张张拿给你看 / A pile of travel photos · Click, one by one](https://lemomo-ai.github.io/lemo-wake/#t01-flatlay): Everyday photos · 生活随拍, by Lemomo
+- [夏日旅行日记 · 每张照片都上前来 / Summer travel diary · Every photo steps forward](https://lemomo-ai.github.io/lemo-wake/#t02-collage): Everyday photos · 生活随拍, by Lemomo
