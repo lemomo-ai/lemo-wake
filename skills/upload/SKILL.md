@@ -3,7 +3,7 @@ description: "Share a film to the lemo-wake gallery. 把动图投稿到作品墙
 when_to_use: "Share a finished lemo-wake film to the community gallery on GitHub (github.com/lemomo-ai/lemo-wake, gallery branch). Checks the film, makes a small preview, strips photo metadata, asks the user to confirm everything, then opens a pull request from the user's own GitHub account. Only when the user asks to upload / share / submit a film."
 argument-hint: [film file or project folder]
 disable-model-invocation: true
-license: MIT
+license: CC-BY-NC-4.0
 metadata:
   version: "1.0.0"
   author: Lemomo

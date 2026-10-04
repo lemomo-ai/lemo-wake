@@ -8,3 +8,4 @@
 - Five optional local models (depth, subject cut-out, portrait matting, element picking, hole filling), downloaded only after asking once; Hugging Face mirror support; films are still finished when a model is unavailable.
 - `/lemo-wake:upload`: share a film to the community gallery through a pull request from your own GitHub account.
 - Built and tuned for Claude Code; other agents can read the skill, but results are not guaranteed.
+- License: code, docs and gallery films under CC BY-NC 4.0 (attribution, non-commercial).

@@ -7,7 +7,7 @@ authors:
   - name: "Lemomo"
     website: "https://github.com/lemomo-ai"
 version: "1.0.0"
-license: MIT
+license: CC-BY-NC-4.0
 repository-code: "https://github.com/lemomo-ai/lemo-wake"
 url: "https://lemomo-ai.github.io/lemo-wake/"
 keywords:

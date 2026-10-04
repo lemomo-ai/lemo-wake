@@ -14,7 +14,7 @@ One picture in, a seamless loop of about five seconds out.
 
 **English** | [中文](README.zh-CN.md)
 
-![version](https://img.shields.io/badge/version-1.0.0-blue) ![license](https://img.shields.io/badge/license-MIT-green) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-d97757)
+![version](https://img.shields.io/badge/version-1.0.0-blue) ![license](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-d97757)
 
 </div>
 
@@ -179,8 +179,8 @@ Full rules: [CONTRIBUTING.md](https://github.com/lemomo-ai/lemo-wake/blob/galler
 
 ## License
 
-- Code and docs: [MIT](LICENSE).
-- Gallery films, including samples, community films and any originals shown with them, are licensed by their authors under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/): attribution, non-commercial.
+- Code and docs: [CC BY-NC 4.0](LICENSE): free to use, share and adapt with attribution, not for commercial use. For commercial use, contact [Lemomo](https://github.com/lemomo-ai).
+- Gallery films, including samples, community films and any originals shown with them, are licensed by their authors under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) as well: attribution, non-commercial.
 - Local models are downloaded from their own sources and used under their own licenses. They are not part of this repository.
 
 Versions: [CHANGELOG.md](CHANGELOG.md).

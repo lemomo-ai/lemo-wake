@@ -14,7 +14,7 @@ One picture in, a seamless loop of about five seconds out.
 
 [English](README.md) | **中文**
 
-![version](https://img.shields.io/badge/version-1.0.0-blue) ![license](https://img.shields.io/badge/license-MIT-green) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-d97757)
+![version](https://img.shields.io/badge/version-1.0.0-blue) ![license](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-d97757)
 
 </div>
 
@@ -179,8 +179,8 @@ HF_ENDPOINT=https://hf-mirror.com scripts/models.py fetch all --yes
 
 ## 授权
 
-- 代码和文档采用 [MIT](LICENSE) 许可证。
-- 作品墙里的片子，包括样片、社区作品和附带的原图，由各自作者按 [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) 授权，即署名、非商业。
+- 代码和文档采用 [CC BY-NC 4.0](LICENSE) 许可证：署名即可免费使用、转载和修改，不能商用。商用请联系 [Lemomo](https://github.com/lemomo-ai)。
+- 作品墙里的片子，包括样片、社区作品和附带的原图，同样由各自作者按 [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) 授权，即署名、非商业。
 - 本地模型从各自来源下载，按各自的授权使用，不在本仓库里。
 
 版本记录见 [CHANGELOG.md](CHANGELOG.md)。

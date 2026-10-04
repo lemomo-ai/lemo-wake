@@ -2,7 +2,7 @@
 description: "Turn one image into a ~5 s looping animation. 把一张图做成约 5 秒的循环动图。"
 when_to_use: "Turn any single picture the user gives (their own photo, portrait, poster, illustration, product shot, logo, chart, sticker, Xiaohongshu cover, chat or app screenshot...) into a ~5 second seamlessly looping animation, by reading the image, taking it apart, rebuilding and re-choreographing its elements in code. Delivers the formats the user picks, all from the same film: MP4 (posts), GIF (chats), WebP (web), a WeChat sticker GIF and, on macOS, an Apple Live Photo; at the output size the user picks (default: the source's own size). You decide how; the docs are references. No image generation, no API keys. Use whenever the user gives an image and says \"make it move\", \"animate this\", \"turn it into a GIF / WebP / motion poster / cinemagraph\", \"lemo-wake\", or in Chinese \"让它动起来\", \"做成动图\", \"做成 GIF\", \"动态海报\", \"给这张图加动效\", \"叫醒这张图\", \"能不能变成动态的\", \"做个表情包动图\" - even if they don't mention a skill, a duration or a format. Not for: multi-shot narrative films written from scratch, plain filters or crops, generating new images from text."
 argument-hint: <image path> [seconds] [idea]
-license: MIT
+license: CC-BY-NC-4.0
 metadata:
   version: "1.0.0"
   author: Lemomo
