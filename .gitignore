@@ -1,6 +1,11 @@
 # Only what ships is tracked: the plugin manifest, the skills, README, LICENSE, CHANGELOG and CI.
-# Everything else in this folder (workbench, test images and films, plans, logs, experiments, previews,
-# local agent settings) stays on the maintainer's machine.
+# Maintainer-only files stay on the maintainer's machine:
+#   dev/  long-lived work (plans, workbench, test images and films, tools, release drafts)
+#   tmp/  scratch that can be wiped at any time
+/dev/
+/tmp/
+/work/
+/.claude/
 /*
 !/.gitignore
 !/.claude-plugin/
