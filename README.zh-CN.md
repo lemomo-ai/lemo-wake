@@ -49,12 +49,21 @@ It is not a filter. Claude first reads the image, takes it apart into text, shap
 
 为 Claude Code 设计和调校。其他 agent（比如 Codex）也能读这个 skill，但不保证效果。
 
-作为 Claude Code 插件安装（推荐）：
+作为 Claude Code 插件安装（推荐）。在终端里运行（两行可以一起粘贴）：
+
+```bash
+claude plugin marketplace add lemomo-ai/lemo-wake
+claude plugin install lemo-wake@lemo-wake
+```
+
+或者在 Claude Code 里输入，**一次一行**，第一行跑完再输第二行：
 
 ```
 /plugin marketplace add lemomo-ai/lemo-wake
 /plugin install lemo-wake@lemo-wake
 ```
+
+装好后重启 Claude Code，或者运行 `/reload-plugins`。
 
 作为普通 skill 安装（没有投稿命令）：
 

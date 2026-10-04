@@ -49,12 +49,21 @@ It is not a filter. Claude first reads the image, takes it apart into text, shap
 
 Built and tuned for Claude Code. Other agents (Codex, for example) can read the skill too, but the results are not guaranteed.
 
-As a Claude Code plugin (recommended):
+As a Claude Code plugin (recommended). In a terminal (both lines can be pasted at once):
+
+```bash
+claude plugin marketplace add lemomo-ai/lemo-wake
+claude plugin install lemo-wake@lemo-wake
+```
+
+Or inside Claude Code, **one line at a time** (run the first, then type the second):
 
 ```
 /plugin marketplace add lemomo-ai/lemo-wake
 /plugin install lemo-wake@lemo-wake
 ```
+
+Then restart Claude Code, or run `/reload-plugins`.
 
 As a plain skill (without the upload command):
 
