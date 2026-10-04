@@ -20,7 +20,7 @@ import argparse, datetime, json, re, shutil, sys, unicodedata
 from pathlib import Path
 from PIL import Image, ImageOps, ImageSequence
 
-CATEGORIES = ["photo", "portrait", "multi", "poster", "illustration", "clay", "ui", "chart", "logo", "sticker", "xhs"]
+CATEGORIES = ["life", "people", "poster", "brand", "data", "social", "sticker", "art"]
 FILM_MAX, PREVIEW_MAX, SOURCE_MAX, NOTES_MAX = 8_000_000, 1_000_000, 2_000_000, 20_000
 WEBP_TIERS = [(15, 80), (15, 72), (15, 64), (12, 60), (12, 55), (12, 50)]  # (fps cap, quality); floor 12 fps / q50
 PRIVATE = [(r"[\w.+-]+@[\w-]+\.[\w.-]+", "an email address"),

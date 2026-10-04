@@ -29,7 +29,7 @@ The argument, if any, is a film file or a lemo-wake project folder. Otherwise lo
 
 Ask in a single message, with your suggestion filled in for each so the user can just say "OK":
 - **Title** - short, up to 80 characters; suggest "<what the image is> · <the move>", e.g. "炉边三花猫 · 炉火醒来". The gallery is bilingual, so also suggest the other language's version (Chinese title -> English, English title -> Chinese), e.g. "Calico by the fire · The fire wakes up". Pass the Chinese one as `--title` and the English one as `--title-en`.
-- **Category** - one of `photo`, `portrait`, `multi` (several photos), `poster`, `illustration`, `clay` (clay / paper-cut / 3D), `ui` (screenshots), `chart`, `logo`, `sticker` (stickers / avatars), `xhs` (Xiaohongshu covers). Suggest one.
+- **Category** - the scene the picture comes from (not its style): `life` (everyday photos: food, pets, places, travel), `people` (portraits, couples, family, milestones), `poster` (posters, ads, campaigns), `brand` (logos, brand marks), `data` (charts, reports), `social` (Xiaohongshu covers, chat screenshots, social posts), `sticker` (stickers, greeting images), `art` (paintings, drawings, picture books). Suggest one.
 - **Credit** - the name shown under the film. Default: their GitHub username.
 - **Original image** (optional) - show the source next to the film? It is saved as a JPEG with all metadata (location, camera, date) removed, long side at most 1600 px.
 - **Notes** (optional) - a few lines about how it was made (the director notes can be a starting point). Published as written; no personal details.
