@@ -18,7 +18,7 @@ Chat stickers, reaction images, greeting cards for family groups, and pet or car
 - Busy greeting cards: `segment.py --model sam` (or `general`) for each word, flower and bird; assign shared white outlines to the nearest glyph; `inpaint.py` for the sky plate; fill holes with stamps of nearby texture (baby's breath) instead of trusting a smeared inpaint.
 - Draw tools and symbols in code when they must be bigger or cleaner than in the source (a pencil enlarged to become the hero, then shrunk back before it reinserts).
 - True loops fit stickers well: make every periodic motion an integer fraction of the duration (stride, dust, speed lines, ribbon wave), or end on original pixels so the seam is near zero. Otherwise a short in-picture transition (clouds closing from both sides and parting) or `squash` from `reset.py`.
-- Keep the main film at the source's exact size (square sources stay square, for example 1254×1254). Every film also ships an automatic small sticker GIF (longest side 240, at most 500KB) for chat use, so the main file does not need to be shrunk for that.
+- The main film keeps the output size (by default the source's, so square stays square, for example 1254×1254). For chat use there is the sticker GIF (longest side 240, at most 500KB); offer it for sticker images even if it is not a default format, and never shrink the main file for that.
 - Short durations (about 4–6.5 s) and low frame rates (10–12 fps) suit the genre; a run cycle of four frames per step at 12 fps reads like hand-drawn animation on twos.
 
 ## Pitfalls

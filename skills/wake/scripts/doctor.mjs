@@ -44,6 +44,17 @@ if (fs.existsSync(pw)) {
   }
 }
 exe ? ok('browser', exe) : no('browser', 'not found -> node doctor.mjs --fix, or set CHROME=<path to Chrome/Chromium>');
+// found is not enough: start it once (agent sandboxes can block the browser from starting)
+if (exe) {
+  try {
+    const { chromium } = await import('playwright-core');
+    const b = await chromium.launch({ executablePath: exe, timeout: 30000 }); await b.close();
+    ok('browser start', 'ok');
+  } catch (e) {
+    const line = String(e.message || e).split('\n').find(l => /Permission denied|denied|EPERM/i.test(l)) || String(e.message || e).split('\n')[0];
+    no('browser start', `failed: ${line.slice(0, 160)} -> in an agent sandbox, run render.mjs with permission to run outside the sandbox`);
+  }
+}
 
 // system tools
 for (const k of ['ffmpeg', 'ffprobe', 'uv']) {

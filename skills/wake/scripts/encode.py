@@ -22,7 +22,8 @@
                           file is simply allowed to be bigger); pixels are never reduced. For web pages,
                           GitHub READMEs, galleries.
     <prefix>-sticker.gif  sticker GIF: longest side 240 (--sticker-side), dropping to 200 px / 8 fps when needed to stay
-                          <= 500 KB; bayer dither, diff palette. Drag it into WeChat as a custom sticker.
+                          <= 500 KB, and further (down to 120 px) for busy photos; bayer dither, diff palette.
+                          Drag it into WeChat as a custom sticker.
   <prefix>.encode.json is merged: a rerun with --no-xxx keeps the entries of the skipped formats from the earlier run.
   All sizes are decimal MB (1 MB = 1,000,000 bytes), the way platforms state their limits.
   Platform limit overrides: --gif-max / --webp-max / --sticker-max (MB), --gif-width (px, exclusive).
@@ -42,6 +43,8 @@ WEBP_TIERS = [(15, 82), (15, 75), (15, 68), (12, 66), (12, 58), (12, 50)]
 # If the lowest tier is still over the target, keep it and accept the bigger file.
 # sticker GIF tiers: (longest side, fps, colors) - the approved sticker look
 STICKER_TIERS = [(240, 12, 128), (240, 10, 96), (240, 10, 64), (200, 10, 64), (200, 8, 48)]
+# busy photos can still be over the limit at 200 px: keep stepping the size down rather than failing
+STICKER_FALLBACK = [(184, 8, 48), (168, 8, 40), (152, 8, 32), (136, 8, 32), (120, 8, 24)]
 
 
 def frames_of(d):
@@ -169,14 +172,15 @@ def main():
             n = enc_webp(fs, a.fps, out, fps, q, cache); b = os.path.getsize(out)
             if b <= cap: break
             i += 2 if b > 1.8 * cap and i + 2 < len(WEBP_TIERS) else 1
-        rep["webp"] = dict(path=os.path.basename(out), size=[w, h], fps=fps, quality=q, frames=n, bytes=b,
+        with Image.open(out) as im: real = getattr(im, "n_frames", n)   # Pillow merges identical neighbouring frames
+        rep["webp"] = dict(path=os.path.basename(out), size=[w, h], fps=fps, quality=q, frames=real, bytes=b,
                            target_bytes=int(cap), ok=b <= cap, use="web, GitHub README, galleries")
         print(f"  {rep['webp']['path']}: {w}x{h} {fps}fps q{q} -> {kb(b)}"
               + ("" if b <= cap else f"  (above the {kb(cap)} target; pixel size kept - use the MP4/GIF where a hard limit applies)"))
 
     if not a.no_sticker:
         out = a.prefix + "-sticker.gif"; cap = a.sticker_max * 1e6
-        for L, fps, colors in STICKER_TIERS:
+        for L, fps, colors in STICKER_TIERS + STICKER_FALLBACK:
             L = round(L * a.sticker_side / 240); s = L / max(w, h)
             W, H = even(round(w * s / 2) * 2), even(round(h * s / 2) * 2)
             enc_sticker(a.frames, a.fps, out, W, H, fps, colors); b = os.path.getsize(out)

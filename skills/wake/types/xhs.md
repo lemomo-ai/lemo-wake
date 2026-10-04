@@ -16,7 +16,7 @@ Portrait note covers (usually 3:4) built around a big title: a photo with headli
 - Typographic cards decompose cleanly: rebuild the grid paper procedurally (paper colour field times per-column and per-row line factors), back-solve alpha for each glyph against the plate, keep the original ink colour. Split sticker-style text into a white-outline layer and an ink layer so neighbours do not clip each other.
 - Photo covers: `inpaint.py` to remove the title, `segment.py --model sam` for people, bowls, chopsticks, stickers; colour clustering for small ingredient pieces.
 - A good opening is the complete cover (it doubles as the preview), then something shakes or tosses it apart in under a second; the complete cover returns at or after the climax and holds long enough to be read.
-- Keep the exact source size (commonly 1086×1448). When the file gets heavy, trade frame rate and quality for size (for example 15 fps at a lower WebP quality), never pixels.
+- Covers are usually 3:4 (commonly 1086×1448), which is what the platform shows; the user picks the output size. When the file gets heavy, trade frame rate and quality for size (for example 15 fps at a lower WebP quality), never pixels.
 - Loop options: in-picture endings usually fit best (the note shrinking back into the feed; the opening shake that empties the page; a true loop where the closing hold is the original pixels). `paper` or `brush` from `reset.py` are alternatives for plain card styles.
 
 ## Pitfalls

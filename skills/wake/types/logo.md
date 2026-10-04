@@ -30,7 +30,7 @@ Users bring a brand mark, an icon plus wordmark lockup, sometimes with a tagline
 - Camera pulling out immediately after a hit steals the moment; hold briefly, then pull back. Text appearing off-frame during a push-in is wasted.
 - Elements that are not in the logo (a tonearm, a pouring stream) are fine as brief props but should exit quickly; they can read as additions.
 - Dark letters crossing a dark disc vanish for a few frames; route them or keep the overshoot small.
-- The film keeps the native size (`encode.py` never downscales the MP4 or WebP; only the chat GIF and sticker are smaller).
+- The film keeps its output size (`encode.py` never downscales the MP4 or WebP; only the chat GIF and sticker are smaller).
 
 ## Case cards
 

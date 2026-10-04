@@ -13,7 +13,7 @@ A cross-category toolbox: ways of reading an image and techniques that made earl
 
 | Medium | Traits | Dialect that has worked |
 |---|---|---|
-| Photography (real light) | real light, depth of field, grain | cut-out objects that perform (jump, fall, fly, settle back); light that travels and makes things react; camera journeys; depth layers; whole-frame weather or time change carried by objects; natural motion. Bending rigid things looks wrong. |
+| Photography (real light) | real light, depth of field, grain | cut-out objects that perform (jump, fall, fly, settle back); light that travels and makes things react; camera journeys that follow such an action (never the action themselves); depth layers; whole-frame weather or time change carried by objects; natural motion. Bending rigid things looks wrong. |
 | Print / layout | type, colour fields, grids | typesetting actions (stamping, registration, typing, guide lines); take apart and reassemble |
 | Painting (impasto, ink, watercolour) | strokes, pigment, paper | the act of painting (underdrawing, laying colour, bleeding, outlining); clean geometric slides tend to look like a slideshow |
 | Clay / 3D render / stylised generated art | volume, squash | squash and stretch, physical drops, bounce |

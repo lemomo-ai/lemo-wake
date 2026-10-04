@@ -6,7 +6,8 @@ Real (or photo-real) pictures: landscapes, interiors, food on a table, scenes fr
 - One continuous photograph where light, perspective and depth are baked together. Pulling it apart leaves holes that have to be filled, so "taking it apart" costs more than with posters or collages.
 - Discrete, liftable things sitting in the scene: food items, balloons, candles, a pet, a lamp, boats, birds. These are the actors. `segment.py --model sam` with points or boxes cuts them out one by one.
 - A light source that explains the whole mood (a fire, a lamp, the sun, candles, a window). It is a good carrier for a chain reaction, but it is not the action by itself.
-- Large rigid shapes (tents, buildings, furniture, people) that look wrong when bent. Move them whole: translate, rotate, rise, parallax.
+- Large rigid shapes (tents, buildings, furniture) that look wrong when bent. Move them whole: translate, rotate, rise, parallax.
+- People. When they are the subject, read `portrait.md`: rigid cut-outs of real people moving inside an untouched photo look like puppets.
 - Sometimes a text layer (a calligraphy title, a caption) that can be cut out and performed separately.
 
 ## What tends to work
@@ -14,7 +15,7 @@ Real (or photo-real) pictures: landscapes, interiors, food on a table, scenes fr
 - Start from an incomplete picture: a dark room, an empty plate, an empty sky, a dawn before the sun. The complete source image arrives at the climax.
 - Use light as the fuse, not as the show. One option: a WebGL pass that blends a computed "before" state with the original according to an arrival-time map (distance from the source + depth + noise), so light spreads along real surfaces, and every object reacts at the moment the light reaches it.
 - Compute the "before" state from the photo's own pixels (desaturate, darken, cooler; darken harder near the light source because those pixels were lit by it; replace glowing pixels with an estimated unlit plate). Do not paste a filter on top.
-- A camera journey adds a lot: open close on one emotional detail, follow the chain, pull out to the full frame for the climax. `depth.py` gives the depth map for light parallax during moves; let the parallax settle to zero on the full frame so it matches the source exactly.
+- A camera journey can support the action: open close on one emotional detail, follow the chain, pull out to the full frame for the climax. It is a supporting move, not the action: a camera travelling over a photo where only small things stir reads as a slideshow, and was rejected. The approved coast film worked because the lamplight spread and the coast physically reacted while the camera pulled back. `depth.py` gives the depth map for light parallax during moves; let the parallax settle to zero on the full frame so it matches the source exactly.
 - Supporting blocks that fit photos: `godrays`, `dust`, `steam`, `embers`, `snow`, `fog`, `water`, `ripples`, `twinkle`, `sparkle`, `confetti`. Keep them secondary.
 - Endings: an in-picture ending is usually best (the fire dies back to embers, she blows out the candles, a near out-of-focus balloon rises past the lens and covers the frame). A true loop also works when the action starts and ends on the full photo. Among `reset.py` kinds, `sweep`, `mist`, `steam`, `leak` or `develop` suit photos; `passby` and `lightcut` are in-picture options.
 - If the photo carries a title, cut it out and let it be written or stamped in the style of its own lettering once the full frame has arrived.

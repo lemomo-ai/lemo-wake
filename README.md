@@ -29,7 +29,7 @@ It is not a filter. Claude first reads the image, takes it apart into text, shap
 
 - **No image generation.** Everything comes from your picture, from code and from small local models.
 - **No API keys.** No cloud services. Everything runs on your machine.
-- **Same size.** Every film keeps your image's exact pixel size and aspect ratio.
+- **Your size, your formats.** It asks once: keep your image's size or pick another ratio, and which formats you want.
 
 **中文简介**
 
@@ -39,7 +39,11 @@ It is not a filter. Claude first reads the image, takes it apart into text, shap
 
 - **不生图**：素材只来自你的图、代码和本地小模型。
 - **不用 API key**：不连云服务，全部在你的电脑上完成。
-- **同尺寸**：成片和原图的像素尺寸、比例完全一致。
+- **尺寸和格式你来选**：开始前问一次，保持原图尺寸还是换个比例，要哪几种格式。
+
+**How it works 流程**
+
+<p align="center"><img src="https://github.com/lemomo-ai/lemo-wake/raw/gallery/assets/readme/flow-en.webp" width="100%" alt="How it works: one picture, then Claude reads it, takes it apart, rebuilds and moves it in code, renders frame by frame and checks the loop, and you get the formats you pick: MP4 for posts and GIF for chats by default, WebP, a WeChat sticker GIF or a Live Photo on request"></p>
 
 ## Install
 
@@ -72,18 +76,21 @@ With a plain skill install, the command is `/lemo-wake <image>`.
 
 ## What you get
 
-Every film comes as four files, all made from the same frames:
+Before it starts, Claude asks once: which size (your image's own size by default, or another ratio such as 16:9, 9:16 or 1:1) and which formats. Say "go" to take the defaults. Every format comes from the same frames, and more can be added later without re-rendering.
 
-| File | Size | For |
-|---|---|---|
-| `<name>.mp4` | Original size, no audio | Posts on WeChat Moments, Xiaohongshu, Douyin, Instagram, X |
-| `<name>.gif` | At most 5 MB, under 1080 wide | Chats on WeChat, QQ, Weibo |
-| `<name>.webp` | Original size, about 8 MB | Web pages, GitHub, galleries |
-| `<name>-sticker.gif` | Long side 240 px, at most 500 KB | A WeChat custom sticker |
+| File | Default | Size | For |
+|---|---|---|---|
+| `<name>.mp4` | yes | output size, no audio | Posts on WeChat Moments, Xiaohongshu, Douyin, Instagram, X |
+| `<name>.gif` | yes | at most 5 MB, under 1080 wide | Chats on WeChat, QQ, Weibo |
+| `<name>.webp` | on request | output size, about 8 MB | Web pages, GitHub, the gallery |
+| `<name>-sticker.gif` | on request | long side 240 px, at most 500 KB | A WeChat custom sticker |
+| `<name>.pvt` | on request, macOS only | a 3 s Live Photo, still at output size | iPhone Photos, then Xiaohongshu or Moments |
 
-Why four: most chat apps and phone galleries don't play animated WebP, social platforms want MP4 for posts, and GIF works everywhere but is heavy. If a platform has another limit, such as "GIF under 2 MB", tell Claude.
+Why several: most chat apps and phone galleries don't play animated WebP, social platforms want MP4 for posts, and GIF works everywhere but is heavy. If a platform has another limit, such as "GIF under 2 MB", tell Claude.
 
-Photos with a long side over 2560 px are scaled to 2560 first to keep rendering fast. Ask for full resolution if you need it.
+The Live Photo is a `.pvt` bundle (Finder shows it as one file). AirDrop that one file to your iPhone and it lands in Photos as a Live Photo. Sending the photo and the video inside it separately gives you a photo and a video.
+
+Photos with a long side over 2560 px are rendered at 2560 to keep it fast. Ask for full resolution if you need it.
 
 ## First run
 
@@ -96,6 +103,7 @@ On first use Claude runs `node scripts/doctor.mjs` in the skill folder (`skills/
 | uv (runs the Python scripts) | | `brew install uv`, or see https://docs.astral.sh/uv/ |
 | Headless Chromium and `playwright-core` | About 190 MB | `node scripts/doctor.mjs --fix`, or use an installed Chrome with `CHROME=<path>` |
 | Python packages (Pillow, NumPy, OpenCV, onnxruntime) | About 150 MB | Downloaded automatically on first use |
+| Xcode Command Line Tools (Live Photos only, macOS) | | `xcode-select --install` |
 
 Tested on macOS. Linux and Windows should work. If a step fails, Claude works out what is missing.
 

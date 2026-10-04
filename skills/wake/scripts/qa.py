@@ -95,7 +95,11 @@ def main():
     # source appearance and hold
     sim = None
     if src_img:
-        S = gray(src_img); S = cv2.resize(S, (G[0].shape[1], G[0].shape[0]))
+        S = gray(src_img)
+    if src_img and abs(S.shape[1] / S.shape[0] - G[0].shape[1] / G[0].shape[0]) > .02:
+        add("PASS", "source seen", "output ratio differs from the source (size picked by the user): source comparison skipped")
+    elif src_img:
+        S = cv2.resize(S, (G[0].shape[1], G[0].shape[0]))
         sim = np.array([ssim(g, S) for g in G]); pk = float(sim.max()); at = int(sim.argmax())
         hold = int(((sim >= pk - .03) & (sim >= .75)).sum())
         if pk < .8: add("WARN", "source seen", f"closest frame to the source only reaches similarity {pk:.2f} (#{at}): viewers may never see the complete picture")

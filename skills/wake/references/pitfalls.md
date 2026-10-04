@@ -26,13 +26,15 @@ Each of these has broken a real film. Skim before building; check against them d
 - **The film loops forever.** If the first and last frames differ a lot, every loop hard-cuts. `qa.py` checks this; fix it with a structure that closes on itself, an in-picture transition (`backplay` / `passby` / `pushcut` / `lightcut` in `fx.js`), or a frame-level reset from `reset.py`.
 
 ## Output size and encoding
-- `new_project.py` makes the canvas the source image's own pixel size and aspect ratio. After HEIC conversion and EXIF rotation it shrinks only when the long side exceeds 2560 px (a performance guard for 12-48 MP phone photos; `--max-long 0` disables it). `CFG.orig` records the original size. From then on all coordinates refer to `src/assets/source.*`; do not measure the user's original file.
-- `encode.py` always writes four files plus `<prefix>.encode.json`:
-  - `<prefix>.mp4`: H.264 at the original size, for social posts (H.264 needs even dimensions: an odd width or height loses 1 px).
+- `new_project.py` makes the canvas the source image's own pixel size and aspect ratio, or the output size the user picked (`--out`). After HEIC conversion and EXIF rotation it shrinks only when the long side exceeds 2560 px (a performance guard for 12-48 MP phone photos; `--max-long 0` disables it). `CFG.orig` records the original size. From then on all coordinates refer to `src/assets/source.*`; do not measure the user's original file.
+- `encode.py` writes up to four files plus `<prefix>.encode.json` (skip the ones the user did not ask for):
+  - `<prefix>.mp4`: H.264 at the canvas size, for social posts (H.264 needs even dimensions: an odd width or height loses 1 px).
   - `<prefix>.gif`: chat GIF, scaled down only as far as needed to fit 5 MB with width under 1080.
-  - `<prefix>.webp`: original size; about 8 MB is a target, and quality and frame rate drop before pixels do.
-  - `<prefix>-sticker.gif`: longest side 240 (200 when needed to stay at most 500 KB), for chat stickers.
-- Skip outputs with `--no-mp4 / --no-gif / --no-webp / --no-sticker`; a rerun merges into the existing `<prefix>.encode.json`, so skipped formats keep their entries for `qa.py`. Override platform limits with `--gif-max`, `--gif-width`, `--webp-max`, `--sticker-max`, `--sticker-side`. `--gif-width` is a cap, not a target: busy full-frame motion (night scenes, star fields, a moving camera) is squeezed to ~300-450 px by the 5 MB limit, and only a larger `--gif-max` buys width. Exit code 3 means the chat GIF or sticker could not reach its limit even at the lowest tier.
+  - `<prefix>.webp`: canvas size; about 8 MB is a target, and quality and frame rate drop before pixels do.
+  - `<prefix>-sticker.gif`: longest side 240 (stepping down to 120 when needed to stay at most 500 KB), for chat stickers.
+- `livephoto.py` (macOS) writes `<prefix>.pvt`, a Live Photo bundle, and adds it to the same `encode.json`. It compiles two small Swift tools once (needs `swiftc` from the Xcode Command Line Tools) and checks the bundle with the system's Live Photo reader.
+- Skip outputs with `--no-mp4 / --no-gif / --no-webp / --no-sticker`; a rerun merges into the existing `<prefix>.encode.json`, so a format can be added later by rerunning with the others skipped. Override platform limits with `--gif-max`, `--gif-width`, `--webp-max`, `--sticker-max`, `--sticker-side`. `--gif-width` is a cap, not a target: busy full-frame motion (night scenes, star fields, a moving camera) is squeezed to ~300-450 px by the 5 MB limit, and only a larger `--gif-max` buys width. Exit code 3 means the chat GIF or sticker could not reach its limit even at the lowest tier.
+- If `render.mjs` says the browser did not start (also written to `render.log`) while `doctor.mjs` found it, an agent sandbox is usually blocking it: re-run the command with permission to run outside the sandbox.
 
 ## Environment
 - First run: `node $S/scripts/doctor.mjs` (`--fix` installs the npm dependencies and the headless browser).

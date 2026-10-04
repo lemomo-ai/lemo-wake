@@ -22,7 +22,7 @@ canvas.full{position:absolute;left:0;top:0}
 <body>
 <!--
   Structure: #view (output size, clips)
-              └ #cam (design coordinates = source pixels; the camera transform applies here)
+              └ #cam (design coordinates = source pixels, or the output pixels when the user picked another size; camera transform applies here)
                   └ your layers: background / subject / foreground ... (build them for your plan)
             #post: frame-level post (grain, vignette, sheen, flash, tint) - does not move with the camera
   Contract: window.render(t) must be pure (the same t always draws the same frame); set window.READY = true after build.
@@ -57,7 +57,9 @@ async function build(){
   if(GRAIN){const g=document.createElement('canvas');g.width=Math.round(CFG.outW/2);g.height=Math.round(CFG.outH/2);L.grain(g);
     Object.assign(g.style,{position:'absolute',inset:0,width:'100%',height:'100%',mixBlendMode:GRAIN.blend||'multiply',opacity:GRAIN.opacity??.35});$('#post').appendChild(g);}
   // -- placeholder: the source as a flat background (a real film takes it apart and rebuilds it, see SKILL.md) --
-  const [c,x]=L.canvas(CFG.srcW,CFG.srcH,1);x.drawImage(SRC,0,0);c.className='full';c.style.width=CFG.srcW+'px';c.style.height=CFG.srcH+'px';$('#bg').appendChild(c);
+  // with another output size (CFG.img set) the source sits centred and fitted until you design the frame
+  const [iw,ih]=CFG.img||[CFG.srcW,CFG.srcH],fs=Math.min(CFG.srcW/iw,CFG.srcH/ih);
+  const [c,x]=L.canvas(CFG.srcW,CFG.srcH,1);x.drawImage(SRC,(CFG.srcW-iw*fs)/2,(CFG.srcH-ih*fs)/2,iw*fs,ih*fs);c.className='full';c.style.width=CFG.srcW+'px';c.style.height=CFG.srcH+'px';$('#bg').appendChild(c);
   CAM=new L.Camera([[0,1.15,CFG.srcW/2,CFG.srcH/2,0],[CFG.dur,1,CFG.srcW/2,CFG.srcH/2,0]]);
 }
 

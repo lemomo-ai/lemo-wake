@@ -7,7 +7,7 @@ Designed posters: typographic layouts, screen prints and vintage travel posters,
 - A picture layer that is one of: flat ink colours (print), a photograph (movie poster), cut paper pieces and a figure (collage), or rendered objects on a plain set (3D still life).
 - Flat print and collage pull apart without damage; a photo or rendered scene can't, because its light and perspective are baked in. Those are semi-separable: lift the text and a few objects out, keep the rest as one plate.
 - Rigid things: letterforms, products, faces, geometric objects. Move them whole (drop, roll, rotate, slide). Don't warp them.
-- Many posters are portrait (A4, 2:3, 4:5). The film keeps the source's pixel size and aspect ratio. Never reflow the layout to 16:9.
+- Many posters are portrait (A4, 2:3, 4:5). The output keeps that ratio unless the user picked another size; if they did, design for the new frame rather than stretching or cropping the layout.
 
 ## What tends to work
 - **Read the title as a script.** Poster copy often names the action: "FORM & LIGHT" can play as two acts (objects land, then light sweeps). Before inventing a move, check whether the words already describe one.

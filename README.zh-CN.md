@@ -29,7 +29,7 @@ One picture in, a seamless loop of about five seconds out.
 
 - **不生图**：素材只来自你的图、代码和本地小模型。
 - **不用 API key**：不连云服务，全部在你的电脑上完成。
-- **同尺寸**：成片和原图的像素尺寸、比例完全一致。
+- **尺寸和格式你来选**：开始前问一次，保持原图尺寸还是换个比例，要哪几种格式。
 
 **English overview**
 
@@ -39,7 +39,11 @@ It is not a filter. Claude first reads the image, takes it apart into text, shap
 
 - **No image generation.** Everything comes from your picture, from code and from small local models.
 - **No API keys.** No cloud services. Everything runs on your machine.
-- **Same size.** Every film keeps your image's exact pixel size and aspect ratio.
+- **Your size, your formats.** It asks once: keep your image's size or pick another ratio, and which formats you want.
+
+**流程 How it works**
+
+<p align="center"><img src="https://github.com/lemomo-ai/lemo-wake/raw/gallery/assets/readme/flow-zh.webp" width="100%" alt="流程：一张图，Claude 读图、拆开、用代码重建并让它动起来、逐帧渲染、自检接缝，最后拿到你选的格式：默认是发帖用的 MP4 和聊天用的 GIF，WebP、微信表情 GIF 和实况照片要了才出"></p>
 
 ## 安装
 
@@ -72,18 +76,21 @@ cp -R lemo-wake/skills/wake ~/.claude/skills/lemo-wake
 
 ## 你会拿到什么
 
-每支片子交付 4 个文件，来自同一组画面：
+开始前 Claude 会问一次：要多大（默认和原图一样，也可以选 16:9、9:16、1:1 等比例），要哪几种格式。直接说“开始”就用默认。所有格式都来自同一组画面，做完还能追加，不用重新渲染。
 
-| 文件 | 尺寸 | 用途 |
-|---|---|---|
-| `<名字>.mp4` | 原图尺寸，无声 | 发朋友圈、小红书、抖音、Instagram、X |
-| `<名字>.gif` | 不超过 5MB，宽度小于 1080 | 发微信、QQ 聊天和微博 |
-| `<名字>.webp` | 原图尺寸，目标约 8MB | 网页、GitHub、作品墙 |
-| `<名字>-sticker.gif` | 长边 240 像素，不超过 500KB | 拖进微信直接存成表情 |
+| 文件 | 默认 | 尺寸 | 用途 |
+|---|---|---|---|
+| `<名字>.mp4` | 出 | 输出尺寸，无声 | 发朋友圈、小红书、抖音、Instagram、X |
+| `<名字>.gif` | 出 | 不超过 5MB，宽度小于 1080 | 发微信、QQ 聊天和微博 |
+| `<名字>.webp` | 要了才出 | 输出尺寸，目标约 8MB | 网页、GitHub、作品墙 |
+| `<名字>-sticker.gif` | 要了才出 | 长边 240 像素，不超过 500KB | 拖进微信直接存成表情 |
+| `<名字>.pvt` | 要了才出，只限 Mac | 3 秒实况照片，封面是输出尺寸 | 存进 iPhone 相册，再发小红书或朋友圈 |
 
-为什么是 4 个：多数聊天软件和手机相册不播放动态 WebP，社交平台发帖要 MP4，GIF 哪里都能放但体积大。某个平台有别的限制，比如“GIF 要小于 2MB”，直接告诉 Claude。
+为什么有好几种：多数聊天软件和手机相册不播放动态 WebP，社交平台发帖要 MP4，GIF 哪里都能放但体积大。某个平台有别的限制，比如“GIF 要小于 2MB”，直接告诉 Claude。
 
-长边超过 2560 像素的照片会先缩到 2560，保证渲染速度。需要原分辨率可以说一声。
+实况照片是一个 `.pvt` 包，在 Finder 里看起来是一个文件。把这一个文件隔空投送到 iPhone，就会以实况照片存进相册。把里面的照片和视频分开发，只会得到一张图和一段视频。
+
+长边超过 2560 像素的照片会按 2560 渲染，保证速度。需要原分辨率可以说一声。
 
 ## 第一次使用
 
@@ -96,6 +103,7 @@ cp -R lemo-wake/skills/wake ~/.claude/skills/lemo-wake
 | uv（运行 Python 脚本） | | `brew install uv`，或见 https://docs.astral.sh/uv/ |
 | 无头浏览器和 `playwright-core` | 约 190MB | `node scripts/doctor.mjs --fix`，也可以用已装的 Chrome：`CHROME=<路径>` |
 | Python 包（Pillow、NumPy、OpenCV、onnxruntime） | 约 150MB | 第一次使用时自动下载 |
+| Xcode 命令行工具（只有实况照片要用，限 Mac） | | `xcode-select --install` |
 
 在 macOS 上测试过。Linux 和 Windows 应该也能用，哪一步出错，Claude 会自己排查。
 

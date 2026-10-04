@@ -75,6 +75,17 @@ if (isMain) {
     return { page, cfg };
   }
 
+  // A browser that cannot start (e.g. inside an agent sandbox that blocks macOS Mach ports) is written to render.log too
+  async function launch() {
+    try { return await chromium.launch({ executablePath: EXE, args: ARGS }); }
+    catch (e) {
+      const msg = String(e.message || e).split('\n').find(l => /Permission denied|denied|EPERM|closed|not found/i.test(l)) || String(e.message || e).split('\n')[0];
+      fs.writeFileSync(path.join(srcDir, 'render.log'), `[launch] the browser did not start: ${msg}\n`);
+      console.error(`the browser did not start: ${msg}\n  (see ${path.join(srcDir, 'render.log')}). In an agent sandbox, re-run this command with permission to run outside the sandbox.`);
+      process.exit(2);
+    }
+  }
+
   function finish() {
     const log = path.join(srcDir, 'render.log');
     fs.writeFileSync(log, [...errors].join('\n') + (errors.size ? '\n' : ''));
@@ -82,7 +93,7 @@ if (isMain) {
   }
 
   if (mode === 'stills') {
-    const browser = await chromium.launch({ executablePath: EXE, args: ARGS });
+    const browser = await launch();
     fs.mkdirSync(path.join(srcDir, 'stills'), { recursive: true });
     const { page } = await openPage(browser);
     for (const ts of process.argv.slice(4)) {
@@ -96,14 +107,14 @@ if (isMain) {
     const Wk = parseInt(process.argv[4] || String(Math.min(4, Math.max(1, os.cpus().length - 1))));
     const fdir = path.join(srcDir, 'frames');
     fs.rmSync(fdir, { recursive: true, force: true }); fs.mkdirSync(fdir, { recursive: true });
-    const b0 = await chromium.launch({ executablePath: EXE, args: ARGS });
+    const b0 = await launch();
     const { cfg } = await openPage(b0); await b0.close();
     const TOTAL = Math.round(cfg.fps * cfg.dur);
     const per = Math.ceil(TOTAL / Wk), t0 = Date.now();
     await Promise.all([...Array(Wk)].map(async (_, w) => {
       const a = w * per, b = Math.min(TOTAL, a + per);
       if (a >= b) return;
-      const br = await chromium.launch({ executablePath: EXE, args: ARGS });
+      const br = await launch();
       const { page } = await openPage(br);
       for (let f = a; f < b; f++) {
         await page.evaluate(t => window.render(t), f / cfg.fps);

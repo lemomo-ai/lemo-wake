@@ -46,11 +46,12 @@ These standards come from reviewing many films side by side: which ones people k
 - People's faces, products, buildings, tents and letterforms look wrong when bent or warped. Move them whole (translate, rotate, rise, parallax) or cut them out.
 - Panning, zooming or warping the whole untouched image is not animation. Decompose and rebuild.
 
-## 8. The film keeps the source's size
+## 8. Output size: the user picks the frame, you design inside it
 
-- Every film keeps the source image's exact pixel size and aspect ratio. A portrait A4 page stays a portrait A4 page; a square sticker stays square. Never reflow a layout into 16:9 or any other ratio unless the user asks for that.
-- The main deliverables (MP4 and WebP) are never downscaled. Size limits are targets: lower quality or frame rate a little before touching pixels. Only the chat GIF and the sticker GIF are smaller versions, by design.
-- The one exception is the project's performance guard for very large photos (long side above 2560 px), which new_project.py applies and reports.
+- The output size and aspect ratio are the user's choice (SKILL.md step 1); the default is the source's own size. Do not change it on your own: a portrait A4 report silently reflowed into 16:9 was rejected because the user had not asked for another size.
+- What happens inside the frame is yours. Fill it with the photo, turn the photo into a print, a card or a page with room around it, build a scene: whatever this image needs. Several of the most liked portrait films turned a portrait photo into a landscape journal page, because the user had asked for 16:9 output; the same ideas can be built in the source's own ratio.
+- The main deliverables (MP4 and WebP) are never downscaled below the output size. Size limits are targets: lower quality or frame rate a little before touching pixels. Only the chat GIF and the sticker GIF are smaller versions, by design.
+- The one exception is the performance guard for very large photos (long side above 2560 px), which new_project.py applies and reports; full resolution only when the user wants it.
 
 ## 9. Several photos in one image: each one gets its moment
 

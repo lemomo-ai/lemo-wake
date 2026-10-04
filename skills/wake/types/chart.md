@@ -22,7 +22,7 @@ Users bring keynote-style 3D or glow charts, flat infographics, dashboards and p
 - Loop: the in-picture take-apart is usually the best join. If it does not fit, `backplay`, `pushcut` into a flat paper area, or a frame-level `reset.py` kind such as `paper`, `flash`, `dissolve`, `mosaic` or `glitch` (for tech-styled dashboards) are options.
 
 ## Pitfalls
-- Reflowing a portrait report into 16:9 to fill the frame. It was rejected because the output no longer matched the source size; keep the original canvas and the same action.
+- Reflowing a portrait report into 16:9 when the user had not asked for another size. It was rejected ("the size is completely different from the original"); the output size is the user's choice, by default the source's own.
 - Narrative out of order: the KPI arriving while its counter is only halfway, or the crossover marked at the end instead of when it happens.
 - Rolling-digit odometers whose ones digit never stops: halves of two digits stacked, unreadable as stills and blurry in motion. Use integer counts, or roll only near a carry.
 - Generic UI rings, ellipse halos and orange geometric bursts at the climax read as cheap overlays or a transition. Prefer shock lines that grow from the subject and reactions in the marks themselves.
@@ -32,7 +32,7 @@ Users bring keynote-style 3D or glow charts, flat infographics, dashboards and p
 - Inpainting large smooth dark backgrounds can hallucinate glints and ghost numbers; a smooth fill (normalized convolution) may be cleaner. Segmentation struggles with glass segments sharing reflections; geometric sectors from measured dividers work.
 - Mid-year passages where hundreds of items land per second read only as a wave; give the start, the end and a few data-driven beats (pollution days, the record month) real weight.
 - Too many half-transparent items in the air at once turn to mush; make them opaque early.
-- The film keeps the native size; `encode.py` never downscales the MP4 or WebP.
+- The film keeps its output size; `encode.py` never downscales the MP4 or WebP.
 
 ## Case cards
 
@@ -62,7 +62,7 @@ Users bring keynote-style 3D or glow charts, flat infographics, dashboards and p
 - **Structure:** original page, bands fall out of frame, coal rises from below and the other bands shoot in and stack into 2010, slow-fast sweep with a pause at the forecast line, crossover, impact, settle.
 - **Technique:** band boundaries measured column by column from the image; readouts calibrated to the printed labels; header kept as original pixels; KPIs redrawn live in a matching thin weight.
 - **Loop:** in-picture fall-out at the start; first frame is the original page.
-- **Hard part:** the first version reflowed the portrait page into a landscape layout and was rejected for not matching the source size; the approved version keeps the original portrait canvas with the same action. The fade back then ghosted until geometry used measured pixels and settled text used original-glyph sprites.
+- **Hard part:** the first version reflowed the portrait page into a landscape layout although the user had not asked for another size, and was rejected; the approved version keeps the original portrait canvas with the same action. The fade back then ghosted until geometry used measured pixels and settled text used original-glyph sprites.
 
 ### An Island's Four Seasons: The Sun Hops Through a Year
 - **Signature:** a sun pops out of the decimal point in "4.4", hops month by month onto bars that rise to catch it, lands hardest on August's peak, then dives back between the two 4s and shrinks into the decimal point again.

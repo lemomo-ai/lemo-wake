@@ -54,7 +54,7 @@ Derivation: lead element x its nature x one notch of exaggeration.
 - A coffee product shot: the steam rises and writes the brand name in the air, then disperses.
 - A neon street at night: the sign flickers twice on a bad contact, then snaps fully on, and the whole street's reflections light up after it.
 - An ink landscape: a drop of ink falls and spreads; the edge of the bloom becomes the mountain's outline, and the painting grows out of the ink.
-- A portrait: wind arrives from off frame, hair and clothing move first, then the person looks up into the lens.
+- A portrait: the photo is a print lying on a table; a gust lifts it, the person steps out of it as a cut-out, catches the flying hat and lands back in place as the print settles.
 - An aerial city view: streets light up in sequence like a circuit carrying current.
 - A sneaker: it reassembles from exploding fragments, and the last piece in is the logo.
 - An infographic: numbers roll, lines draw themselves as if by hand, and the key figure rushes toward the camera.
