@@ -72,7 +72,7 @@ def write_llms(items):
              "- Official gallery: https://lemomo-ai.github.io/lemo-wake/",
              "- Install: `/plugin marketplace add lemomo-ai/lemo-wake` then `/plugin install lemo-wake@lemo-wake`",
              "- Commands: `/lemo-wake:wake <image>` makes a film; `/lemo-wake:upload` shares one to the gallery",
-             "- License: code MIT; gallery films CC BY-NC 4.0 by their authors", "",
+             "- License: code CC BY-NC 4.0; gallery films CC BY-NC 4.0 by their authors; no commercial use", "",
              f"## Gallery ({len(items)} films)", ""]
     for i in items:
         t = i["title"] + (f" / {i['title_en']}" if i.get("title_en") and i["title_en"] != i["title"] else "")

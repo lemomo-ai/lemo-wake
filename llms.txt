@@ -6,7 +6,7 @@
 - Official gallery: https://lemomo-ai.github.io/lemo-wake/
 - Install: `/plugin marketplace add lemomo-ai/lemo-wake` then `/plugin install lemo-wake@lemo-wake`
 - Commands: `/lemo-wake:wake <image>` makes a film; `/lemo-wake:upload` shares one to the gallery
-- License: code MIT; gallery films CC BY-NC 4.0 by their authors
+- License: code CC BY-NC 4.0; gallery films CC BY-NC 4.0 by their authors; no commercial use
 
 ## Gallery (44 films)
 
