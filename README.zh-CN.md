@@ -14,7 +14,7 @@ One picture in, a seamless loop of about five seconds out.
 
 [English](README.md) | **中文**
 
-![version](https://img.shields.io/badge/version-1.0.0-blue) ![license](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-d97757)
+![version](https://img.shields.io/badge/version-1.1.0-blue) ![license](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-d97757)
 
 </div>
 
@@ -65,7 +65,7 @@ claude plugin install lemo-wake@lemo-wake
 
 装好后重启 Claude Code，或者运行 `/reload-plugins`。
 
-作为普通 skill 安装（没有投稿命令）：
+作为普通 skill 安装（没有投稿和图层命令）：
 
 ```bash
 git clone --depth 1 https://github.com/lemomo-ai/lemo-wake
@@ -81,9 +81,14 @@ cp -R lemo-wake/skills/wake ~/.claude/skills/lemo-wake
 | 命令 | 作用 |
 |---|---|
 | `/lemo-wake:wake <图片>` | 把一张图做成动图 |
+| `/lemo-wake:layers <图片>` | 把一张图拆成图层（PSD + PNG） |
 | `/lemo-wake:upload` | 把动图投稿到作品墙 |
 
 普通 skill 安装时，命令是 `/lemo-wake <图片>`。
+
+**拆图层。** 用 `/lemo-wake:layers`，或者直接说“拆成图层”“给我 PSD”：每个人、每个物件、每块文字各占一个透明图层，后面的背景补干净，再附一张景深图。你会拿到 `layers.psd`（Photoshop、Affinity、Procreate 都能打开，也可以在浏览器里用免费的 Photopea）、按大小裁好的 PNG 图层，以及记录位置和叠放顺序的 `layers.json`（方便导入 After Effects、Figma、游戏引擎）。人物整体保留，文字是像素不是可编辑文字；因为不生成新内容，被大面积遮住的地方补出来会偏糊。做过动图的图，也能直接复用里面已经抠好的零件。
+
+能拆得多干净取决于图片本身，所以分层效果不作保证。哪里不满意，直接告诉 agent 你想怎么改就行，比如“把两个人分成两层”“花和花瓶放在一起”“头发边缘再修干净一点”，它会重做那一部分。
 
 ## 你会拿到什么
 

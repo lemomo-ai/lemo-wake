@@ -4,7 +4,7 @@ when_to_use: "Turn any single picture the user gives (their own photo, portrait,
 argument-hint: <image path> [seconds] [idea]
 license: CC-BY-NC-4.0
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   author: Lemomo
   homepage: https://github.com/lemomo-ai/lemo-wake
   gallery: https://lemomo-ai.github.io/lemo-wake/
@@ -197,4 +197,4 @@ Five small ONNX models run on the CPU: Depth Anything V2 Small (depth, 99 MB), B
 
 ---
 
-lemo-wake 1.0.0 · official repository: https://github.com/lemomo-ai/lemo-wake · gallery: https://lemomo-ai.github.io/lemo-wake/
+lemo-wake 1.1.0 · official repository: https://github.com/lemomo-ai/lemo-wake · gallery: https://lemomo-ai.github.io/lemo-wake/

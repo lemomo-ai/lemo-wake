@@ -5,7 +5,7 @@ argument-hint: [film file or project folder]
 disable-model-invocation: true
 license: CC-BY-NC-4.0
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   author: Lemomo
   homepage: https://github.com/lemomo-ai/lemo-wake
   gallery: https://lemomo-ai.github.io/lemo-wake/
@@ -62,4 +62,4 @@ Tell the user the pull request URL, that an automatic check runs first and a mai
 
 ---
 
-lemo-wake 1.0.0 · official repository: https://github.com/lemomo-ai/lemo-wake
+lemo-wake 1.1.0 · official repository: https://github.com/lemomo-ai/lemo-wake

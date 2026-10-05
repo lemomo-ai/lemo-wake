@@ -6,7 +6,7 @@ type: software
 authors:
   - name: "Lemomo"
     website: "https://github.com/lemomo-ai"
-version: "1.0.0"
+version: "1.1.0"
 license: CC-BY-NC-4.0
 repository-code: "https://github.com/lemomo-ai/lemo-wake"
 url: "https://lemomo-ai.github.io/lemo-wake/"

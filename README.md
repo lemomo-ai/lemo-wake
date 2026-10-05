@@ -14,7 +14,7 @@ One picture in, a seamless loop of about five seconds out.
 
 **English** | [中文](README.zh-CN.md)
 
-![version](https://img.shields.io/badge/version-1.0.0-blue) ![license](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-d97757)
+![version](https://img.shields.io/badge/version-1.1.0-blue) ![license](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-d97757)
 
 </div>
 
@@ -65,7 +65,7 @@ Or inside Claude Code, **one line at a time** (run the first, then type the seco
 
 Then restart Claude Code, or run `/reload-plugins`.
 
-As a plain skill (without the upload command):
+As a plain skill (without the upload and layers commands):
 
 ```bash
 git clone --depth 1 https://github.com/lemomo-ai/lemo-wake
@@ -81,9 +81,14 @@ Give Claude an image and say "make it move". No command needed. Or use the comma
 | Command | What it does |
 |---|---|
 | `/lemo-wake:wake <image>` | Make a film from an image |
+| `/lemo-wake:layers <image>` | Split an image into layers (PSD + PNG) |
 | `/lemo-wake:upload` | Share a film to the gallery |
 
 With a plain skill install, the command is `/lemo-wake <image>`.
+
+**Layers.** `/lemo-wake:layers`, or just "split this into layers" / "give me a PSD": each person, object and text block on its own transparent layer, the background behind them filled in, plus a depth map. You get `layers.psd` (Photoshop, Affinity, Procreate, or free in the browser at Photopea), the PNG layers and a `layers.json` with positions and stacking order (After Effects, Figma, game engines). People are kept whole, text stays pixels, and large hidden areas come out soft, since nothing is generated. It also reuses the parts of a film you already made.
+
+How cleanly a picture splits depends on the picture, so the result is not guaranteed. If something is off, just tell the agent what you want, for example "put the two people on separate layers", "keep the flowers with the vase" or "clean up the edge of the hair", and it will redo that part.
 
 ## What you get
 
