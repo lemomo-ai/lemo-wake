@@ -10,7 +10,7 @@ One picture in, a seamless loop of about five seconds out.
 
 <img src="https://github.com/lemomo-ai/lemo-wake/raw/gallery/assets/readme/cover.webp" width="100%" alt="lemo-wake: one picture in, a seamless loop out">
 
-[**▶ 去作品墙看看 See the gallery**](https://lemomo-ai.github.io/lemo-wake/)
+[**▶ 去作品墙看看 See the gallery**](https://lemomo-ai.github.io/lemo-wake/) · [**▶ Logo 动效 Logo Motion**](https://lemomo-ai.github.io/lemo-wake/logos/)
 
 [English](README.md) | **中文**
 
