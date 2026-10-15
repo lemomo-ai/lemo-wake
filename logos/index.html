@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Logo Motion · lemo-wake</title>
+<meta name="description" content="56 个品牌 logo，各用一张静帧做成一支动画。点开每一支，看它的设计灵感。56 brand logos, each animated from a single still with lemo-wake.">
+<meta property="og:title" content="Logo Motion · lemo-wake">
+<meta property="og:description" content="56 个品牌，56 个故事。56 brands, 56 stories, each woken up from one still logo.">
+<meta property="og:url" content="https://lemomo-ai.github.io/lemo-wake/logos/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://lemomo-ai.github.io/lemo-wake/logos/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%2316181d' stroke-width='3'/%3E%3Ccircle cx='24' cy='8' r='4' fill='%23ff6b3d'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/BodoniModa.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/BodoniModa-Italic.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Bodoni Moda（OFL，见 fonts/OFL.txt）随页面自带，不连 Google Fonts：可变字体，拉丁字符子集 */
+@font-face{font-family:"Bodoni Moda";font-style:normal;font-weight:400 900;font-display:swap;src:url(fonts/BodoniModa.woff2) format("woff2"),url(fonts/BodoniModa.woff) format("woff")}
+@font-face{font-family:"Bodoni Moda";font-style:italic;font-weight:400 900;font-display:swap;src:url(fonts/BodoniModa-Italic.woff2) format("woff2"),url(fonts/BodoniModa-Italic.woff) format("woff")}
+/* 展墙：整面墙铺满一屏，格子大小按窗口算；标题和声明收进墙中间的标题格 */
+:root{
+  --wall:#dfe1e4; --wall-hi:#eef0f2; --wall-lo:#d2d5d9;
+  --ink:#16181d; --ink2:#4c515b; --ink3:#7b808a; --line:rgba(22,24,29,.14);
+  --paper:#fbfbfa; --accent:#ff6b3d;
+  --display:"Bodoni Moda",Didot,"Songti SC","Noto Serif SC",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Segoe UI","Microsoft YaHei","Noto Sans SC",Roboto,Helvetica,Arial,sans-serif;
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC","Iowan Old Style",Georgia,serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --out:cubic-bezier(.16,1,.3,1);
+  --s:150px; --g:12px; --cols:11;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+html.fit,html.fit body{height:100%;overflow:hidden}
+html:has(dialog[open]){overflow:hidden}
+body{margin:0;color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased;
+  background:radial-gradient(120% 70% at 50% -10%,var(--wall-hi) 0,var(--wall) 55%,var(--wall-lo) 100%) fixed,var(--wall)}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.zh-only,.en-only{display:none}
+html[lang^="zh"] .zh-only,html[lang="en"] .en-only{display:revert}
+
+/* ---------- 墙 ---------- */
+.stage{min-height:100vh;min-height:100dvh;display:grid;place-items:center;
+  padding:max(var(--g),env(safe-area-inset-top,0px)) max(var(--g),env(safe-area-inset-right,0px)) max(var(--g),env(safe-area-inset-bottom,0px)) max(var(--g),env(safe-area-inset-left,0px))}
+.wall{display:grid;grid-template-columns:repeat(var(--cols),var(--s));grid-auto-rows:var(--s);gap:var(--g);opacity:0;transition:opacity .6s}
+.wall.on{opacity:1}
+.tile{all:unset;position:relative;width:var(--s);height:var(--s);cursor:pointer;border-radius:3px;overflow:hidden;background:#fff;
+  box-shadow:0 1px 1px rgba(20,24,32,.10),0 calc(var(--s)*.06) calc(var(--s)*.14) calc(var(--s)*-.05) rgba(20,24,32,.30);
+  transition:transform .45s var(--out),box-shadow .45s var(--out),filter .45s}
+.tile img,.tile video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.tile video{opacity:0;transition:opacity .4s}
+.tile video.ready{opacity:1}
+.tile .i{position:absolute;right:7px;top:7px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(22,24,29,.66);color:#fff;font:italic 600 13px/1 Georgia,serif;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  opacity:0;transform:scale(.7);transition:opacity .25s,transform .35s var(--out)}
+.tile .nm{position:absolute;left:0;right:0;bottom:0;padding:24px 10px 8px;font-size:12px;line-height:1.3;color:#fff;
+  background:linear-gradient(transparent,rgba(0,0,0,.55));opacity:0;transition:opacity .25s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .nm b{font:500 10.5px var(--mono);opacity:.75;margin-right:6px}
+.tile:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media (hover:hover){
+  .wall:has(.tile:hover) .tile:not(:hover){filter:saturate(.3) brightness(1.04) opacity(.62)}
+  .tile:hover{transform:translateY(calc(var(--s)*-.05)) scale(1.04);z-index:2;
+    box-shadow:0 2px 3px rgba(20,24,32,.10),0 calc(var(--s)*.16) calc(var(--s)*.3) calc(var(--s)*-.08) rgba(20,24,32,.45)}
+  .tile:hover .i,.tile:hover .nm,.tile:focus-visible .i,.tile:focus-visible .nm{opacity:1;transform:none}
+}
+@media (hover:none){.tile .i{opacity:.92;transform:none;width:20px;height:20px;font-size:11px;right:5px;top:5px}}
+
+/* 标题格：横向 5×2，标题、介绍、声明都在这里；下半部分左右两栏 */
+.ttl{grid-column:var(--tc)/span var(--tw);grid-row:var(--tr)/span var(--th);container-type:size;min-width:0;
+  display:flex;flex-direction:column;justify-content:center;gap:min(3.6cqh,18px);padding:min(2cqh,8px) min(2cqi,10px)}
+.ttl .txt{grid-template-columns:1fr 1fr;column-gap:min(5cqi,32px);align-items:start}
+.ttl .txt>p{display:block;grid-row:1}
+.ttl .txt>.lead{grid-column:1}
+.ttl .txt>.fine{grid-column:2}
+html[lang^="zh"] .ttl .txt>.en-only,html[lang="en"] .ttl .txt>.zh-only{visibility:hidden}
+.ttl .hd{display:flex;align-items:center;justify-content:space-between;gap:10px;font:500 max(10px,min(1.6cqi,4.2cqh))/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.ttl .hd a{text-decoration:none;white-space:nowrap;transition:color .2s}
+.ttl .hd .r{display:flex;align-items:center;gap:12px}
+.ttl .hd a:hover{color:var(--ink)}
+/* 标题：Bodoni Moda，做成挂在展墙上的立体字：字有厚度，往右下方投影 */
+.ttl h1{margin:0;font:500 min(13cqi,30cqh)/.9 var(--display);font-variation-settings:"opsz" 96;letter-spacing:-.03em;white-space:nowrap;color:var(--face)}
+.ttl h1 .mo{font-style:italic;margin-left:.16em}
+/* 字的厚度：12 层文字副本往右下错开，越深越暗。每层描一道同色细边：
+   Safari 和 Firefox 画字会对齐像素，Bodoni 的细笔画比一步还细，不描边层间会露出一道道缝 */
+.ttl h1 .tw{position:relative;display:inline-block;z-index:0}
+.ttl h1 .ex{position:absolute;inset:0;z-index:-1;pointer-events:none;user-select:none;-webkit-user-select:none}
+.ttl h1 .ex>span{position:absolute;left:0;top:0;white-space:nowrap;color:var(--c);-webkit-text-stroke:.004em var(--c);transform:translate(calc(var(--i)*.0018em),calc(var(--i)*.0028em))}
+.ttl h1 .ex>span:first-child{text-shadow:.05em .09em .07em rgba(20,24,32,.16),.1em .2em .25em rgba(20,24,32,.13)}
+@container (max-height:215px){.ttl h1{font-size:min(13cqi,27cqh)}.ttl .beat{margin-top:calc(min(13cqi,27cqh)*.42)}.ttl .txt>p.lead,.ttl .txt>p.fine{line-height:1.42}} /* 小屏标题格太矮时收一点 */
+.ttl h1 sup{font:500 max(10px,min(1.8cqi,4.6cqh)) var(--mono);letter-spacing:.06em;color:var(--accent);text-shadow:none;vertical-align:top;margin-left:.45em;position:relative;top:.5em}
+:root{--face:#1b1d22}
+.ttl .beat{display:flex;gap:3px;margin-top:calc(min(13cqi,30cqh)*.42)}
+.ttl .beat i{flex:1;height:2px;border-radius:2px;background:var(--ink);opacity:.14;transition:opacity .2s}
+.ttl .beat i.on{opacity:.85}
+.ttl .txt{display:grid;gap:min(3cqh,12px)}
+/* 小屏上下滚动时标题格在最上面、比较窄：正文改成一栏 */
+html:not(.fit) .ttl .txt{grid-template-columns:1fr}
+html:not(.fit) .ttl .txt>.lead{grid-column:1;grid-row:1}
+html:not(.fit) .ttl .txt>.fine{grid-column:1;grid-row:2}
+html:not(.fit) .ttl h1{font-size:min(17cqi,24cqh)}
+html:not(.fit) .ttl .hd,html:not(.fit) .ttl .lang{font-size:max(10px,min(2.6cqi,4.2cqh))}
+html:not(.fit) .ttl .lead{font-size:max(11px,min(3.4cqi,4.9cqh))}
+html:not(.fit) .ttl .fine{font-size:max(10px,min(2.6cqi,3.7cqh))}
+.ttl .lead{margin:0;font-size:max(11px,min(2.1cqi,5.4cqh));line-height:1.55;color:var(--ink2);text-wrap:pretty}
+.ttl .fine{margin:0;font-size:max(10px,min(1.6cqi,4.1cqh));line-height:1.55;color:var(--ink3);text-wrap:pretty}
+.ttl .fine a{text-decoration:none;border-bottom:1px solid var(--line)}
+.ttl .fine a:hover{border-color:var(--ink3)}
+.lang{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:2px;padding:2px;border:1px solid var(--line);border-radius:999px;
+  font:500 12px/1 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink3);flex:none}
+.ttl .lang{font-size:max(10.5px,min(1.7cqi,4.4cqh))}
+.lang span{padding:.34em .75em;border-radius:999px;transition:background .2s,color .2s}
+.lang span.on{background:var(--ink);color:#fff}
+.lang:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* 占位格：窗口比例特殊、格子多出来时才会出现 */
+.ph{width:var(--s);height:var(--s);border-radius:3px;border:1.5px dashed rgba(22,24,29,.22);display:flex;align-items:flex-end;padding:calc(var(--s)*.09);
+  font:italic 400 calc(var(--s)*.2)/1 var(--display);color:rgba(22,24,29,.24)}
+
+/* ---------- 弹窗 ---------- */
+dialog{--vs:min(calc(100dvh - 64px),calc(100vw - 64px - var(--tw)),620px);--tw:400px;border:0;padding:0;width:fit-content;max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);
+  border-radius:16px;background:var(--paper);color:var(--ink);overflow:hidden;box-shadow:0 40px 120px -30px rgba(10,12,16,.6),0 0 0 1px rgba(22,24,29,.06)}
+dialog::backdrop{background:rgba(214,217,221,.72);backdrop-filter:blur(14px) saturate(.7);-webkit-backdrop-filter:blur(14px) saturate(.7)}
+dialog[open]{animation:pop .45s var(--out)}
+@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.97)}}
+.dl{display:grid;grid-template-columns:var(--vs) var(--tw);height:var(--vs)}
+.dl .v{position:relative;width:var(--vs);height:var(--vs);background:#fff}
+.dl .v video{width:100%;height:100%;object-fit:cover;display:block}
+.dl .t{display:grid;grid-template-rows:auto 1fr auto;min-width:0;min-height:0;border-left:1px solid var(--line)}
+.dh{display:flex;align-items:center;gap:10px;padding:16px 16px 14px 26px;border-bottom:1px solid var(--line)}
+.dh .meta{display:flex;align-items:center;gap:9px;min-width:0;font:500 12px var(--mono);color:var(--ink3);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:auto}
+.dh .meta i{width:9px;height:9px;border-radius:50%;flex:none}
+.x{all:unset;cursor:pointer;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:var(--ink2);transition:background .2s;flex:none}
+.x:hover{background:rgba(22,24,29,.07)}
+.x:focus-visible{outline:2px solid var(--accent)}
+.db{overflow:auto;padding:24px 26px 26px;display:flex;flex-direction:column;gap:22px;outline:none;overscroll-behavior:contain}
+.dl h2{margin:0;font-family:var(--serif);font-weight:900;font-size:clamp(23px,2.3vw,30px);line-height:1.25;text-wrap:balance}
+html[lang="en"] .dl h2{font:400 clamp(30px,2.9vw,38px)/1.08 var(--display);letter-spacing:-.01em}
+.dl h2 small{display:block;margin-top:8px;font:500 12px var(--mono);color:var(--ink3);letter-spacing:.04em}
+.dl h3{margin:0 0 8px;font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.dl p{margin:0 0 8px;font-size:14.5px;line-height:1.7}
+.dl ol{margin:0;padding:0;list-style:none;counter-reset:b;display:grid;gap:7px;font-size:14.5px;line-height:1.6}
+.dl ol li{counter-increment:b;display:grid;grid-template-columns:26px 1fr;gap:4px}
+.dl ol li::before{content:counter(b,decimal-leading-zero);font:500 11.5px/2 var(--mono);color:var(--accent)}
+.dl .sum{margin:0;font-family:var(--serif);font-size:16.5px;line-height:1.7;border-left:2px solid var(--ink);padding-left:14px}
+html[lang="en"] .dl .sum{font:italic 400 19px/1.45 var(--display)}
+.dl .legal{padding-top:14px;border-top:1px solid var(--line);font-size:11.5px;line-height:1.6;color:var(--ink3)}
+.df{display:flex;align-items:center;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
+.df .pos{flex:1;text-align:center;font:500 12px var(--mono);color:var(--ink3)}
+.pill{all:unset;cursor:pointer;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13px;transition:background .2s}
+.pill:hover{background:rgba(22,24,29,.05)}
+.pill:focus-visible{outline:2px solid var(--accent)}
+@media (max-width:780px){
+  dialog{width:calc(100vw - 20px);max-width:none;max-height:calc(100dvh - 20px)}
+  .dl{display:block;height:auto;max-height:calc(100dvh - 20px);overflow:auto}
+  .dl .v{width:100%;height:auto;aspect-ratio:1}
+  .dl .t{display:block;border-left:0}
+  .dh{position:sticky;top:0;z-index:2;background:var(--paper);padding:12px 12px 12px 18px}
+  .db{overflow:visible;padding:20px 18px}
+  .df{position:sticky;bottom:0;background:var(--paper)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="wall" id="wall" aria-label="Logo Motion">
+    <div class="ttl" id="ttl">
+      <div class="hd">
+        <a href="../">← lemo-wake <span class="zh-only">作品墙</span><span class="en-only">gallery</span></a>
+        <span class="r">
+          <a href="https://github.com/lemomo-ai/lemo-wake#install"><span class="zh-only">安装 lemo-wake ↗</span><span class="en-only">Get lemo-wake ↗</span></a>
+          <button type="button" class="lang" id="lang"><span data-l="zh">中</span><span data-l="en">EN</span></button>
+        </span>
+      </div>
+      <div>
+        <h1><span class="tw">Logo<span class="mo">Motion</span><span class="ex" aria-hidden="true"></span></span><sup id="count">56</sup></h1>
+        <div class="beat" id="beat" aria-hidden="true"></div>
+      </div>
+      <div class="txt">
+      <p class="lead zh-only"><span class="n">56</span> 个品牌，<span class="n">56</span> 个故事。每一支都从一张 logo 静帧开始，用 lemo-wake 叫醒。点任意一格，看它的设计灵感。</p>
+      <p class="lead en-only"><span class="n">56</span> brands, <span class="n">56</span> stories, each woken up from one still logo with lemo-wake. Tap a tile to see the idea behind it.</p>
+      <p class="fine zh-only">非官方作品，与各品牌及其公司无关联，也未获授权或认可；logo 和商标归各自所有者，这里只用来展示 lemo-wake 的效果。动画按 <a href="https://github.com/lemomo-ai/lemo-wake/blob/gallery/LICENSE">CC BY-NC 4.0</a> 授权，商标不在其内。如需下架，请<a href="https://github.com/lemomo-ai/lemo-wake/issues">开 issue</a>。</p>
+      <p class="fine en-only">Unofficial fan works, not affiliated with or endorsed by any brand; logos and trademarks belong to their owners. Animation under <a href="https://github.com/lemomo-ai/lemo-wake/blob/gallery/LICENSE">CC BY-NC 4.0</a>, trademarks excluded. Want one removed? <a href="https://github.com/lemomo-ai/lemo-wake/issues">Open an issue</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<dialog id="dlg" aria-labelledby="d-title">
+  <div class="dl">
+    <div class="v"><video id="d-video" muted loop playsinline></video></div>
+    <div class="t">
+      <div class="dh">
+        <span class="meta"><i id="d-sw"></i><span id="d-no"></span></span>
+        <button type="button" class="x" id="d-close"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+      </div>
+      <div class="db" tabindex="-1">
+        <h2 id="d-title"></h2>
+        <div><h3><span class="zh-only">设计灵感</span><span class="en-only">The idea</span></h3><div id="d-idea"></div></div>
+        <div><h3><span class="zh-only">动效设计</span><span class="en-only">The motion</span></h3><ol id="d-beats"></ol></div>
+        <p class="sum" id="d-sum"></p>
+        <div class="legal">
+          <span class="zh-only">非官方作品，与该品牌及其所属公司没有关联，也未获授权或认可。logo 和商标归各自所有者，这里只用来展示 lemo-wake 的动效能力。如需下架，请在 GitHub 开 issue。</span>
+          <span class="en-only">Unofficial fan work, not affiliated with or endorsed by the brand. The logo and trademarks belong to their owner and appear here only to show what lemo-wake can do. To request removal, open an issue on GitHub.</span>
+        </div>
+      </div>
+      <div class="df">
+        <button type="button" class="pill" id="d-prev">← <span class="zh-only">上一个</span><span class="en-only">Previous</span></button>
+        <span class="pos" id="d-pos"></span>
+        <button type="button" class="pill" id="d-next"><span class="zh-only">下一个</span><span class="en-only">Next</span> →</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(async function () {
+  const $ = s => document.querySelector(s);
+  // 标题的厚度层：最深的放最底下
+  const DEPTH = ['#4a4e57', '#464a53', '#42464e', '#3e424a', '#3a3e45', '#363a41', '#33353c', '#2f3138', '#2b2d33', '#27292f', '#23252a', '#1f2126'];
+  $('.ttl h1 .ex').innerHTML = DEPTH.map((c, i) => `<span style="--i:${i + 1};--c:${c}">Logo<span class="mo">Motion</span></span>`).reverse().join('');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wall = $('#wall'), ttl = $('#ttl');
+  const FILMS = (await (await fetch('logos.json')).json()).films;
+  const N = FILMS.length;
+  const CYCLE = Math.ceil((Math.max(...FILMS.map(f => f.dur)) + 0.9) * 10) / 10; // 最长一支 + 约 1 秒全墙定格
+  $('#count').textContent = N;
+  document.querySelectorAll('.n').forEach(e => e.textContent = N);
+
+  // ---------- 语言：墙、弹窗、标签页标题、读屏文字一起切 ----------
+  let lang = 'zh';
+  try { lang = localStorage.getItem('lw-lang') || (/^zh/i.test(navigator.language) ? 'zh' : 'en'); } catch (e) {}
+  const T = f => (lang === 'en' && f.en.film) ? f.en : f.zh;
+  const say = (zh, en) => lang === 'zh' ? zh : en;
+  function setLang(l) {
+    lang = l; document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+    document.title = say('Logo Motion · lemo-wake 动效 logo', 'Logo Motion · lemo-wake');
+    document.querySelectorAll('.lang').forEach(b => {
+      b.setAttribute('aria-label', say('切换到英文', 'Switch to Chinese'));
+      b.querySelectorAll('span').forEach(s => s.classList.toggle('on', s.dataset.l === l));
+    });
+    $('#d-close').setAttribute('aria-label', say('关闭', 'Close'));
+    try { localStorage.setItem('lw-lang', l); } catch (e) {}
+    tiles.forEach((t, id) => label(t, FILMS.find(f => f.id === id)));
+    if (dlg.open) fill(cur);
+  }
+  document.querySelectorAll('.lang').forEach(b => b.onclick = () => setLang(lang === 'zh' ? 'en' : 'zh'));
+
+  // ---------- 格子 ----------
+  const tiles = new Map();
+  function label(t, f) {
+    const x = T(f);
+    t.setAttribute('aria-label', say(`${x.name}：${x.film}，看设计灵感`, `${x.name}: ${x.film}. See the idea`));
+    t.querySelector('.nm').innerHTML = `<b>${String(f.no).padStart(2, '0')}</b>`;
+    t.querySelector('.nm').append(x.name);
+  }
+  for (const f of FILMS) {
+    const t = document.createElement('button');
+    t.type = 'button'; t.className = 'tile'; t.dataset.id = f.id;
+    t.innerHTML = `<img src="posters/${f.id}.jpg" alt="" decoding="async"><video muted playsinline preload="none"></video><span class="i" aria-hidden="true">i</span><span class="nm"></span>`;
+    t.onclick = () => openDlg(f.id);
+    tiles.set(f.id, t);
+  }
+  // 占位格：格子比片子多时补满，越往后越淡
+  const placeholders = k => Array.from({ length: k }, (_, i) => {
+    const p = document.createElement('div');
+    p.className = 'ph'; p.setAttribute('aria-hidden', 'true'); p.textContent = N + 1 + i;
+    p.style.opacity = (1 - i / Math.max(k, 2) * 0.75).toFixed(2);
+    return p;
+  });
+
+  // ---------- 排版：一屏装下整面墙，标题格横放 5×2、在正中（上下各两排） ----------
+  // 每种排法：列、行、标题格位置和大小（列, 行, 宽, 高）。格子比片子多时用占位格补满
+  const FIT = [
+    { cols: 11, rows: 6, t: [4, 3, 5, 2] },
+    { cols: 9, rows: 8, t: [3, 4, 5, 2] },
+    { cols: 7, rows: 10, t: [2, 5, 5, 2] },
+  ];
+  const SCROLL = [{ cols: 4, t: [1, 1, 4, 2] }, { cols: 3, t: [1, 1, 3, 3] }]; // 窗口太小时改成上下滚动，标题格放最上面
+  const K = 0.085; // 缝宽 = 格子边长 × K
+  let L = null;
+  function pick() {
+    const W = document.documentElement.clientWidth, H = window.innerHeight;
+    const fits = FIT.filter(l => l.cols * l.rows - l.t[2] * l.t[3] >= N).map(l => {
+      const pad = 2 * K, s = Math.min(W / (l.cols + (l.cols - 1) * K + pad), H / (l.rows + (l.rows - 1) * K + pad));
+      return { ...l, s, fit: true };
+    });
+    const top = Math.max(...fits.map(l => l.s));
+    const best = fits.filter(l => l.s >= top * 0.94).sort((a, b) => b.cols - a.cols)[0]; // 格子差不多大时选更宽的，墙铺满左右
+    if (best.s >= 96) return best;
+    const l = W >= 560 ? SCROLL[0] : SCROLL[1];
+    return { ...l, rows: Math.ceil((N + l.t[2] * l.t[3]) / l.cols), s: W / (l.cols + (l.cols - 1) * K + 2 * K), fit: false };
+  }
+  function layout() {
+    const n = pick(), changed = !L || n.cols !== L.cols || n.rows !== L.rows;
+    L = n;
+    const r = document.documentElement.style, s = Math.floor(L.s), g = Math.max(4, Math.round(L.s * K));
+    document.documentElement.classList.toggle('fit', L.fit);
+    r.setProperty('--s', s + 'px'); r.setProperty('--g', g + 'px'); r.setProperty('--cols', L.cols);
+    [['--tc', 0], ['--tr', 1], ['--tw', 2], ['--th', 3]].forEach(([k, i]) => r.setProperty(k, L.t[i]));
+    if (changed) wall.replaceChildren(ttl, ...arrange(L).map(id => tiles.get(id)), ...placeholders(L.cols * L.rows - L.t[2] * L.t[3] - N));
+  }
+
+  // 打散：相邻（左、上、左上、右上）不同色系，左和上也不同行业
+  function arrange(l) {
+    const [tc, tr, tw, th] = l.t, cells = [];
+    for (let r = 1; r <= l.rows; r++) for (let c = 1; c <= l.cols; c++)
+      if (!(c >= tc && c < tc + tw && r >= tr && r < tr + th)) cells.push([r, c]);
+    let seed = 7 + l.cols;
+    const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    for (let attempt = 0; attempt < 400; attempt++) {
+      const pool = FILMS.map(f => f.id).sort(() => rnd() - .5), at = {}, out = [];
+      let ok = true;
+      for (let i = 0; i < N && ok; i++) {
+        const [r, c] = cells[i];
+        const nb = [[r, c - 1, 1], [r - 1, c, 1], [r - 1, c - 1, 0], [r - 1, c + 1, 0]].map(([a, b, ind]) => [at[a + ',' + b], ind]).filter(x => x[0]);
+        const j = pool.findIndex(id => { const f = FILMS.find(x => x.id === id); return nb.every(([o, ind]) => o.group !== f.group && (!ind || o.ind !== f.ind)); });
+        if (j < 0) { ok = false; break; }
+        const id = pool.splice(j, 1)[0]; at[r + ',' + c] = FILMS.find(x => x.id === id); out.push(id);
+      }
+      if (ok) return out;
+    }
+    return FILMS.map(f => f.id).sort(() => rnd() - .5);
+  }
+  layout();
+  let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(layout, 120); });
+
+  // ---------- 齐奏：全墙一起从头播，最后一起停在标准 logo ----------
+  const beat = $('#beat'), BEATS = 12;
+  beat.innerHTML = '<i></i>'.repeat(BEATS);
+  const visible = new Set();
+  let t0 = null; // 开场时间：大部分格子能播了才一起开始
+  const vid = t => t.querySelector('video');
+  function load(t) {
+    const v = vid(t);
+    if (v.src) return;
+    v.src = 'wall/' + t.dataset.id + '.mp4'; v.preload = 'auto';
+    v.addEventListener('canplay', () => { v.classList.add('ready'); if (t0 !== null) join(v); }, { once: true });
+  }
+  function join(v) {
+    if (reduce || t0 === null || !visible.has(v)) return;
+    const e = ((performance.now() - t0) / 1000) % CYCLE, d = v.duration || 6;
+    v.currentTime = Math.min(e, d - 0.04);
+    if (e < d) v.play().catch(() => {});
+  }
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    const v = vid(e.target);
+    if (e.isIntersecting) { visible.add(v); load(e.target); join(v); } else { visible.delete(v); v.pause(); }
+  }), { rootMargin: '100px' });
+  tiles.forEach(t => io.observe(t));
+  requestAnimationFrame(() => wall.classList.add('on'));
+
+  if (!reduce) {
+    const start = () => { if (t0 === null) { t0 = performance.now(); visible.forEach(v => { if (v.readyState >= 3) { v.currentTime = 0; v.play().catch(() => {}); } }); } };
+    const ready = setInterval(() => {
+      const vs = [...visible], n = vs.filter(v => v.readyState >= 3).length;
+      if (vs.length && n / vs.length >= 0.9) { clearInterval(ready); start(); }
+    }, 200);
+    setTimeout(() => { clearInterval(ready); start(); }, 5000);
+    let last = 0;
+    (function tick() {
+      if (t0 !== null) {
+        const t = (performance.now() - t0) / 1000, c = Math.floor(t / CYCLE);
+        if (c !== last) { last = c; visible.forEach(v => { if (v.readyState >= 2) { v.currentTime = 0; v.play().catch(() => {}); } }); }
+        const on = Math.floor((t % CYCLE) / CYCLE * BEATS);
+        beat.querySelectorAll('i').forEach((el, i) => el.classList.toggle('on', i <= on));
+      }
+      requestAnimationFrame(tick);
+    })();
+    document.addEventListener('visibilitychange', () => { if (!document.hidden && t0 !== null) visible.forEach(join); });
+  }
+
+  // ---------- 弹窗 ----------
+  const dlg = $('#dlg'), dv = $('#d-video'), body = dlg.querySelector('.db');
+  let cur = null;
+  const order = () => [...wall.querySelectorAll('.tile')].map(t => t.dataset.id);
+  const el = (tag, text) => Object.assign(document.createElement(tag), { textContent: text });
+  function fill(id) {
+    const f = FILMS.find(x => x.id === id); if (!f) return;
+    const x = T(f), same = cur === id;
+    if (!same) { dv.poster = `posters/${id}.jpg`; dv.src = `hd/${id}.mp4`; if (!reduce) dv.play().catch(() => {}); }
+    cur = id;
+    $('#d-sw').style.background = f.color;
+    $('#d-no').textContent = `No.${String(f.no).padStart(2, '0')} · ${x.name}`;
+    $('#d-title').replaceChildren(x.film, el('small', `${f.dur.toFixed(1)} ${say('秒', 's')}`));
+    $('#d-idea').replaceChildren(...x.idea.map(t => el('p', t)));
+    $('#d-beats').replaceChildren(...x.beats.map(t => el('li', t)));
+    $('#d-sum').textContent = x.summary;
+    const o = order(); $('#d-pos').textContent = `${o.indexOf(id) + 1} / ${o.length}`;
+    if (!same) body.scrollTop = 0;
+    try { history.replaceState(null, '', '#' + id); } catch (e) {}
+  }
+  function openDlg(id) { fill(id); if (!dlg.open) { dlg.showModal(); body.focus({ preventScroll: true }); } }
+  const step = n => { const o = order(); fill(o[(o.indexOf(cur) + n + o.length) % o.length]); };
+  $('#d-prev').onclick = () => step(-1);
+  $('#d-next').onclick = () => step(1);
+  $('#d-close').onclick = () => dlg.close();
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('keydown', e => { if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1); });
+  dlg.addEventListener('close', () => {
+    dv.pause(); dv.removeAttribute('src'); dv.load(); cur = null;
+    try { history.replaceState(null, '', location.pathname); } catch (e) {}
+  });
+
+  setLang(lang);
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (tiles.has(h)) openDlg(h);
+})();
+</script>
+</body>
+</html>
