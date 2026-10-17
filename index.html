@@ -326,7 +326,7 @@ dialog.closing .stage{animation:v-zoom-out .22s ease-in forwards}
 /* ---------- smaller screens ---------- */
 /* buttons keep one size everywhere above phones, so the two hero buttons stay on one row */
 .btn{padding:0 17px;gap:8px;font-size:14.5px}.btn code{padding:6px 7px;font-size:12px}
-@media (min-width:1241px) and (max-width:1439px){.chip{padding:8px 11px 7px}.btn{padding:0 14px}.btn code{padding:5px 6px;font-size:11.5px}}
+@media (min-width:1241px) and (max-width:1439px){.btn{padding:0 14px}.btn code{padding:5px 6px;font-size:11.5px}}
 @media (max-width:1240px){.cta .btn{flex:1 1 auto}}
 /* mid widths: keep the dock to one row that scrolls sideways instead of a tall two-row slab */
 @media (min-width:641px) and (max-width:1240px){
@@ -358,9 +358,12 @@ dialog.closing .stage{animation:v-zoom-out .22s ease-in forwards}
   .feature{padding:8px;border-radius:16px}
   .feature-cap{padding:12px 4px 2px;gap:12px}
   .filters{position:static;padding:4px 0}
-  .chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:auto;border-radius:18px;padding:5px}
+  /* phones: All and Community share the top row, the categories go four to a row */
+  .chips{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));width:auto;border-radius:18px;padding:5px}
+  .chip{grid-column:span 3}.chip[data-k="all"],.chip.cm{grid-column:span 6}.chips:not(:has(.cm)) .chip[data-k="all"]{grid-column:span 12}
+  .chip.cm::before{left:calc(50% - 43px)}  /* keep the dot next to the label in the wide cell */
   .chips .ind{border-radius:13px}
-  .chip{padding:9px 6px 8px;font-size:13.5px;border-radius:13px}
+  .chip{padding:9px 2px 8px;font-size:13.5px;border-radius:13px}
   .chip .e{font-size:11px;white-space:normal}
   .chip[data-k="all"]{margin-right:0}.chip[data-k="all"]::after{display:none}
   .badge{right:6px;top:6px;font-size:11px;padding:3px 8px}
@@ -523,6 +526,8 @@ function pairHTML(f, big) {
 }
 
 /* ---------- category chips: built once, then a sliding indicator follows the choice ---------- */
+/* the dock shows one-word English labels so all chips fit one row; cards and headings keep the full ones */
+const SHORT = {people: 'People', art: 'Art', social: 'Social', poster: 'Posters', brand: 'Brands', data: 'Charts', sticker: 'Stickers', life: 'Everyday'};
 function renderChips() {
   const box = $('chips');
   if (!box.dataset.built) {
@@ -530,7 +535,7 @@ function renderChips() {
     DATA.films.forEach(f => n[f.category] = (n[f.category] || 0) + 1);
     const cm = DATA.films.filter(isCm).length;
     const items = [{key: 'all', zh: '全部', en: 'All', c: DATA.films.length}, ...(cm ? [{key: 'community', zh: '社区共创', en: 'Community', c: cm}] : []), ...DATA.categories.filter(c => n[c.key]).map(c => ({...c, c: n[c.key]}))];
-    box.innerHTML = '<span class="ind" aria-hidden="true"></span>' + items.map(c => `<button class="chip${c.key === 'community' ? ' cm' : ''}" type="button" data-k="${c.key}" aria-pressed="false"><span class="z">${esc(c.zh)}<span class="n">${c.c}</span></span><span class="e">${esc(c.en)}</span></button>`).join('');
+    box.innerHTML = '<span class="ind" aria-hidden="true"></span>' + items.map(c => `<button class="chip${c.key === 'community' ? ' cm' : ''}" type="button" data-k="${c.key}" aria-pressed="false"><span class="z">${esc(c.zh)}<span class="n">${c.c}</span></span><span class="e">${esc(SHORT[c.key] || c.en)}</span></button>`).join('');
     box.dataset.built = '1';
     if ('ResizeObserver' in window) new ResizeObserver(() => placeInd()).observe(box);
     requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add('ready')));
