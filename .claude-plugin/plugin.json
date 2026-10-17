@@ -1,6 +1,6 @@
 {
   "name": "lemo-wake",
-  "displayName": "lemo-wake",
+  "displayName": "Lemo-Wake",
   "version": "1.1.0",
   "description": "Wake your image. 把你的照片叫醒。 Turn one picture into a ~5 second seamless loop (MP4, GIF, WebP, WeChat sticker), or split it into layers (PSD + PNG). No image generation, no API keys.",
   "author": {
