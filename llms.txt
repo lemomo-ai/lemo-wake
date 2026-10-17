@@ -8,9 +8,12 @@
 - Commands: `/lemo-wake:wake <image>` makes a film; `/lemo-wake:upload` shares one to the gallery
 - License: code CC BY-NC 4.0; gallery films CC BY-NC 4.0 by their authors; no commercial use
 
-## Gallery (45 films)
+## Gallery (48 films)
 
+- [悉尼马拉松奖牌 · 钥匙升起歌剧院 / Sydney Marathon medal · The key that raises the sails](https://lemomo-ai.github.io/lemo-wake/#20261017-lemomo-ai-sydney-medal): Everyday photos · 生活随拍, by lemomo-ai
+- [A year of momentum · 彗星点亮增长曲线 / A year of momentum · A comet lights up the chart](https://lemomo-ai.github.io/lemo-wake/#20261017-lemomo-ai-momentum): Charts & reports · 数据图表, by lemomo-ai
 - [夏日气泡柠檬水 · 一口吸进去再喷出来 / Sparkling lemonade · The glass inhales the poster](https://lemomo-ai.github.io/lemo-wake/#20261017-lemomo-ai-lemonade): Posters & ads · 海报广告, by lemomo-ai
+- [Claude 别封我 · 磕头求解封 / Don't ban me, Claude · Begging for mercy](https://lemomo-ai.github.io/lemo-wake/#20261017-lemomo-ai-claude-ban): Stickers & greetings · 表情问候, by lemomo-ai
 - [咖啡馆自拍 · 剪下来贴上去 / Café selfie · Cut out and pasted in](https://lemomo-ai.github.io/lemo-wake/#h01-cafe): People & portraits · 人像合影, by Lemomo
 - [樱花野餐 · 打开就跳出来 / Cherry-blossom picnic · Pops up as it opens](https://lemomo-ai.github.io/lemo-wake/#h02-picnic): People & portraits · 人像合影, by Lemomo
 - [毕业照 · 抛帽出框 / Graduation · The cap flies out of frame](https://lemomo-ai.github.io/lemo-wake/#h03-grad): People & portraits · 人像合影, by Lemomo
