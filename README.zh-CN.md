@@ -12,6 +12,8 @@ One picture in, a seamless loop of about five seconds out.
 
 [**▶ 去作品墙看看 See the gallery**](https://lemomo-ai.github.io/lemo-wake/) · [**▶ Logo 动效 Logo Motion**](https://lemomo-ai.github.io/lemo-wake/logos/)
 
+**最新（2026-10-15）：** [Logo 动效](https://lemomo-ai.github.io/lemo-wake/logos/)上线，56 个品牌 logo，每一个都是用 lemo-wake 叫醒的。
+
 [English](README.md) | **中文**
 
 ![version](https://img.shields.io/badge/version-1.1.0-blue) ![license](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-d97757)
@@ -228,3 +230,12 @@ lemo-wake 由 [Lemomo](https://github.com/lemomo-ai) 和 Claude 一起制作。�
 </tr>
 </table>
 
+## LemoLab 的其他项目
+
+- 🎬 **[Lemo-Opuscar](https://github.com/lemomo-ai/lemo-opuscar)**：51 种影片风格，每种都配一支完全用代码做出来的短片。 ![stars](https://img.shields.io/github/stars/lemomo-ai/lemo-opuscar?style=social)
+- 🍋 **[lemo-mod](https://github.com/lemomo-ai/lemo-mod)**：给 Claude Code 换上 21 套风格，终端和桌面 App 都能用。 ![stars](https://img.shields.io/github/stars/lemomo-ai/lemo-mod?style=social)
+- 🟥 **[小章 Stampy](https://github.com/lemomo-ai/lemo-stampy)**：Mac 菜单栏小工具，在预览里点一下，给复印件盖上「仅供××使用」。 ![stars](https://img.shields.io/github/stars/lemomo-ai/lemo-stampy?style=social)
+
+<sub>LemoLab · by Lemomo</sub>
+
+⭐ 点个星 · 👀 Watch → Custom → Releases，有新版本会通知你 · 关注 [@lemomo_ai](https://x.com/lemomo_ai)

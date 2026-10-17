@@ -12,6 +12,8 @@ One picture in, a seamless loop of about five seconds out.
 
 [**▶ 去作品墙看看 See the gallery**](https://lemomo-ai.github.io/lemo-wake/) · [**▶ Logo 动效 Logo Motion**](https://lemomo-ai.github.io/lemo-wake/logos/)
 
+**New (2026-10-15):** [Logo Motion](https://lemomo-ai.github.io/lemo-wake/logos/), a wall of 56 brand logos, each woken up by lemo-wake.
+
 **English** | [中文](README.zh-CN.md)
 
 ![version](https://img.shields.io/badge/version-1.1.0-blue) ![license](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey) ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-d97757)
@@ -228,3 +230,12 @@ One film from each category, original on the left and film on the right. See the
 </tr>
 </table>
 
+## More from LemoLab
+
+- 🎬 **[Lemo-Opuscar](https://github.com/lemomo-ai/lemo-opuscar)**: 51 film styles, each with a short film made entirely in code. ![stars](https://img.shields.io/github/stars/lemomo-ai/lemo-opuscar?style=social)
+- 🍋 **[lemo-mod](https://github.com/lemomo-ai/lemo-mod)**: re-skin Claude Code with 21 styles, in the terminal and the desktop app. ![stars](https://img.shields.io/github/stars/lemomo-ai/lemo-mod?style=social)
+- 🟥 **[Stampy](https://github.com/lemomo-ai/lemo-stampy)**: a tiny Mac menu bar stamp that marks your copies "For XX use only". ![stars](https://img.shields.io/github/stars/lemomo-ai/lemo-stampy?style=social)
+
+<sub>LemoLab · by Lemomo</sub>
+
+⭐ Star this repo · 👀 Watch → Custom → Releases to hear about new versions · Follow [@lemomo_ai](https://x.com/lemomo_ai)
