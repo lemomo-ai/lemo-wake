@@ -8,8 +8,9 @@
 - Commands: `/lemo-wake:wake <image>` makes a film; `/lemo-wake:upload` shares one to the gallery
 - License: code CC BY-NC 4.0; gallery films CC BY-NC 4.0 by their authors; no commercial use
 
-## Gallery (44 films)
+## Gallery (45 films)
 
+- [夏日气泡柠檬水 · 一口吸进去再喷出来 / Sparkling lemonade · The glass inhales the poster](https://lemomo-ai.github.io/lemo-wake/#20261017-lemomo-ai-lemonade): Posters & ads · 海报广告, by lemomo-ai
 - [咖啡馆自拍 · 剪下来贴上去 / Café selfie · Cut out and pasted in](https://lemomo-ai.github.io/lemo-wake/#h01-cafe): People & portraits · 人像合影, by Lemomo
 - [樱花野餐 · 打开就跳出来 / Cherry-blossom picnic · Pops up as it opens](https://lemomo-ai.github.io/lemo-wake/#h02-picnic): People & portraits · 人像合影, by Lemomo
 - [毕业照 · 抛帽出框 / Graduation · The cap flies out of frame](https://lemomo-ai.github.io/lemo-wake/#h03-grad): People & portraits · 人像合影, by Lemomo
