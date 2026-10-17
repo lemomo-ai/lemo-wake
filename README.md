@@ -232,9 +232,9 @@ One film from each category, original on the left and film on the right. See the
 
 ## More from LemoLab
 
-- 🎬 **[Lemo-Opuscar](https://github.com/lemomo-ai/lemo-opuscar)**: 51 film styles, each with a short film made entirely in code. ![stars](https://img.shields.io/github/stars/lemomo-ai/lemo-opuscar?style=social)
-- 🍋 **[lemo-mod](https://github.com/lemomo-ai/lemo-mod)**: re-skin Claude Code with 21 styles, in the terminal and the desktop app. ![stars](https://img.shields.io/github/stars/lemomo-ai/lemo-mod?style=social)
-- 🟥 **[Stampy](https://github.com/lemomo-ai/lemo-stampy)**: a tiny Mac menu bar stamp that marks your copies "For XX use only". ![stars](https://img.shields.io/github/stars/lemomo-ai/lemo-stampy?style=social)
+- 🎬 **[Lemo-Opuscar](https://github.com/lemomo-ai/lemo-opuscar)**: 51 film styles, each with a short film made entirely in code.
+- 🍋 **[lemo-mod](https://github.com/lemomo-ai/lemo-mod)**: re-skin Claude Code with 21 styles, in the terminal and the desktop app.
+- 🟥 **[Stampy](https://github.com/lemomo-ai/lemo-stampy)**: a tiny Mac menu bar stamp that marks your copies "For XX use only".
 
 <sub>LemoLab · by Lemomo</sub>
 
