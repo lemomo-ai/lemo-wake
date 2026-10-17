@@ -17,13 +17,22 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install --quiet "pillow>=10"
-      - name: Rebuild films.json, thumbs and README.md
-        run: python3 .github/scripts/build_gallery.py
-      - name: Commit if changed
+      # Several merges in a row push to gallery while a build is still running, so a plain push gets rejected.
+      # Each try starts from the newest gallery and rebuilds, so the pushed pages always match every film there.
+      - name: Rebuild films.json, thumbs and README.md, then push
         run: |
-          git add README.md films.json llms.txt thumbs
-          git diff --cached --quiet && exit 0
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Update gallery page"
-          git push
+          for try in 1 2 3 4 5; do
+            git fetch --quiet origin gallery
+            git reset --quiet --hard origin/gallery
+            git clean -fdq thumbs
+            python3 .github/scripts/build_gallery.py
+            git add README.md films.json llms.txt thumbs
+            git diff --cached --quiet && exit 0
+            git commit --quiet -m "Update gallery page"
+            git push --quiet origin HEAD:gallery && exit 0
+            echo "gallery moved on during the build, rebuilding on top of it (try $try)"
+            sleep $((try * 3))
+          done
+          exit 1
