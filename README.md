@@ -88,6 +88,13 @@ Give Claude an image and say "make it move". No command needed. Or use the comma
 
 With a plain skill install, the command is `/lemo-wake <image>`.
 
+Things you can say:
+
+- "Make this logo move, a 5-second loop."
+- "Wake up this group photo. Keep the original size, and give me MP4 and WebP."
+- "Turn this duck drawing into a WeChat sticker GIF."
+- "Split this poster into layers and give me a PSD."
+
 **Layers.** `/lemo-wake:layers`, or just "split this into layers" / "give me a PSD": each person, object and text block on its own transparent layer, the background behind them filled in, plus a depth map. You get `layers.psd` (Photoshop, Affinity, Procreate, or free in the browser at Photopea), the PNG layers and a `layers.json` with positions and stacking order (After Effects, Figma, game engines). People are kept whole, text stays pixels, and large hidden areas come out soft, since nothing is generated. It also reuses the parts of a film you already made.
 
 How cleanly a picture splits depends on the picture, so the result is not guaranteed. If something is off, just tell the agent what you want, for example "put the two people on separate layers", "keep the flowers with the vase" or "clean up the edge of the hair", and it will redo that part.
@@ -121,6 +128,7 @@ On first use Claude runs `node scripts/doctor.mjs` in the skill folder (`skills/
 | uv (runs the Python scripts) | | `brew install uv`, or see https://docs.astral.sh/uv/ |
 | Headless Chromium and `playwright-core` | About 190 MB | `node scripts/doctor.mjs --fix`, or use an installed Chrome with `CHROME=<path>` |
 | Python packages (Pillow, NumPy, OpenCV, onnxruntime) | About 150 MB | Downloaded automatically on first use |
+| Fonts used in a film | A few hundred KB | Downloaded from Google Fonts into the project folder when a film needs them; the request carries only the font name and, for Chinese, Japanese and Korean fonts, the characters used |
 | Xcode Command Line Tools (Live Photos only, macOS) | | `xcode-select --install` |
 
 Tested on macOS. Linux and Windows should work. If a step fails, Claude works out what is missing.

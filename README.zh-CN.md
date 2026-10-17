@@ -88,6 +88,13 @@ cp -R lemo-wake/skills/wake ~/.claude/skills/lemo-wake
 
 普通 skill 安装时，命令是 `/lemo-wake <图片>`。
 
+可以这样说：
+
+- “把这个 logo 做成 5 秒的循环动图。”
+- “让这张合影动起来，保持原图尺寸，要 MP4 和 WebP。”
+- “把这张鸭子画做成微信表情包 GIF。”
+- “把这张海报拆成图层，给我 PSD。”
+
 **拆图层。** 用 `/lemo-wake:layers`，或者直接说“拆成图层”“给我 PSD”：每个人、每个物件、每块文字各占一个透明图层，后面的背景补干净，再附一张景深图。你会拿到 `layers.psd`（Photoshop、Affinity、Procreate 都能打开，也可以在浏览器里用免费的 Photopea）、按大小裁好的 PNG 图层，以及记录位置和叠放顺序的 `layers.json`（方便导入 After Effects、Figma、游戏引擎）。人物整体保留，文字是像素不是可编辑文字；因为不生成新内容，被大面积遮住的地方补出来会偏糊。做过动图的图，也能直接复用里面已经抠好的零件。
 
 能拆得多干净取决于图片本身，所以分层效果不作保证。哪里不满意，直接告诉 agent 你想怎么改就行，比如“把两个人分成两层”“花和花瓶放在一起”“头发边缘再修干净一点”，它会重做那一部分。
@@ -121,6 +128,7 @@ cp -R lemo-wake/skills/wake ~/.claude/skills/lemo-wake
 | uv（运行 Python 脚本） | | `brew install uv`，或见 https://docs.astral.sh/uv/ |
 | 无头浏览器和 `playwright-core` | 约 190MB | `node scripts/doctor.mjs --fix`，也可以用已装的 Chrome：`CHROME=<路径>` |
 | Python 包（Pillow、NumPy、OpenCV、onnxruntime） | 约 150MB | 第一次使用时自动下载 |
+| 画面用到的字体 | 几百 KB | 需要时从 Google Fonts 下载到项目文件夹；请求里只有字体名，中日韩文字体还会带上用到的字 |
 | Xcode 命令行工具（只有实况照片要用，限 Mac） | | `xcode-select --install` |
 
 在 macOS 上测试过。Linux 和 Windows 应该也能用，哪一步出错，Claude 会自己排查。
