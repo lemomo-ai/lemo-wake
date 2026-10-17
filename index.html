@@ -74,6 +74,9 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid 
 .bar nav a.gh svg{width:16px;height:16px}
 .bar nav a.gh:hover{border-color:var(--line-hover)}
 .bar nav a:active{background:rgba(255,236,214,.12)}
+.bar nav a.gh .n{display:inline-flex;align-items:center;gap:4px;margin-left:2px;padding-left:9px;border-left:1px solid var(--line-strong);font-weight:600;font-variant-numeric:tabular-nums}
+.bar nav a.gh .n::before{content:"★";color:var(--accent2);font-size:12px}
+.bar nav a.gh .n[hidden]{display:none}
 
 /* ---------- hero ---------- */
 .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:clamp(40px,5vw - 24px,72px);align-items:center;padding:clamp(28px,3vw,64px) 0 clamp(64px,5.5vw,112px)}
@@ -231,6 +234,19 @@ footer nav a:active{transform:scale(.96)}
 footer p a{color:var(--ink2);text-decoration:none;
   background:linear-gradient(var(--accent2),var(--accent2)) 0 100%/0 1px no-repeat,linear-gradient(var(--line-strong),var(--line-strong)) 0 100%/100% 1px no-repeat;transition:background-size .4s var(--out),color .2s}
 footer p a:hover{color:var(--ink);background-size:100% 1px,100% 1px}
+/* more from LemoLab: the other three projects */
+.more{grid-column:1/-1;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.more h2{display:flex;align-items:baseline;gap:10px;margin:0 0 16px;font-size:15px;font-weight:650;color:var(--ink)}
+.more h2 .en{font-size:14px;font-weight:400;color:var(--ink3)}
+.more-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.more-grid a{display:flex;flex-direction:column;gap:4px;padding:16px 18px;border:1px solid var(--card-line);border-radius:16px;background:var(--card);box-shadow:var(--card-shadow);text-decoration:none;color:var(--ink2);
+  transition:border-color .25s,transform .35s var(--out),box-shadow .35s var(--out)}
+.more-grid a:hover{border-color:var(--card-line-hover);transform:translateY(-2px);box-shadow:var(--card-shadow-hover)}
+.more-grid b{font-size:15px;font-weight:650;color:var(--ink)}
+.more-grid b::after{content:" ↗";color:var(--accent2);font-weight:400}
+.more-grid span{font-size:13.5px;line-height:1.6}
+.more-grid .en{font-size:13px;line-height:1.5;color:var(--ink3)}
+.more .by{margin:14px 0 0;font-size:12.5px;color:var(--ink3);letter-spacing:.04em}
 
 /* ---------- viewer: always dark so the films read best ---------- */
 dialog{--panel:#1d1a17;--panel2:#26221e;--line:#34302a;--line-strong:#4a443c;--ink:#f3eee7;--ink2:#c6bfb4;--ink3:#948c80;--accent-ink:#ff8a5e;
@@ -367,10 +383,15 @@ dialog.closing .stage{animation:v-zoom-out .22s ease-in forwards}
   .v-info{padding:12px 16px 20px}
   .v-info .links{margin-left:0}
   footer{grid-template-columns:minmax(0,1fr);padding-bottom:48px}
+  .more-grid{grid-template-columns:minmax(0,1fr)}
 }
 
 /* ---------- reduced motion: keep every state, drop the travel ---------- */
 @media (max-width:400px){.bar nav a{padding:8px 6px}.bar nav a.gh{margin-left:2px;padding:7px 9px}.brand{gap:7px}}
+/* phones: once the star count has loaded, the chip shows just ★ and the count (the GitHub mark would push it off the edge) */
+@media (max-width:640px){.bar nav a.gh:has(.n:not([hidden])) svg{display:none}.bar nav a.gh .n{margin-left:0;padding-left:0;border-left:0;gap:3px;font-size:13.5px;color:var(--ink)}.bar nav a.gh .n::before{font-size:12px}}
+@media (max-width:400px){.bar nav a.gh:has(.n:not([hidden])){padding:7px 8px}}
+@media (max-width:380px){.bar:has(.n:not([hidden])) nav a{padding:8px 4px}.bar nav a.gh:has(.n:not([hidden])){margin-left:0;padding:7px 7px}.bar:has(.n:not([hidden])) .brand{gap:5px}}
 @media (max-width:359px){.brand{font-size:0;gap:0}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
@@ -393,7 +414,7 @@ dialog.closing .stage{animation:v-zoom-out .22s ease-in forwards}
       <a href="logos/">Logo 动效 <span>Logo Motion</span></a>
       <a href="https://github.com/lemomo-ai/lemo-wake#install">安装 <span>Install</span></a>
       <a href="https://github.com/lemomo-ai/lemo-wake/blob/gallery/CONTRIBUTING.md">投稿 <span>Share</span></a>
-      <a class="gh" href="https://github.com/lemomo-ai/lemo-wake"><svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="ght">GitHub</span></a>
+      <a class="gh" href="https://github.com/lemomo-ai/lemo-wake" title="在 GitHub 上点星 Star lemo-wake on GitHub"><svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="ght">Star</span><span class="n" data-stars hidden></span></a>
     </nav>
   </header>
 
@@ -430,6 +451,15 @@ dialog.closing .stage{animation:v-zoom-out .22s ease-in forwards}
 
 <div class="wrap">
   <footer>
+    <section class="more" aria-label="LemoLab 的其他项目 More from LemoLab">
+      <h2>LemoLab 的其他项目 <span class="en">More from LemoLab</span></h2>
+      <div class="more-grid">
+        <a href="https://lemomo-ai.github.io/lemo-opuscar/"><b>Lemo-Opuscar</b><span>51 种影片风格，每种都配一支完全用代码做出来的短片。</span><span class="en">51 film styles, each with a short film made entirely in code.</span></a>
+        <a href="https://lemomo-ai.github.io/lemo-mod/"><b>lemo-mod</b><span>给 Claude Code 换上 21 套风格，终端和桌面 App 都能用。</span><span class="en">Re-skin Claude Code with 21 styles, in the terminal and the desktop app.</span></a>
+        <a href="https://lemomo-ai.github.io/lemo-stampy/"><b>小章 Stampy</b><span>Mac 菜单栏小工具，在预览里点一下，给复印件盖上「仅供××使用」。</span><span class="en">A tiny Mac menu bar stamp that marks your copies “For XX use only”.</span></a>
+      </div>
+      <p class="by">LemoLab · by Lemomo</p>
+    </section>
     <div>
       <div class="fb"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="24" cy="8" r="4" fill="#ff6b3d"/></svg>lemo-wake</div>
       <p>作品由作者按 CC BY-NC 4.0 授权（署名、非商业）。官方仓库 <a href="https://github.com/lemomo-ai/lemo-wake">github.com/lemomo-ai/lemo-wake</a></p>
@@ -694,6 +724,19 @@ function openHash() {
   if (i >= 0) openV(i);
 }
 addEventListener('hashchange', openHash);
+
+// GitHub 星数，放在顶栏 Star 按钮里；读不到就不显示数字 · star count on the header button, hidden if the API can't be reached
+(() => {
+  const el = document.querySelector('[data-stars]'); if (!el) return;
+  const show = n => { el.textContent = n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : String(n); el.hidden = false; };
+  const KEY = 'lemo-wake-stars';
+  try { const c = JSON.parse(sessionStorage.getItem(KEY) || 'null'); if (c && Date.now() - c.t < 36e5) { show(c.n); return; } } catch (e) {}
+  fetch('https://api.github.com/repos/lemomo-ai/lemo-wake').then(r => r.ok ? r.json() : null).then(d => {
+    if (!d || typeof d.stargazers_count !== 'number') return;
+    show(d.stargazers_count);
+    try { sessionStorage.setItem(KEY, JSON.stringify({n: d.stargazers_count, t: Date.now()})); } catch (e) {}
+  }).catch(() => {});
+})();
 
 fetch('films.json', {cache: 'no-cache'}).then(r => r.json()).then(d => {
   DATA = d;

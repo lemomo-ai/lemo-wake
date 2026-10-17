@@ -33,7 +33,6 @@
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;overflow-x:clip}
-html.fit,html.fit body{height:100%;overflow:hidden}
 html:has(dialog[open]){overflow:hidden}
 body{margin:0;color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased;
   background:radial-gradient(120% 70% at 50% -10%,var(--wall-hi) 0,var(--wall) 55%,var(--wall-lo) 100%) fixed,var(--wall)}
@@ -115,6 +114,29 @@ html:not(.fit) .ttl .fine{font-size:max(10px,min(2.6cqi,3.7cqh))}
 .lang span{padding:.34em .75em;border-radius:999px;transition:background .2s,color .2s}
 .lang span.on{background:var(--ink);color:#fff}
 .lang:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* Star 按钮：和语言切换一样的细框胶囊，星数读到了才显示 */
+.ttl .hd a.star{display:inline-flex;align-items:center;gap:.5em;padding:.42em .8em;border:1px solid var(--line);border-radius:999px;font:500 max(10.5px,min(1.7cqi,4.4cqh))/1 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink2)}
+.ttl .hd a.star:hover{color:var(--ink);border-color:var(--ink3)}
+.ttl .hd a.star .sc{font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding-left:.5em;border-left:1px solid var(--line)}
+.ttl .hd a.star .sc[hidden]{display:none}
+html:not(.fit) .ttl .hd a.star{font-size:max(10px,min(2.6cqi,4.2cqh));gap:.3em}
+html:not(.fit) .ttl .hd a.star:has(.sc:not([hidden])) .t{display:none} /* 手机上标题格窄：星数读到了就只留「★ 52」 */
+html:not(.fit) .ttl .hd a.star .sc{padding-left:0;border-left:0}
+html:not(.fit) .ttl .hd{flex-wrap:wrap;row-gap:8px} /* 加了 Star 以后这一行在手机上放不下：右边那组折到下一行 */
+
+/* 墙下面：LemoLab 的其他项目（往下滚才看到，第一屏还是整面墙） */
+.more{max-width:1080px;margin:0 auto;padding:clamp(40px,6vw,72px) max(20px,env(safe-area-inset-left,0px)) clamp(48px,7vw,80px)}
+.more h2{margin:0;display:flex;align-items:baseline;justify-content:space-between;gap:12px;font:500 11px/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.more .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
+.more .grid a{display:flex;flex-direction:column;gap:6px;padding:18px 20px;border-radius:6px;background:var(--paper);text-decoration:none;color:var(--ink2);
+  box-shadow:0 1px 1px rgba(20,24,32,.08),0 10px 24px -14px rgba(20,24,32,.35);transition:transform .45s var(--out),box-shadow .45s var(--out)}
+.more .grid a:hover{transform:translateY(-3px);box-shadow:0 2px 3px rgba(20,24,32,.10),0 18px 34px -16px rgba(20,24,32,.45)}
+.more .grid b{font:500 24px/1.1 var(--display);letter-spacing:-.01em;color:var(--ink)}
+.more .grid b::after{content:" ↗";font:400 14px var(--sans);color:var(--accent)}
+.more .grid span{font-size:14px;line-height:1.6;text-wrap:pretty}
+.more .grid b span{font:inherit}
+.more .by{margin:18px 0 0;font:500 11px var(--mono);letter-spacing:.08em;color:var(--ink3)}
+@media (max-width:780px){.more .grid{grid-template-columns:1fr}}
 
 /* 占位格：窗口比例特殊、格子多出来时才会出现 */
 .ph{width:var(--s);height:var(--s);border-radius:3px;border:1.5px dashed rgba(22,24,29,.22);display:flex;align-items:flex-end;padding:calc(var(--s)*.09);
@@ -173,6 +195,7 @@ html[lang="en"] .dl .sum{font:italic 400 19px/1.45 var(--display)}
         <a href="../">← lemo-wake <span class="zh-only">作品墙</span><span class="en-only">gallery</span></a>
         <span class="r">
           <a href="https://github.com/lemomo-ai/lemo-wake#install"><span class="zh-only">安装 lemo-wake ↗</span><span class="en-only">Get lemo-wake ↗</span></a>
+          <a class="star" href="https://github.com/lemomo-ai/lemo-wake" title="Star lemo-wake on GitHub">★ <span class="t">Star</span><span class="sc" data-stars hidden></span></a>
           <button type="button" class="lang" id="lang"><span data-l="zh">中</span><span data-l="en">EN</span></button>
         </span>
       </div>
@@ -189,6 +212,16 @@ html[lang="en"] .dl .sum{font:italic 400 19px/1.45 var(--display)}
     </div>
   </div>
 </div>
+
+<section class="more" aria-labelledby="more-h">
+  <h2 id="more-h"><span class="zh-only">LemoLab 的其他项目</span><span class="en-only">More from LemoLab</span></h2>
+  <div class="grid">
+    <a href="https://lemomo-ai.github.io/lemo-opuscar/"><b>Lemo-Opuscar</b><span class="zh-only">51 种影片风格，每种都配一支完全用代码做出来的短片。</span><span class="en-only">51 film styles, each with a short film made entirely in code.</span></a>
+    <a href="https://lemomo-ai.github.io/lemo-mod/"><b>lemo-mod</b><span class="zh-only">给 Claude Code 换上 21 套风格，终端和桌面 App 都能用。</span><span class="en-only">Re-skin Claude Code with 21 styles, in the terminal and the desktop app.</span></a>
+    <a href="https://lemomo-ai.github.io/lemo-stampy/"><b><span class="zh-only">小章 Stampy</span><span class="en-only">Stampy</span></b><span class="zh-only">Mac 菜单栏小工具，在预览里点一下，给复印件盖上「仅供××使用」。</span><span class="en-only">A tiny Mac menu bar stamp that marks your copies “For XX use only”.</span></a>
+  </div>
+  <p class="by">LemoLab · by Lemomo</p>
+</section>
 
 <dialog id="dlg" aria-labelledby="d-title">
   <div class="dl">
@@ -405,6 +438,17 @@ html[lang="en"] .dl .sum{font:italic 400 19px/1.45 var(--display)}
     dv.pause(); dv.removeAttribute('src'); dv.load(); cur = null;
     try { history.replaceState(null, '', location.pathname); } catch (e) {}
   });
+
+  // GitHub 星数：读不到就只显示「★ Star」
+  (() => {
+    const n = $('[data-stars]'), show = v => { n.textContent = v >= 1000 ? (v / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : String(v); n.hidden = false; };
+    try { const c = JSON.parse(sessionStorage.getItem('lemo-wake-stars') || 'null'); if (c && Date.now() - c.t < 36e5) return show(c.n); } catch (e) {}
+    fetch('https://api.github.com/repos/lemomo-ai/lemo-wake').then(r => r.ok ? r.json() : null).then(d => {
+      if (!d || typeof d.stargazers_count !== 'number') return;
+      show(d.stargazers_count);
+      try { sessionStorage.setItem('lemo-wake-stars', JSON.stringify({ n: d.stargazers_count, t: Date.now() })); } catch (e) {}
+    }).catch(() => {});
+  })();
 
   setLang(lang);
   const h = decodeURIComponent(location.hash.slice(1));
